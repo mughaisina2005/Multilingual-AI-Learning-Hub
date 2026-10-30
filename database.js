@@ -1,17 +1,109 @@
-const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 
-const dataDir = path.join(__dirname, 'data');
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+// Detect runtime environment (Vercel, AWS Lambda, or container)
+const isServerless = Boolean(process.env.VERCEL || process.env.NOW_REGION || process.env.AWS_LAMBDA_FUNCTION_NAME);
+
+// Check if LibSQL / Turso cloud database is configured for permanent persistent storage
+let libsqlClient = null;
+const tursoUrl = process.env.TURSO_DATABASE_URL || process.env.LIBSQL_URL || null;
+const tursoToken = process.env.TURSO_AUTH_TOKEN || process.env.LIBSQL_AUTH_TOKEN || null;
+
+if (tursoUrl) {
+  try {
+    const { createClient } = require('@libsql/client');
+    libsqlClient = createClient({
+      url: tursoUrl,
+      authToken: tursoToken
+    });
+    console.log('Connected to Turso / LibSQL cloud database for persistent storage.');
+  } catch (libsqlErr) {
+    console.error('Failed to initialize LibSQL client, falling back to SQLite:', libsqlErr.message);
+    libsqlClient = null;
+  }
 }
 
-const dbPath = path.join(dataDir, 'hub_users.db');
-const db = new sqlite3.Database(dbPath);
+// Fallback / standard SQLite engine
+let db = null;
+let sqliteInitError = null;
 
-// Promisified helpers
-function runQuery(sql, params = []) {
+if (!libsqlClient) {
+  // Determine writable directory for SQLite
+  let dataDir;
+  if (isServerless) {
+    // In Vercel serverless lambda, /var/task is read-only; /tmp is the writable storage
+    dataDir = path.join(os.tmpdir(), 'multilingual-ai-hub');
+  } else {
+    dataDir = process.env.DATA_DIR || path.join(__dirname, 'data');
+  }
+
+  try {
+    if (!fs.existsSync(dataDir)) {
+      fs.mkdirSync(dataDir, { recursive: true });
+    }
+  } catch (err) {
+    console.warn(`Failed to create directory at ${dataDir}, falling back to ${os.tmpdir()}:`, err.message);
+    dataDir = path.join(os.tmpdir(), 'multilingual-ai-hub');
+    try {
+      if (!fs.existsSync(dataDir)) {
+        fs.mkdirSync(dataDir, { recursive: true });
+      }
+    } catch (e2) {
+      console.error('Failed to create tmp data directory:', e2.message);
+    }
+  }
+
+  const dbPath = process.env.DATABASE_PATH || path.join(dataDir, 'hub_users.db');
+
+  // If in serverless mode and an initial bundled database exists, copy it to /tmp if target doesn't exist
+  const seedDbPath = path.join(__dirname, 'data', 'hub_users.db');
+  if (isServerless && fs.existsSync(seedDbPath) && !fs.existsSync(dbPath)) {
+    try {
+      fs.copyFileSync(seedDbPath, dbPath);
+      console.log('Seeded database copied to writable /tmp path successfully.');
+    } catch (copyErr) {
+      console.warn('Could not copy initial database to /tmp:', copyErr.message);
+    }
+  }
+
+  try {
+    const sqlite3 = require('sqlite3').verbose();
+    db = new sqlite3.Database(dbPath, (err) => {
+      if (err) {
+        console.error('SQLite connection error:', err.message);
+        sqliteInitError = err;
+      } else {
+        console.log(`SQLite connected successfully at: ${dbPath}`);
+      }
+    });
+  } catch (nativeErr) {
+    console.warn('Native sqlite3 module could not be loaded, initializing LibSQL file fallback:', nativeErr.message);
+    try {
+      const { createClient } = require('@libsql/client');
+      libsqlClient = createClient({
+        url: `file:${dbPath}`
+      });
+      console.log(`Connected to local SQLite via LibSQL client at: ${dbPath}`);
+    } catch (fallbackErr) {
+      console.error('All database driver initializations failed:', fallbackErr.message);
+      sqliteInitError = fallbackErr;
+    }
+  }
+}
+
+// Promisified helpers supporting both LibSQL and native SQLite3
+async function runQuery(sql, params = []) {
+  if (libsqlClient) {
+    const res = await libsqlClient.execute({ sql, args: params });
+    return {
+      id: res.lastInsertRowid !== undefined && res.lastInsertRowid !== null ? Number(res.lastInsertRowid) : 0,
+      changes: res.rowsAffected || 0
+    };
+  }
+  if (!db) {
+    throw new Error(sqliteInitError ? `Database not initialized: ${sqliteInitError.message}` : 'Database connection not available');
+  }
   return new Promise((resolve, reject) => {
     db.run(sql, params, function (err) {
       if (err) return reject(err);
@@ -20,7 +112,14 @@ function runQuery(sql, params = []) {
   });
 }
 
-function getQuery(sql, params = []) {
+async function getQuery(sql, params = []) {
+  if (libsqlClient) {
+    const res = await libsqlClient.execute({ sql, args: params });
+    return res.rows && res.rows.length > 0 ? res.rows[0] : undefined;
+  }
+  if (!db) {
+    throw new Error(sqliteInitError ? `Database not initialized: ${sqliteInitError.message}` : 'Database connection not available');
+  }
   return new Promise((resolve, reject) => {
     db.get(sql, params, (err, row) => {
       if (err) return reject(err);
@@ -29,7 +128,14 @@ function getQuery(sql, params = []) {
   });
 }
 
-function allQuery(sql, params = []) {
+async function allQuery(sql, params = []) {
+  if (libsqlClient) {
+    const res = await libsqlClient.execute({ sql, args: params });
+    return res.rows ? Array.from(res.rows) : [];
+  }
+  if (!db) {
+    throw new Error(sqliteInitError ? `Database not initialized: ${sqliteInitError.message}` : 'Database connection not available');
+  }
   return new Promise((resolve, reject) => {
     db.all(sql, params, (err, rows) => {
       if (err) return reject(err);
@@ -38,7 +144,22 @@ function allQuery(sql, params = []) {
   });
 }
 
+let isDbInitialized = false;
+let initDbPromise = null;
+
 async function initDb() {
+  if (isDbInitialized) return;
+  if (initDbPromise) return initDbPromise;
+
+  initDbPromise = (async () => {
+    await performDbMigrations();
+    isDbInitialized = true;
+  })();
+
+  return initDbPromise;
+}
+
+async function performDbMigrations() {
   // Create users table
   await runQuery(`
     CREATE TABLE IF NOT EXISTS users (

@@ -13,11 +13,23 @@ const gamesService = require('./games_service');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const SESSION_SECRET = process.env.SESSION_SECRET || 'multilingual_ai_learning_hub_default_secret_key';
+const ROOT_DIR = process.env.VERCEL ? process.cwd() : __dirname;
 
 // Middleware (with generous body limits for study material & PDF processing)
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser(SESSION_SECRET));
+
+// Database readiness middleware: guarantees DB schema & migrations are ready before handling requests
+app.use(async (req, res, next) => {
+  try {
+    await db.initDb();
+    next();
+  } catch (err) {
+    console.error('Database readiness error:', err);
+    res.status(500).json({ error: 'DATABASE_INITIALIZATION_ERROR', message: 'Database initialization failed. Please retry.' });
+  }
+});
 
 // Helper: Format recovery code into readable chunks (e.g. HUB-4829-KDJ8-912A)
 function generateFormattedRecoveryCode() {
@@ -1959,60 +1971,60 @@ app.get('/api/learning/analytics', requireAuth, async (req, res) => {
 
 // Protected dashboard route
 app.get('/dashboard', requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'dashboard.html'));
+  res.sendFile(path.join(ROOT_DIR, 'dashboard.html'));
 });
 
 app.get('/dashboard.html', requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'dashboard.html'));
+  res.sendFile(path.join(ROOT_DIR, 'dashboard.html'));
 });
 
 // Protected language learning route (Module 4)
 app.get('/learn', requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'learn.html'));
+  res.sendFile(path.join(ROOT_DIR, 'learn.html'));
 });
 
 app.get('/learn.html', requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'learn.html'));
+  res.sendFile(path.join(ROOT_DIR, 'learn.html'));
 });
 
 // Protected AI Learning Studio & AI Tutor route (Modules 5 & 6)
 app.get('/studio', requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'studio.html'));
+  res.sendFile(path.join(ROOT_DIR, 'studio.html'));
 });
 
 app.get('/studio.html', requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'studio.html'));
+  res.sendFile(path.join(ROOT_DIR, 'studio.html'));
 });
 
 // Protected Practice & Mistake Memory route (Module 7)
 app.get('/practice', requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'practice.html'));
+  res.sendFile(path.join(ROOT_DIR, 'practice.html'));
 });
 
 app.get('/practice.html', requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'practice.html'));
+  res.sendFile(path.join(ROOT_DIR, 'practice.html'));
 });
 
 // Protected Learning Analytics route (Module 8)
 app.get('/analytics', requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'analytics.html'));
+  res.sendFile(path.join(ROOT_DIR, 'analytics.html'));
 });
 
 app.get('/analytics.html', requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'analytics.html'));
+  res.sendFile(path.join(ROOT_DIR, 'analytics.html'));
 });
 
 // Brain Break — Brain Games route (Module: Brain Break)
 app.get('/brain_break', optionalAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'brain_break.html'));
+  res.sendFile(path.join(ROOT_DIR, 'brain_break.html'));
 });
 
 app.get('/brain_break.html', optionalAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'brain_break.html'));
+  res.sendFile(path.join(ROOT_DIR, 'brain_break.html'));
 });
 
 app.get('/brain-break', optionalAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'brain_break.html'));
+  res.sendFile(path.join(ROOT_DIR, 'brain_break.html'));
 });
 
 // ==========================================
@@ -2130,11 +2142,11 @@ app.get('/api/intro/audio', async (req, res) => {
 });
 
 // Serve static directory files
-app.use(express.static(__dirname));
+app.use(express.static(ROOT_DIR));
 
 // Default root redirect
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(ROOT_DIR, 'index.html'));
 });
 
 // Start Server
@@ -2162,4 +2174,10 @@ async function startServer() {
   }
 }
 
-startServer();
+// Export Express app for Vercel and serverless platforms
+module.exports = app;
+
+// Only start standalone HTTP server when server.js is executed directly (e.g. `node server.js`)
+if (require.main === module) {
+  startServer();
+}

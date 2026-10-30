@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Dashboard — Multilingual AI Learning Hub</title>
+  <meta name="session-status" content="Verified Authenticated Session">
+  
+  <!-- High-legibility Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;700&family=Noto+Sans+Telugu:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Universal Theme System -->
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
+
+  <style>
+    /* ===================================================
+       DASHBOARD COMPONENT STYLING
+       =================================================== */
+    :root {
+      --sidebar-width: 260px;
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background: var(--color-bg-gradient);
+      color: var(--color-text-main);
+      overflow-x: hidden;
+    }
+
+    /* Desktop Sidebar Navigation */
+    .app-sidebar {
+      width: var(--sidebar-width);
+      background: var(--color-surface-translucent);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-right: 1px solid var(--color-border-subtle);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 40;
+      transition: all 0.25s ease;
+    }
+
+    .sidebar-header {
+      padding: 1.35rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .brand-mascot-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--color-brand-light);
+      border: 1px solid var(--color-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-mascot-box img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .brand-text-col {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .brand-heading {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--color-brand-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-subtext {
+      font-size: 0.72rem;
+      color: var(--color-text-subtle);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Navigation Links */
+    .sidebar-nav {
+      flex: 1;
+      padding: 1rem 0.75rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .nav-item-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 0.9rem;
+      border-radius: 12px;
+      color: var(--color-text-muted);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item-btn:hover {
+      background: var(--color-surface-hover);
+      color: var(--color-brand-primary);
+      transform: translateX(2px);
+    }
+
+    .nav-item-btn.active {
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      font-weight: 700;
+    }
+
+    .nav-item-icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+    }
+
+    .nav-badge-soon {
+      margin-left: auto;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border-radius: 10px;
+      background: var(--color-border);
+      color: var(--color-text-subtle);
+    }
+
+    /* Sidebar Footer */
+    .sidebar-footer {
+      padding: 1rem 1.1rem;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .user-mini-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      min-width: 0;
+    }
+
+    .user-avatar-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--color-brand-primary);
+      color: var(--color-text-inverse);
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .user-mini-names {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .user-name-label {
+      font-size: 0.86rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-handle-label {
+      font-size: 0.73rem;
+      color: var(--color-text-subtle);
+    }
+
+    /* Main Content Area */
+    .main-viewport {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      padding: 1.8rem 2rem 5rem 2rem;
+      max-width: calc(100vw - var(--sidebar-width));
+      box-sizing: border-box;
+    }
+
+    /* Top Action Bar (Stats + Theme Toggle) */
+    .top-action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stats-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 20px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-pill-xp {
+      color: #d97706;
+      border-color: rgba(217, 119, 6, 0.25);
+    }
+
+    .stat-pill-streak {
+      color: #ea580c;
+      border-color: rgba(234, 88, 12, 0.25);
+    }
+
+    .stat-pill-lang {
+      color: var(--color-brand-primary);
+      border-color: var(--color-border-subtle);
+    }
+
+    .action-controls-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn-icon-control {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.15rem;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-icon-control:hover {
+      background: var(--color-surface-hover);
+      border-color: var(--color-brand-primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-intro-replay {
+      padding: 0.5rem 0.9rem;
+      border-radius: 12px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      font-size: 0.84rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-intro-replay:hover {
+      color: var(--color-brand-primary);
+      border-color: var(--color-brand-primary);
+    }
+
+    /* Welcome Hero Banner */
+    .welcome-hero {
+      background: var(--color-surface);
+      border-radius: 20px;
+      padding: 2.2rem;
+      border: 1px solid var(--color-border-subtle);
+      box-shadow: var(--shadow-card);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-content-side {
+      flex: 1;
+      position: relative;
+      z-index: 2;
+    }
+
+    .welcome-tagline-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .welcome-title-text {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.45rem;
+      color: var(--color-text-main);
+    }
+
+    .welcome-subtitle-text {
+      font-size: 0.98rem;
+      color: var(--color-text-muted);
+      line-height: 1.55;
+      max-width: 580px;
+    }
+
+    .welcome-mascot-side {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #ffffff 0%, var(--color-brand-light) 100%);
+      border: 3px solid var(--color-surface);
+      box-shadow: 0 8px 24px var(--color-brand-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      animation: gentleHover 3.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes gentleHover {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+
+    .welcome-mascot-side img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+    }
+
+    /* Section: Continue Learning Card */
+    .continue-learning-section {
+      margin-bottom: 2.2rem;
+    }
+
+    .section-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .continue-card {
+      background: var(--color-surface);
+      border-radius: 18px;
+      padding: 1.6rem 1.8rem;
+      border: 1px solid var(--color-border-subtle);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .continue-details-col {
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .continue-lang-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .continue-lesson-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .continue-lesson-desc {
+      font-size: 0.86rem;
+      color: var(--color-text-muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .progress-bar-track {
+      height: 8px;
+      width: 100%;
+      background: var(--color-surface-hover);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 0.4rem;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8 0%, #0284c7 100%);
+      border-radius: 6px;
+      transition: width 0.5s ease;
+    }
+
+    .progress-caption-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--color-text-subtle);
+      font-weight: 600;
+    }
+
+    .btn-continue-primary {
+      padding: 0.85rem 1.8rem;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 14px var(--color-brand-shadow);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-continue-primary:hover {
+      background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--color-brand-shadow);
+    }
+
+    /* Empty State for New Learners */
+    .empty-state-card {
+      background: var(--color-surface);
+      border: 2px dashed var(--color-border);
+      border-radius: 18px;
+      padding: 2.2rem 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .empty-mascot-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .empty-state-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .empty-state-desc {
+      font-size: 0.92rem;
+      color: var(--color-text-muted);
+      max-width: 480px;
+      margin: 0 auto 1.5rem auto;
+      line-height: 1.5;
+    }
+
+    /* Grid of 8 Hub Modules */
+    .hub-modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .module-card {
+      background: var(--color-surface);
+      border-radius: 18px;
+      padding: 1.4rem 1.35rem;
+      border: 1px solid var(--color-border-subtle);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .module-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--color-brand-primary);
+      box-shadow: 0 12px 30px var(--color-brand-shadow);
+    }
+
+    .module-card.active-module {
+      border: 1.5px solid var(--color-brand-primary);
+    }
+
+    .card-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon-box {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: var(--color-brand-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.45rem;
+    }
+
+    .card-status-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.65rem;
+      border-radius: 20px;
+    }
+
+    .status-active {
+      background: var(--color-success-bg);
+      color: var(--color-success-text);
+      border: 1px solid var(--color-success-border);
+    }
+
+    .status-soon {
+      background: var(--color-surface-hover);
+      color: var(--color-text-subtle);
+      border: 1px solid var(--color-border);
+    }
+
+    .card-title-text {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+      color: var(--color-text-main);
+    }
+
+    .card-desc-text {
+      font-size: 0.84rem;
+      color: var(--color-text-muted);
+      line-height: 1.45;
+      margin-bottom: 1.1rem;
+      flex: 1;
+    }
+
+    .card-action-link {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: gap 0.2s;
+    }
+
+    .module-card:hover .card-action-link {
+      gap: 0.55rem;
+    }
+
+    /* Modal Styles for Settings & Coming Soon */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+      animation: modalFadeIn 0.25s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--color-surface);
+      border-radius: 20px;
+      box-shadow: var(--shadow-modal);
+      padding: 2rem;
+      border: 1px solid var(--color-border);
+      position: relative;
+    }
+
+    .modal-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.4rem;
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+    }
+
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--color-text-subtle);
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+
+    .modal-close-btn:hover {
+      background: var(--color-surface-hover);
+      color: var(--color-text-main);
+    }
+
+    /* Theme Option Tiles inside Settings Modal */
+    .theme-selection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin: 1rem 0 1.5rem 0;
+    }
+
+    .theme-tile-btn {
+      background: var(--color-surface-subtle);
+      border: 2px solid var(--color-border);
+      border-radius: 14px;
+      padding: 1rem 0.6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--color-text-main);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .theme-tile-btn:hover {
+      border-color: var(--color-brand-primary);
+      transform: translateY(-2px);
+    }
+
+    .theme-tile-btn.selected {
+      border-color: var(--color-brand-primary);
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+    }
+
+    .theme-tile-icon {
+      font-size: 1.6rem;
+    }
+
+    /* Mobile Bottom Navigation Bar */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--color-surface-translucent);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--color-border);
+      padding: 0.4rem 0.5rem;
+      z-index: 50;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .mobile-nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      background: none;
+      border: none;
+      color: var(--color-text-subtle);
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 0.35rem 0.6rem;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .mobile-nav-btn.active {
+      color: var(--color-brand-primary);
+      font-weight: 700;
+    }
+
+    .mobile-nav-icon {
+      font-size: 1.25rem;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1024px) {
+      .app-sidebar {
+        display: none;
+      }
+      .main-viewport {
+        margin-left: 0;
+        max-width: 100vw;
+        padding: 1.25rem 1rem 6rem 1rem;
+      }
+      .mobile-bottom-nav {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .welcome-hero {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 1.4rem 1rem;
+      }
+      .welcome-title-text {
+        font-size: 1.5rem;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+      .welcome-subtitle-text {
+        font-size: 0.88rem;
+      }
+      .continue-card {
+        padding: 1.2rem 1rem;
+      }
+      .continue-details-col {
+        min-width: 0;
+        width: 100%;
+      }
+      .continue-lesson-title {
+        font-size: 1.15rem;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+      .btn-continue-primary {
+        width: 100%;
+        justify-content: center;
+      }
+      .theme-selection-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .welcome-title-text {
+        font-size: 1.3rem;
+      }
+      .continue-lesson-title {
+        font-size: 1.05rem;
+      }
+      .welcome-tagline-badge {
+        font-size: 0.72rem;
+        padding: 0.25rem 0.6rem;
+      }
+      .stat-pill {
+        padding: 0.35rem 0.65rem;
+        font-size: 0.78rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       1. DESKTOP SIDEBAR NAVIGATION
+       ========================================== -->
+  <aside class="app-sidebar" aria-label="Main Navigation">
+    <div class="sidebar-header">
+      <div class="brand-mascot-box">
+        <img src="robot_clean.png" alt="Robot Mascot" onerror="this.src='robot.png'">
+      </div>
+      <div class="brand-text-col">
+        <span class="brand-heading">Multilingual AI</span>
+        <span class="brand-subtext">Learning Hub</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item-btn active" data-nav="dashboard">
+        <span class="nav-item-icon">🏠</span>
+        <span>Dashboard</span>
+      </button>
+
+      <a href="learn.html" class="nav-item-btn" id="navSidebarLearn">
+        <span class="nav-item-icon">🗣️</span>
+        <span>Language Learning</span>
+      </a>
+
+      <a href="studio.html?tab=studio" class="nav-item-btn">
+        <span class="nav-item-icon">🎨</span>
+        <span>AI Learning Studio</span>
+      </a>
+
+      <a href="studio.html?tab=tutor" class="nav-item-btn">
+        <span class="nav-item-icon">🤖</span>
+        <span>AI Tutor & Voice</span>
+      </a>
+
+      <a href="practice.html" class="nav-item-btn" id="navSidebarPractice">
+        <span class="nav-item-icon">🎯</span>
+        <span>Practice & Mistakes</span>
+      </a>
+
+      <button class="nav-item-btn" id="btnOpenSavedModal">
+        <span class="nav-item-icon">📂</span>
+        <span>Saved Learning</span>
+      </button>
+
+      <button class="nav-item-btn" id="btnScrollProgress">
+        <span class="nav-item-icon">📊</span>
+        <span>Learning Progress</span>
+      </button>
+
+      <a href="/brain_break.html" class="nav-item-btn" id="navBrainBreak" style="text-decoration:none;">
+        <span class="nav-item-icon">🎮</span>
+        <span>Brain Break</span>
+      </a>
+
+      <button class="nav-item-btn" id="btnOpenSettingsModal">
+        <span class="nav-item-icon">⚙️</span>
+        <span>Settings</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-mini-profile">
+        <div id="userAvatarInitial" class="user-avatar-circle">M</div>
+        <div class="user-mini-names">
+          <span id="sidebarUserName" class="user-name-label">Learner</span>
+          <span id="sidebarUserHandle" class="user-handle-label">@username</span>
+        </div>
+      </div>
+      <button id="btnSidebarLogout" class="btn-icon-control" title="Sign Out" style="width:34px; height:34px; font-size:0.95rem;">
+        🚪
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==========================================
+       2. MAIN VIEWPORT
+       ========================================== -->
+  <main class="main-viewport">
+    
+    <!-- Top Action Bar -->
+    <header class="top-action-bar">
+      <div class="stats-pills-row">
+        <div class="stat-pill stat-pill-xp">
+          <span>⭐</span>
+          <span id="statTopXp">0 XP</span>
+        </div>
+        <div class="stat-pill stat-pill-streak">
+          <span>🔥</span>
+          <span id="statTopStreak">0 Day Streak</span>
+        </div>
+        <div class="stat-pill stat-pill-lang">
+          <span id="statTopLangFlag">🇬🇧</span>
+          <span id="statTopLangName">English → Tamil</span>
+        </div>
+      </div>
+
+      <div class="action-controls-row">
+        <button id="btnHeaderThemeToggle" class="btn-icon-control" title="Toggle Theme (Light / Dark / System)">
+          🌓
+        </button>
+        <a href="intro.html" class="btn-intro-replay" title="Replay Welcome Intro Animation">
+          <span>↺</span>
+          <span>Replay Intro</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Welcome Hero Banner -->
+    <section class="welcome-hero">
+      <div class="welcome-content-side">
+        <div class="welcome-tagline-badge">
+          <span>●</span>
+          <span>Bridging Cultures with Adaptive AI Education</span>
+        </div>
+        <h1 id="welcomeGreetingHeading" class="welcome-title-text">Welcome back, Learner!</h1>
+        <p class="welcome-subtitle-text">
+          Continue your language learning journey. Master vocabulary, pronunciation, and sentences with guided AI lessons.
+        </p>
+      </div>
+      <div class="welcome-mascot-side">
+        <img src="robot_clean.png" alt="Friendly Assistant Robot Mascot" onerror="this.src='robot.png'">
+      </div>
+    </section>
+
+    <!-- Prominent "Continue Learning" Section -->
+    <section class="continue-learning-section">
+      <div class="section-header-row">
+        <h2 class="section-title">
+          <span>▶️</span>
+          <span>Continue Learning</span>
+        </h2>
+        <a href="learn.html" style="color:var(--color-brand-primary); font-size:0.86rem; font-weight:700; text-decoration:none;">
+          View All Units →
+        </a>
+      </div>
+
+      <!-- State A: Active learning progress -->
+      <div id="continueActiveCard" class="continue-card" style="display:none;">
+        <div class="continue-details-col">
+          <div class="continue-lang-badge">
+            <span id="continueLangFlag">🇫🇷</span>
+            <span id="continueLangPairText">Learning French via Tamil</span>
+            <span>•</span>
+            <span id="continueLevelBadge" style="text-transform:capitalize;">Beginner</span>
+          </div>
+          <h3 id="continueLessonTitle" class="continue-lesson-title">Unit 1: Essential Greetings</h3>
+          <p id="continueLessonDesc" class="continue-lesson-desc">
+            Next lesson ready: Practice conversational greetings, phonetics, and matching.
+          </p>
+
+          <div class="progress-bar-track">
+            <div id="continueProgressBar" class="progress-bar-fill" style="width: 0%;"></div>
+          </div>
+          <div class="progress-caption-row">
+            <span id="continueProgressText">0 of 10 lessons completed</span>
+            <span id="continuePercentText">0% Complete</span>
+          </div>
+        </div>
+
+        <a href="learn.html" id="btnContinueLesson" class="btn-continue-primary">
+          <span>Start Next Lesson</span>
+          <span>→</span>
+        </a>
+      </div>
+
+      <!-- State B: Clean Empty State for New Learners (Prompt requirement) -->
+      <div id="continueEmptyCard" class="empty-state-card">
+        <div class="empty-mascot-icon">🚀</div>
+        <h3 class="empty-state-title">Start your first language lesson!</h3>
+        <p class="empty-state-desc">
+          Choose your native explanation language and any of our 7 world languages to begin your personalized learning path with Duolingo-style guided lessons.
+        </p>
+        <a href="learn.html?autostart=1" class="btn-continue-primary">
+          <span>Choose Language & Begin</span>
+          <span>→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 8 Main Hub Modules Grid -->
+    <section id="sectionHubModules">
+      <div class="section-header-row">
+        <h2 class="section-title">
+          <span>⚡</span>
+          <span>Multilingual AI Hub Modules</span>
+        </h2>
+      </div>
+
+      <div class="hub-modules-grid">
+        
+        <!-- 1. Language Learning (ACTIVE -> Module 4) -->
+        <a href="learn.html" class="module-card active-module">
+          <div class="card-top-row">
+            <div class="card-icon-box">🗣️</div>
+          </div>
+          <h3 class="card-title-text">Language Learning</h3>
+          <p class="card-desc-text">
+            Interactive, guided lessons with 9 exercise types across Tamil, English, Hindi, Malayalam, Telugu, French, and Japanese.
+          </p>
+          <div class="card-action-link">Open Lessons →</div>
+        </a>
+
+        <!-- 2. AI Learning Studio (ACTIVE -> Module 5) -->
+        <a href="studio.html?tab=studio" class="module-card active-module">
+          <div class="card-top-row">
+            <div class="card-icon-box">🎨</div>
+          </div>
+          <h3 class="card-title-text">AI Learning Studio & Mind Maps</h3>
+          <p class="card-desc-text">
+            Explore Python, AI, ML, and custom topics with Answer Only guides, interactive visual Mind Maps, and NotebookLM-style study materials.
+          </p>
+          <div class="card-action-link">Open Studio & Mind Maps →</div>
+        </a>
+
+        <!-- 3. AI Tutor & Voice Assistant (ACTIVE -> Module 6) -->
+        <a href="studio.html?tab=tutor" class="module-card active-module">
+          <div class="card-top-row">
+            <div class="card-icon-box">🤖</div>
+          </div>
+          <h3 class="card-title-text">AI Tutor & Voice Assistant</h3>
+          <p class="card-desc-text">
+            Conversational tutor with friendly robot avatar, real-time voice microphone input, spoken AI playback, and message interactions.
+          </p>
+          <div class="card-action-link">Start Conversing →</div>
+        </a>
+
+        <!-- 4. Practice & Mistake Memory (ACTIVE -> Module 7) -->
+        <a href="practice.html" class="module-card active-module" id="cardPracticeZone">
+          <div class="card-top-row">
+            <div class="card-icon-box">🎯</div>
+          </div>
+          <h3 class="card-title-text">Practice & Mistake Memory</h3>
+          <p class="card-desc-text">
+            Personalized practice sessions, intelligent mistake memory, weak topic identification, and adaptive difficulty.
+          </p>
+          <div class="card-action-link">Start Practice →</div>
+        </a>
+
+        <!-- 5. Saved Learning (ACTIVE) -->
+        <div class="module-card" id="cardSavedLearning">
+          <div class="card-top-row">
+            <div class="card-icon-box">📂</div>
+          </div>
+          <h3 class="card-title-text">Saved Learning</h3>
+          <p class="card-desc-text">
+            Access completed lesson history, reviewed vocabulary decks, and revisit past mistakes.
+          </p>
+          <div class="card-action-link">View Saved Activity →</div>
+        </div>
+
+        <!-- 6. Learning Progress (ACTIVE) -->
+        <div class="module-card" id="cardLearningProgress" style="cursor:pointer;">
+          <div class="card-top-row">
+            <div class="card-icon-box">📊</div>
+          </div>
+          <h3 class="card-title-text">Learning Progress</h3>
+          <p class="card-desc-text">
+            View validated XP, learning streaks, unit completion rates, and historical achievements.
+          </p>
+          <a href="analytics" class="card-action-link" style="text-decoration:none;">Inspect Analytics →</a>
+        </div>
+
+        <!-- 7. Brain Break (Active) -->
+        <div class="module-card active-module" id="cardBrainBreak" style="cursor:pointer;" onclick="window.location.href='/brain_break.html'">
+          <div class="card-top-row">
+            <div class="card-icon-box">🎮</div>
+          </div>
+          <h3 class="card-title-text">Brain Break</h3>
+          <p class="card-desc-text">
+            Interactive brain games: Memory Match, Word Puzzle, Quick Quiz, Logic Challenges, Word Search, Sentence Builder, and more with multi-round progression!
+          </p>
+          <a href="/brain_break.html" class="card-action-link" style="text-decoration:none;">Play Brain Games →</a>
+        </div>
+
+        <!-- 8. Settings (ACTIVE -> Module 3) -->
+        <div class="module-card active-module" id="cardSettings">
+          <div class="card-top-row">
+            <div class="card-icon-box">⚙️</div>
+          </div>
+          <h3 class="card-title-text">Settings & Theme</h3>
+          <p class="card-desc-text">
+            Toggle Light, Dark, or System themes. Manage explanation languages, audio, and account security.
+          </p>
+          <div class="card-action-link">Open Settings →</div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       3. MOBILE BOTTOM NAVIGATION BAR
+       ========================================== -->
+  <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+    <button class="mobile-nav-btn active" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+      <span class="mobile-nav-icon">🏠</span>
+      <span>Home</span>
+    </button>
+    <a href="learn.html" class="mobile-nav-btn">
+      <span class="mobile-nav-icon">🗣️</span>
+      <span>Learn</span>
+    </a>
+    <button class="mobile-nav-btn" id="btnMobileSaved">
+      <span class="mobile-nav-icon">📂</span>
+      <span>Saved</span>
+    </button>
+    <button class="mobile-nav-btn" id="btnMobileSettings">
+      <span class="mobile-nav-icon">⚙️</span>
+      <span>Settings</span>
+    </button>
+  </nav>
+
+  <!-- ==========================================
+       4. MODAL: SETTINGS & THEME (MODULE 3)
+       ========================================== -->
+  <div id="settingsModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+    <div class="modal-card">
+      <div class="modal-header-row">
+        <h2 id="settingsModalTitle" class="modal-title">Hub Settings & Appearance</h2>
+        <button type="button" class="modal-close-btn" data-close="settingsModal">&times;</button>
+      </div>
+
+      <!-- Theme Switcher Section -->
+      <section style="margin-bottom: 1.6rem;">
+        <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.35rem; color:var(--color-text-main);">
+          Interface Theme
+        </h4>
+        <p style="font-size:0.82rem; color:var(--color-text-muted);">
+          Choose your visual appearance. Restored automatically across all your devices and sessions.
+        </p>
+
+        <div class="theme-selection-grid">
+          <button type="button" class="theme-tile-btn" data-theme-val="light">
+            <span class="theme-tile-icon">☀️</span>
+            <span>Light</span>
+          </button>
+          <button type="button" class="theme-tile-btn" data-theme-val="dark">
+            <span class="theme-tile-icon">🌙</span>
+            <span>Dark</span>
+          </button>
+          <button type="button" class="theme-tile-btn" data-theme-val="system">
+            <span class="theme-tile-icon">💻</span>
+            <span>System Default</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Language Preferences inside Settings -->
+      <section style="margin-bottom: 1.6rem;">
+        <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.35rem; color:var(--color-text-main);">
+          Default Learning Languages
+        </h4>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-top:0.75rem;">
+          <div>
+            <label style="display:block; font-size:0.78rem; font-weight:700; color:var(--color-text-subtle); margin-bottom:0.3rem;">
+              Explanation Language
+            </label>
+            <select id="settingsSelectExp" style="width:100%; height:40px; border-radius:10px; border:1px solid var(--color-border); background:var(--color-surface-subtle); color:var(--color-text-main); font-weight:600; padding:0 0.5rem;">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+          <div>
+            <label style="display:block; font-size:0.78rem; font-weight:700; color:var(--color-text-subtle); margin-bottom:0.3rem;">
+              Target Language
+            </label>
+            <select id="settingsSelectTgt" style="width:100%; height:40px; border-radius:10px; border:1px solid var(--color-border); background:var(--color-surface-subtle); color:var(--color-text-main); font-weight:600; padding:0 0.5rem;">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Audio / Pronunciation Toggle -->
+      <section style="margin-bottom: 1.6rem;">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <h4 style="font-size:0.95rem; font-weight:800; color:var(--color-text-main);">Lesson Audio Pronunciation</h4>
+            <p style="font-size:0.8rem; color:var(--color-text-muted);">Enable pronunciation speaker buttons on lesson exercises</p>
+          </div>
+          <input type="checkbox" id="settingsSoundToggle" checked style="width:20px; height:20px; accent-color:var(--color-brand-primary); cursor:pointer;">
+        </div>
+      </section>
+
+      <!-- Account Profile Summary -->
+      <section style="padding:1rem; border-radius:12px; background:var(--color-surface-subtle); border:1px solid var(--color-border); margin-bottom:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--color-brand-primary); margin-bottom:0.4rem;">
+          Account Security
+        </div>
+        <div style="font-size:0.88rem; font-weight:700; color:var(--color-text-main);" id="settingsAccountName">Learner</div>
+        <div style="font-size:0.8rem; color:var(--color-text-muted);" id="settingsAccountEmail">email@example.com</div>
+        <div style="font-size:0.76rem; color:var(--color-text-subtle); margin-top:0.3rem;">
+          No-Email Privacy Shield Active • Recovery Code Protected
+        </div>
+      </section>
+
+      <div style="display:flex; gap:0.75rem;">
+        <button type="button" id="btnSaveSettings" class="btn-continue-primary" style="flex:1; justify-content:center;">
+          Save Settings
+        </button>
+        <button type="button" id="btnLogoutModal" style="padding:0.85rem 1.2rem; border-radius:14px; border:none; background:var(--color-error-bg); color:var(--color-error-text); font-weight:700; cursor:pointer;">
+          Sign Out
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       5. MODAL: COMING SOON PREVIEW
+       ========================================== -->
+  <div id="soonModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="soonModalTitle">
+    <div class="modal-card" style="text-align:center;">
+      <div style="font-size:3rem; margin-bottom:0.8rem;">🚀</div>
+      <h2 id="soonModalTitle" class="modal-title" style="margin-bottom:0.4rem;">Feature Coming Soon</h2>
+      <p id="soonModalDesc" style="font-size:0.92rem; color:var(--color-text-muted); line-height:1.5; margin-bottom:1.5rem;">
+        This educational module is scheduled for our upcoming deployment phase.
+      </p>
+      <button type="button" class="btn-continue-primary" style="margin:0 auto; padding:0.75rem 2rem;" data-close="soonModal">
+        Got It
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       6. MODAL: SAVED LEARNING & RECENT ACTIVITY
+       ========================================== -->
+  <div id="savedModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="savedModalTitle">
+    <div class="modal-card">
+      <div class="modal-header-row">
+        <h2 id="savedModalTitle" class="modal-title">Saved Learning Activity</h2>
+        <button type="button" class="modal-close-btn" data-close="savedModal">&times;</button>
+      </div>
+
+      <p style="font-size:0.88rem; color:var(--color-text-muted); margin-bottom:1.2rem;">
+        Your verified lesson completions and learning progress are securely persisted in your account.
+      </p>
+
+      <div id="savedActivityList" style="display:flex; flex-direction:column; gap:0.6rem; max-height:300px; overflow-y:auto;">
+        <!-- Populated dynamically -->
+      </div>
+
+      <div style="margin-top:1.4rem; text-align:right;">
+        <a href="learn.html" class="btn-continue-primary" style="font-size:0.9rem; padding:0.65rem 1.4rem;">
+          Continue Practicing →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client-side Logic Script -->
+  <script>
+    /**
+     * MULTILINGUAL AI LEARNING HUB — DASHBOARD LOGIC (MODULE 3)
+     */
+    let currentSummary = null;
+    let supportedLanguages = [];
+
+    // Elements
+    const welcomeGreetingHeading = document.getElementById('welcomeGreetingHeading');
+    const statTopXp = document.getElementById('statTopXp');
+    const statTopStreak = document.getElementById('statTopStreak');
+    const statTopLangFlag = document.getElementById('statTopLangFlag');
+    const statTopLangName = document.getElementById('statTopLangName');
+    const userAvatarInitial = document.getElementById('userAvatarInitial');
+    const sidebarUserName = document.getElementById('sidebarUserName');
+    const sidebarUserHandle = document.getElementById('sidebarUserHandle');
+
+    // Continue Learning Area
+    const continueActiveCard = document.getElementById('continueActiveCard');
+    const continueEmptyCard = document.getElementById('continueEmptyCard');
+    const continueLangFlag = document.getElementById('continueLangFlag');
+    const continueLangPairText = document.getElementById('continueLangPairText');
+    const continueLevelBadge = document.getElementById('continueLevelBadge');
+    const continueLessonTitle = document.getElementById('continueLessonTitle');
+    const continueProgressBar = document.getElementById('continueProgressBar');
+    const continueProgressText = document.getElementById('continueProgressText');
+    const continuePercentText = document.getElementById('continuePercentText');
+
+    // Settings Modal
+    const settingsModal = document.getElementById('settingsModal');
+    const btnOpenSettingsModal = document.getElementById('btnOpenSettingsModal');
+    const cardSettings = document.getElementById('cardSettings');
+    const btnMobileSettings = document.getElementById('btnMobileSettings');
+    const settingsSelectExp = document.getElementById('settingsSelectExp');
+    const settingsSelectTgt = document.getElementById('settingsSelectTgt');
+    const settingsSoundToggle = document.getElementById('settingsSoundToggle');
+    const settingsAccountName = document.getElementById('settingsAccountName');
+    const settingsAccountEmail = document.getElementById('settingsAccountEmail');
+    const btnSaveSettings = document.getElementById('btnSaveSettings');
+
+    // Coming Soon Modal
+    const soonModal = document.getElementById('soonModal');
+    const soonModalTitle = document.getElementById('soonModalTitle');
+    const soonModalDesc = document.getElementById('soonModalDesc');
+
+    // Saved Learning Modal
+    const savedModal = document.getElementById('savedModal');
+    const btnOpenSavedModal = document.getElementById('btnOpenSavedModal');
+    const cardSavedLearning = document.getElementById('cardSavedLearning');
+    const btnMobileSaved = document.getElementById('btnMobileSaved');
+    const savedActivityList = document.getElementById('savedActivityList');
+
+    // Theme Tiles
+    const themeTiles = document.querySelectorAll('.theme-tile-btn');
+    const btnHeaderThemeToggle = document.getElementById('btnHeaderThemeToggle');
+
+    // Fetch and render dashboard
+    async function initDashboard() {
+      try {
+        // Sync theme from server
+        if (window.HubTheme) {
+          await HubTheme.syncFromServer();
+          updateThemeTileSelection(HubTheme.getTheme());
+        }
+
+        // Fetch languages
+        const langRes = await fetch('/api/learning/languages');
+        const langData = await langRes.json();
+        supportedLanguages = langData.languages || [];
+        populateLanguageSelects();
+
+        // Fetch summary
+        const res = await fetch('/api/learning/dashboard-summary');
+        if (!res.ok) {
+          window.location.href = 'auth.html?redirect=/dashboard';
+          return;
+        }
+
+        const data = await res.json();
+        currentSummary = data;
+        renderDashboardData(data);
+      } catch (err) {
+        console.error('Dashboard init error:', err);
+      }
+    }
+
+    function renderDashboardData(data) {
+      const user = data.user || {};
+      const stats = data.stats || {};
+      const settings = data.settings || {};
+      const expLang = data.explanationLang || {};
+      const tgtLang = data.targetLang || {};
+
+      // Name & Greeting
+      const displayName = user.fullName || user.username || 'Learner';
+      welcomeGreetingHeading.textContent = `Welcome back, ${displayName}!`;
+      sidebarUserName.textContent = displayName;
+      sidebarUserHandle.textContent = '@' + (user.username || 'user');
+      userAvatarInitial.textContent = displayName.charAt(0).toUpperCase();
+
+      // Top Stats
+      statTopXp.textContent = `${stats.totalXp || 0} XP`;
+      statTopStreak.textContent = `${stats.streakDays || 0} Day Streak`;
+      statTopLangFlag.textContent = tgtLang.flag || '🇮🇳';
+      statTopLangName.textContent = `${expLang.name || 'English'} → ${tgtLang.name || 'Tamil'}`;
+
+      // Settings modal values
+      settingsAccountName.textContent = displayName;
+      settingsAccountEmail.textContent = user.email || '—';
+      if (settingsSelectExp) settingsSelectExp.value = settings.explanation_lang || 'en';
+      if (settingsSelectTgt) settingsSelectTgt.value = settings.target_lang || 'ta';
+      if (settingsSoundToggle) settingsSoundToggle.checked = settings.sound_enabled !== 0;
+
+      // Continue Learning Area
+      if (data.isNewLearner || (stats.lessonsCompleted === 0 && data.currentPairProgress.completed === 0)) {
+        // Show clean empty state
+        continueActiveCard.style.display = 'none';
+        continueEmptyCard.style.display = 'block';
+      } else {
+        // Show actual active progress
+        continueEmptyCard.style.display = 'none';
+        continueActiveCard.style.display = 'flex';
+
+        continueLangFlag.textContent = tgtLang.flag || '🇮🇳';
+        continueLangPairText.textContent = `Learning ${tgtLang.name} via ${expLang.name}`;
+        continueLevelBadge.textContent = settings.learning_level || 'Beginner';
+
+        if (data.nextLesson) {
+          continueLessonTitle.textContent = `${data.nextLesson.unitTitle}: ${data.nextLesson.lessonTitle}`;
+          const btnContinue = document.getElementById('btnContinueLesson');
+          if (btnContinue) {
+            btnContinue.href = `learn.html?autostart=1&unit=${encodeURIComponent(data.nextLesson.unitId)}&lesson=${encodeURIComponent(data.nextLesson.lessonId)}`;
+          }
+        }
+
+        const percent = data.currentPairProgress.percent || 0;
+        continueProgressBar.style.width = `${percent}%`;
+        continueProgressText.textContent = `${data.currentPairProgress.completed} of ${data.currentPairProgress.total} lessons completed`;
+        continuePercentText.textContent = `${percent}% Complete`;
+      }
+
+      // Populate Saved Learning list
+      renderSavedActivity(data.recentActivity || []);
+    }
+
+    function renderSavedActivity(activities) {
+      if (!savedActivityList) return;
+      savedActivityList.innerHTML = '';
+
+      if (activities.length === 0) {
+        savedActivityList.innerHTML = `
+          <div style="text-align:center; padding:1.5rem; color:var(--color-text-subtle); font-size:0.88rem;">
+            No completed lessons yet. Start a lesson to build your learning memory!
+          </div>
+        `;
+        return;
+      }
+
+      activities.forEach(act => {
+        const item = document.createElement('div');
+        item.style.cssText = 'padding:0.75rem 0.9rem; border-radius:12px; background:var(--color-surface-subtle); border:1px solid var(--color-border); display:flex; justify-content:space-between; align-items:center;';
+        
+        const dateStr = act.completed_at ? new Date(act.completed_at).toLocaleDateString() : 'Recent';
+        item.innerHTML = `
+          <div>
+            <div style="font-size:0.88rem; font-weight:700; color:var(--color-text-main);">${act.unit_id.toUpperCase()}: ${act.lesson_id.replace('lesson_', 'Lesson ')}</div>
+            <div style="font-size:0.76rem; color:var(--color-text-subtle); text-transform:uppercase;">${act.target_lang.toUpperCase()} via ${act.explanation_lang.toUpperCase()} • ${act.learning_level}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:0.86rem; font-weight:800; color:var(--color-success);">${act.score}/${act.total_questions} Correct</div>
+            <div style="font-size:0.74rem; color:var(--color-text-subtle);">${dateStr}</div>
+          </div>
+        `;
+        savedActivityList.appendChild(item);
+      });
+    }
+
+    function populateLanguageSelects() {
+      if (!settingsSelectExp || !settingsSelectTgt) return;
+      settingsSelectExp.innerHTML = '';
+      settingsSelectTgt.innerHTML = '';
+
+      supportedLanguages.forEach(lang => {
+        const opt1 = document.createElement('option');
+        opt1.value = lang.code;
+        opt1.textContent = `${lang.flag} ${lang.name} (${lang.nativeName})`;
+        settingsSelectExp.appendChild(opt1);
+
+        const opt2 = document.createElement('option');
+        opt2.value = lang.code;
+        opt2.textContent = `${lang.flag} ${lang.name} (${lang.nativeName})`;
+        settingsSelectTgt.appendChild(opt2);
+      });
+    }
+
+    // ==========================================
+    // THEME SWITCHING (MODULE 3)
+    // ==========================================
+    function updateThemeTileSelection(theme) {
+      themeTiles.forEach(tile => {
+        if (tile.getAttribute('data-theme-val') === theme) {
+          tile.classList.add('selected');
+        } else {
+          tile.classList.remove('selected');
+        }
+      });
+    }
+
+    themeTiles.forEach(tile => {
+      tile.addEventListener('click', () => {
+        const val = tile.getAttribute('data-theme-val');
+        HubTheme.setTheme(val, true);
+        updateThemeTileSelection(val);
+      });
+    });
+
+    // Quick toggle in header
+    btnHeaderThemeToggle.addEventListener('click', () => {
+      const current = HubTheme.getTheme();
+      let nextTheme = 'dark';
+      if (current === 'light') nextTheme = 'dark';
+      else if (current === 'dark') nextTheme = 'system';
+      else nextTheme = 'light';
+
+      HubTheme.setTheme(nextTheme, true);
+      updateThemeTileSelection(nextTheme);
+    });
+
+    // Save Settings
+    btnSaveSettings.addEventListener('click', async () => {
+      const exp = settingsSelectExp.value;
+      const tgt = settingsSelectTgt.value;
+      const sound = settingsSoundToggle.checked;
+
+      if (exp === tgt) {
+        alert('Explanation language and target language must be different!');
+        return;
+      }
+
+      btnSaveSettings.textContent = 'Saving...';
+      try {
+        const res = await fetch('/api/user/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            theme: HubTheme.getTheme(),
+            explanation_lang: exp,
+            target_lang: tgt,
+            sound_enabled: sound
+          })
+        });
+
+        if (res.ok) {
+          settingsModal.classList.remove('open');
+          btnSaveSettings.textContent = 'Save Settings';
+          // Re-fetch dashboard data
+          initDashboard();
+        }
+      } catch (err) {
+        alert('Could not save settings.');
+        btnSaveSettings.textContent = 'Save Settings';
+      }
+    });
+
+    // Modals Handling
+    function openModal(modal) {
+      if (modal) modal.classList.add('open');
+    }
+
+    function closeModal(modal) {
+      if (modal) modal.classList.remove('open');
+    }
+
+    // Open Settings
+    [btnOpenSettingsModal, cardSettings, btnMobileSettings].forEach(btn => {
+      if (btn) btn.addEventListener('click', () => openModal(settingsModal));
+    });
+
+    // Open Saved Learning
+    [btnOpenSavedModal, cardSavedLearning, btnMobileSaved].forEach(btn => {
+      if (btn) btn.addEventListener('click', () => openModal(savedModal));
+    });
+
+    // Navigate or scroll to Learning Progress
+    const btnScrollProgress = document.getElementById('btnScrollProgress');
+    const cardLearningProgress = document.getElementById('cardLearningProgress');
+    if (cardLearningProgress) {
+      cardLearningProgress.addEventListener('click', () => {
+        window.location.href = 'analytics';
+      });
+    }
+    if (btnScrollProgress) {
+      btnScrollProgress.addEventListener('click', () => {
+        window.location.href = 'analytics';
+      });
+    }
+
+    // Coming Soon Modals
+    document.querySelectorAll('[data-modal="soon"]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const feat = el.getAttribute('data-feature') || 'This Feature';
+        soonModalTitle.textContent = `${feat} — Coming Soon`;
+        soonModalDesc.textContent = `${feat} is an upcoming module of the Multilingual AI Learning Hub. We are actively developing it for future releases.`;
+        openModal(soonModal);
+      });
+    });
+
+    // Close Modal triggers
+    document.querySelectorAll('[data-close]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-close');
+        closeModal(document.getElementById(targetId));
+      });
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-backdrop.open').forEach(m => closeModal(m));
+      }
+    });
+
+    // Logout
+    async function handleLogout() {
+      try {
+        await fetch('/api/auth/logout', { method: 'POST' });
+        window.location.href = 'auth.html';
+      } catch (e) {
+        window.location.href = 'auth.html';
+      }
+    }
+
+    document.getElementById('btnSidebarLogout')?.addEventListener('click', handleLogout);
+    document.getElementById('btnLogoutModal')?.addEventListener('click', handleLogout);
+
+    // Run
+    initDashboard();
+  </script>
+</body>
+</html>

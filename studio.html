@@ -1,0 +1,2853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>AI Learning Studio & AI Tutor — Multilingual AI Hub</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Shared Theme Engine -->
+  <link rel="stylesheet" href="theme.css">
+
+  <style>
+    /* Studio & Tutor Custom Layout */
+    :root {
+      --studio-max-width: 1280px;
+    }
+
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation Header */
+    .studio-header {
+      background: var(--color-surface-translucent);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .studio-header-inner {
+      max-width: var(--studio-max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .header-left-col {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-back-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 12px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+
+    .btn-back-nav:hover {
+      background: var(--color-surface-hover);
+      border-color: var(--color-brand-primary);
+    }
+
+    .brand-title-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      color: var(--color-text-subtle);
+      font-weight: 600;
+    }
+
+    .header-right-col {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Main Container */
+    .studio-main-container {
+      max-width: var(--studio-max-width);
+      margin: 1.5rem auto 3rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Unified Dual-Tab Navigation Switcher */
+    .tab-switcher-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .tab-switcher {
+      display: inline-flex;
+      background: var(--color-surface);
+      padding: 0.35rem;
+      border-radius: 16px;
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+      gap: 0.35rem;
+    }
+
+    .tab-switch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: var(--color-text-muted);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-switch-btn:hover {
+      color: var(--color-text-main);
+      background: var(--color-surface-hover);
+    }
+
+    .tab-switch-btn.active {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 12px var(--color-brand-shadow);
+    }
+
+    /* Tab Panels */
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+      animation: tabFadeIn 0.3s ease;
+    }
+
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* -------------------------------------------------------------------------
+       MODULE 5: AI LEARNING STUDIO & MIND MAPS STYLES
+       ------------------------------------------------------------------------- */
+    .studio-panel-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .studio-prompt-card {
+      background: var(--color-surface);
+      border-radius: 20px;
+      border: 1px solid var(--color-border);
+      padding: 1.75rem 2rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .prompt-section-header {
+      margin-bottom: 1.25rem;
+    }
+
+    .prompt-section-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .prompt-section-desc {
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+    }
+
+    /* Topic Input Bar */
+    .topic-input-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .input-topic-field {
+      flex: 1;
+      padding: 0.9rem 1.2rem;
+      border-radius: 14px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-bg);
+      color: var(--color-text-main);
+      font-size: 1rem;
+      font-family: var(--font-body);
+      transition: all 0.2s;
+    }
+
+    .input-topic-field:focus {
+      outline: none;
+      border-color: var(--color-brand-primary);
+      box-shadow: 0 0 0 3px var(--color-brand-shadow);
+    }
+
+    /* Quick Topic Suggestion Pills */
+    .quick-topics-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.75rem;
+    }
+
+    .quick-topic-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--color-text-subtle);
+      text-transform: uppercase;
+      margin-right: 0.2rem;
+    }
+
+    .chip-topic {
+      padding: 0.35rem 0.8rem;
+      border-radius: 20px;
+      background: var(--color-surface-hover);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .chip-topic:hover {
+      background: var(--color-brand-light);
+      border-color: var(--color-brand-primary);
+      color: var(--color-brand-primary);
+    }
+
+    /* Step 2: Learning Mode Choice ("How would you like to learn this topic?") */
+    .mode-choice-section {
+      border-top: 1px solid var(--color-border);
+      padding-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .choice-question-label {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+      margin-bottom: 0.85rem;
+    }
+
+    .mode-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .mode-card-select {
+      background: var(--color-bg);
+      border: 2px solid var(--color-border);
+      border-radius: 16px;
+      padding: 1.25rem 1.4rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .mode-card-select:hover {
+      border-color: var(--color-brand-primary);
+      transform: translateY(-2px);
+    }
+
+    .mode-card-select.selected {
+      border-color: var(--color-brand-primary);
+      background: var(--color-brand-light);
+      box-shadow: 0 6px 18px var(--color-brand-shadow);
+    }
+
+    .mode-card-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+
+    .mode-card-info h4 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+      color: var(--color-text-main);
+    }
+
+    .mode-card-info p {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    /* Language Selection (Strictly 3 languages: Tamil, English, Hindi) */
+    .language-choice-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      background: var(--color-surface-hover);
+      padding: 0.85rem 1.2rem;
+      border-radius: 14px;
+      border: 1px solid var(--color-border);
+      margin-bottom: 1.5rem;
+    }
+
+    .lang-choice-label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+    }
+
+    .lang-btn-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-lang-choice {
+      padding: 0.45rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-main);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-lang-choice:hover {
+      border-color: var(--color-brand-primary);
+    }
+
+    .btn-lang-choice.active {
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      border-color: var(--color-brand-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Main Generation CTA */
+    .btn-generate-main {
+      padding: 0.95rem 2.2rem;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 14px var(--color-brand-shadow);
+      transition: all 0.2s;
+    }
+
+    .btn-generate-main:hover {
+      background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px var(--color-brand-shadow);
+    }
+
+    .btn-generate-main:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Loading Indicator */
+    .generation-spinner-box {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.5rem;
+      justify-content: center;
+      color: var(--color-brand-primary);
+      font-weight: 700;
+    }
+
+    .spinner-ring {
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(2, 132, 199, 0.2);
+      border-top-color: #0284c7;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Studio Content Output Container */
+    .studio-output-container {
+      background: var(--color-surface);
+      border-radius: 20px;
+      border: 1px solid var(--color-border);
+      padding: 2rem;
+      box-shadow: var(--shadow-card);
+      display: none;
+    }
+
+    .studio-output-container.visible {
+      display: block;
+      animation: tabFadeIn 0.35s ease;
+    }
+
+    .output-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .output-topic-badge {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+    }
+
+    .output-actions-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    /* "Continue with AI Tutor" Bridge Button */
+    .btn-bridge-tutor {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.1rem;
+      background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 12px var(--color-brand-shadow);
+      transition: all 0.2s;
+    }
+
+    .btn-bridge-tutor:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px var(--color-brand-shadow);
+    }
+
+    /* Answer Only View Elements */
+    .answer-overview-text {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--color-text-main);
+      margin-bottom: 2rem;
+    }
+
+    .answer-section-heading {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+      margin: 1.75rem 0 0.85rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .concepts-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .concept-card-item {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 1.2rem;
+    }
+
+    .concept-card-item h5 {
+      font-family: var(--font-display);
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--color-brand-primary);
+      margin-bottom: 0.35rem;
+    }
+
+    .concept-card-item p {
+      font-size: 0.84rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    .code-snippet-box {
+      background: #0f172a;
+      border-radius: 14px;
+      padding: 1.25rem 1.4rem;
+      overflow-x: auto;
+      margin-bottom: 1.75rem;
+      border: 1px solid #1e293b;
+    }
+
+    .code-snippet-box pre {
+      margin: 0;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      color: #38bdf8;
+      line-height: 1.6;
+    }
+
+    .steps-progression-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.75rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .step-progression-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: var(--color-bg);
+      padding: 0.85rem 1.1rem;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .step-badge-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Mind Map Visual Canvas */
+    .mindmap-canvas-wrapper {
+      position: relative;
+      background: var(--color-bg);
+      border: 1.5px solid var(--color-border);
+      border-radius: 18px;
+      min-height: 520px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mindmap-controls-floating {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.45rem;
+      background: var(--color-surface-translucent);
+      backdrop-filter: blur(8px);
+      padding: 0.35rem 0.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      z-index: 10;
+    }
+
+    .btn-canvas-ctrl {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-main);
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .btn-canvas-ctrl:hover {
+      background: var(--color-brand-light);
+      border-color: var(--color-brand-primary);
+      color: var(--color-brand-primary);
+    }
+
+    .mindmap-svg-viewport {
+      width: 100%;
+      height: 540px;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .mindmap-svg-viewport:active {
+      cursor: grabbing;
+    }
+
+    .mindmap-interactive-node {
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), filter 0.2s ease;
+    }
+    .mindmap-interactive-node:hover rect {
+      stroke: #38bdf8 !important;
+      stroke-width: 2.5px !important;
+      filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.6));
+    }
+    .mindmap-interactive-node:hover circle {
+      stroke-width: 4px !important;
+      filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.8));
+    }
+    .mindmap-interactive-node.active-selected rect,
+    .mindmap-interactive-node.active-selected circle {
+      stroke: #0ea5e9 !important;
+      stroke-width: 3.5px !important;
+      filter: drop-shadow(0 0 14px rgba(14, 165, 233, 0.9));
+    }
+
+    .mindmap-node-detail-panel {
+      animation: fadeInNodePanel 0.25s ease-out;
+    }
+    @keyframes fadeInNodePanel {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Study Materials & NotebookLM Section */
+    .notebooklm-study-card {
+      background: var(--color-surface);
+      border-radius: 20px;
+      border: 1px solid var(--color-border);
+      padding: 1.75rem 2rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .study-material-dropzone {
+      border: 2px dashed var(--color-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      background: var(--color-bg);
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 1rem;
+    }
+
+    .study-material-dropzone:hover, .study-material-dropzone.dragover {
+      border-color: var(--color-brand-primary);
+      background: var(--color-brand-light);
+    }
+
+    .study-textarea-input {
+      width: 100%;
+      min-height: 110px;
+      padding: 0.85rem 1.1rem;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg);
+      color: var(--color-text-main);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      resize: vertical;
+      box-sizing: border-box;
+      margin-bottom: 1rem;
+    }
+
+    .study-actions-row {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+
+    .btn-study-action {
+      padding: 0.55rem 1.1rem;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface-hover);
+      color: var(--color-text-main);
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .btn-study-action:hover {
+      background: var(--color-brand-light);
+      border-color: var(--color-brand-primary);
+      color: var(--color-brand-primary);
+    }
+
+    .grounded-response-box {
+      display: none;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .grounded-citation-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 8px;
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      font-size: 0.75rem;
+      font-weight: 800;
+      margin-right: 0.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    /* -------------------------------------------------------------------------
+       MODULE 6: AI TUTOR & VOICE ASSISTANT STYLES
+       ------------------------------------------------------------------------- */
+    .tutor-panel-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    /* Robot Avatar Visual Card (Beside / Above Chat) */
+    .robot-avatar-panel {
+      background: var(--color-surface);
+      border-radius: 20px;
+      border: 1px solid var(--color-border);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: sticky;
+      top: 5rem;
+    }
+
+    .avatar-wrapper {
+      width: 140px;
+      height: 140px;
+      position: relative;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-img-element {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    /* Robot Avatar Animations */
+    /* Listening State Animation: pulsing cyan glow & breathing wave */
+    .avatar-wrapper.avatar-listening .avatar-img-element {
+      animation: avatarListenPulse 1.2s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 16px #38bdf8);
+    }
+
+    @keyframes avatarListenPulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.06); }
+    }
+
+    /* Speaking State Animation: digital wave & visor excitation */
+    .avatar-wrapper.avatar-speaking .avatar-img-element {
+      animation: avatarSpeakWave 0.7s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 20px #0284c7);
+    }
+
+    @keyframes avatarSpeakWave {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-4px) rotate(1deg); }
+      100% { transform: translateY(0) rotate(-1deg); }
+    }
+
+    .robot-name-label {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .robot-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      background: var(--color-surface-hover);
+      border: 1px solid var(--color-border);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--color-text-subtle);
+      margin-bottom: 1rem;
+    }
+
+    .robot-status-pill.status-listening {
+      background: rgba(56, 189, 248, 0.15);
+      color: #0284c7;
+      border-color: #38bdf8;
+    }
+
+    .robot-status-pill.status-speaking {
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+      border-color: #10b981;
+    }
+
+    .status-dot-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #94a3b8;
+    }
+
+    .status-listening .status-dot-indicator {
+      background: #38bdf8;
+      box-shadow: 0 0 8px #38bdf8;
+      animation: blink 0.8s infinite alternate;
+    }
+
+    .status-speaking .status-dot-indicator {
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: blink 0.8s infinite alternate;
+    }
+
+    @keyframes blink {
+      from { opacity: 0.4; }
+      to { opacity: 1; }
+    }
+
+    .tutor-sidebar-lang-box {
+      width: 100%;
+      border-top: 1px solid var(--color-border);
+      padding-top: 1rem;
+      text-align: left;
+    }
+
+    .tutor-sidebar-lang-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--color-text-subtle);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Main Chat Stream Area */
+    .tutor-chat-panel {
+      background: var(--color-surface);
+      border-radius: 20px;
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      height: 640px;
+      overflow: hidden;
+    }
+
+    .chat-header-bar {
+      padding: 1rem 1.4rem;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: var(--color-surface-translucent);
+    }
+
+    .chat-topic-indicator {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .chat-messages-stream {
+      flex: 1;
+      padding: 1.25rem 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      scroll-behavior: smooth;
+    }
+
+    /* Message Bubbles */
+    .chat-message-row {
+      display: flex;
+      flex-direction: column;
+      max-width: 82%;
+      animation: messagePop 0.25s ease-out;
+    }
+
+    @keyframes messagePop {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-message-row.user-msg {
+      align-self: flex-end;
+      align-items: flex-end;
+    }
+
+    .chat-message-row.tutor-msg {
+      align-self: flex-start;
+      align-items: flex-start;
+    }
+
+    .message-bubble {
+      padding: 1rem 1.25rem;
+      border-radius: 18px;
+      font-size: 0.94rem;
+      line-height: 1.6;
+      word-break: break-word;
+      position: relative;
+    }
+
+    .user-msg .message-bubble {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 4px 12px var(--color-brand-shadow);
+    }
+
+    .tutor-msg .message-bubble {
+      background: var(--color-bg);
+      color: var(--color-text-main);
+      border: 1px solid var(--color-border);
+      border-bottom-left-radius: 4px;
+    }
+
+    /* Message Actions: Copy, Edit, Select All, Speak (Always accessible on desktop & mobile) */
+    .message-actions-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.4rem;
+      padding: 0 0.2rem;
+    }
+
+    .btn-msg-action {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-subtle);
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s;
+    }
+
+    .btn-msg-action:hover {
+      background: var(--color-surface-hover);
+      color: var(--color-brand-primary);
+      border-color: var(--color-brand-primary);
+    }
+
+    .btn-msg-action.speaking-now {
+      background: rgba(16, 185, 129, 0.2);
+      color: #059669;
+      border-color: #10b981;
+    }
+
+    /* Follow-up question chips */
+    .followup-suggestions-row {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      margin-top: 0.65rem;
+    }
+
+    .chip-followup {
+      padding: 0.35rem 0.75rem;
+      border-radius: 16px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-brand-primary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .chip-followup:hover {
+      background: var(--color-brand-light);
+      border-color: var(--color-brand-primary);
+    }
+
+    /* Chat Input Bar */
+    .chat-bottom-input-bar {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--color-border);
+      background: var(--color-surface-translucent);
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .input-speech-feedback {
+      display: none;
+      font-size: 0.78rem;
+      color: #0284c7;
+      font-weight: 700;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .chat-input-controls-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.65rem;
+    }
+
+    .chat-textarea {
+      flex: 1;
+      min-height: 44px;
+      max-height: 120px;
+      padding: 0.75rem 1rem;
+      border-radius: 14px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-bg);
+      color: var(--color-text-main);
+      font-family: var(--font-body);
+      font-size: 0.94rem;
+      resize: none;
+      box-sizing: border-box;
+      line-height: 1.45;
+      transition: all 0.2s;
+    }
+
+    .chat-textarea:focus {
+      outline: none;
+      border-color: var(--color-brand-primary);
+      box-shadow: 0 0 0 3px var(--color-brand-shadow);
+    }
+
+    /* Microphone Button */
+    .btn-mic-voice {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-main);
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-mic-voice:hover {
+      background: var(--color-surface-hover);
+      border-color: var(--color-brand-primary);
+    }
+
+    .btn-mic-voice.mic-active {
+      background: #ef4444;
+      border-color: #ef4444;
+      color: #ffffff;
+      animation: micPulse 1s infinite alternate;
+    }
+
+    @keyframes micPulse {
+      from { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+      to { transform: scale(1.08); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+    }
+
+    /* Send Button */
+    .btn-send-chat {
+      height: 44px;
+      padding: 0 1.25rem;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-send-chat:hover {
+      background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+      transform: translateY(-1px);
+    }
+
+    .btn-send-chat:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Toast Notification */
+    .toast-popup {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      z-index: 100;
+    }
+
+    .toast-popup.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 900px) {
+      .tutor-panel-layout {
+        grid-template-columns: 1fr;
+      }
+      .robot-avatar-panel {
+        position: static;
+        flex-direction: row;
+        text-align: left;
+        gap: 1.25rem;
+        padding: 1rem 1.25rem;
+      }
+      .avatar-wrapper {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 0;
+      }
+      .tutor-sidebar-lang-box {
+        display: none;
+      }
+      .mode-cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .studio-header-inner {
+        padding: 0;
+      }
+      .topic-input-row {
+        flex-direction: column;
+      }
+      .btn-generate-main {
+        width: 100%;
+        justify-content: center;
+      }
+      .chat-message-row {
+        max-width: 96%;
+      }
+      .btn-back-nav span:last-child {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       1. TOP NAVIGATION HEADER
+       ========================================== -->
+  <header class="studio-header">
+    <div class="studio-header-inner">
+      <div class="header-left-col">
+        <a href="dashboard.html" class="btn-back-nav" title="Back to Hub Dashboard">
+          <span>←</span>
+          <span>Dashboard</span>
+        </a>
+        <div class="brand-title-group">
+          <div class="brand-title">Multilingual AI Hub</div>
+          <div class="brand-sub">Studio & Mind Maps • AI Tutor & Voice</div>
+        </div>
+      </div>
+
+      <div class="header-right-col">
+        <button id="btnThemeToggle" class="btn-icon-control" title="Toggle Theme (Light / Dark / System)" style="width:36px; height:36px; border-radius:10px; border:1px solid var(--color-border); background:var(--color-surface); cursor:pointer;">
+          🌓
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       2. MAIN VIEWPORT
+       ========================================== -->
+  <main class="studio-main-container">
+
+    <!-- Unified Dual-Tab Navigation Switcher -->
+    <div class="tab-switcher-wrapper">
+      <nav class="tab-switcher" role="tablist" aria-label="Learning Modules Navigation">
+        <button id="tabBtnStudio" class="tab-switch-btn active" role="tab" aria-selected="true" aria-controls="panelStudio">
+          <span>🎨</span>
+          <span>AI Learning Studio & Mind Maps</span>
+        </button>
+        <button id="tabBtnTutor" class="tab-switch-btn" role="tab" aria-selected="false" aria-controls="panelTutor">
+          <span>🤖</span>
+          <span>AI Tutor & Voice Assistant</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- ==========================================
+         TAB 1: MODULE 5 — AI LEARNING STUDIO & MIND MAPS
+         ========================================== -->
+    <section id="panelStudio" class="tab-panel active" role="tabpanel" aria-labelledby="tabBtnStudio">
+      <div class="studio-panel-layout">
+
+        <!-- 1. Topic Selection & Mode Prompt Card -->
+        <div class="studio-prompt-card">
+          <div class="prompt-section-header">
+            <h2 class="prompt-section-title">
+              <span>💡</span>
+              <span>Explore Any Topic with Adaptive AI</span>
+            </h2>
+            <p class="prompt-section-desc">
+              Enter any technical subject such as Python, Artificial Intelligence, Machine Learning, or Natural Language Processing.
+            </p>
+          </div>
+
+          <!-- Topic Input -->
+          <div class="topic-input-row">
+            <input type="text" id="inputTopicText" class="input-topic-field" placeholder="Enter educational topic (e.g., Python, Artificial Intelligence, Machine Learning, NLP)..." value="Python">
+          </div>
+
+          <!-- Quick Topic Pills -->
+          <div class="quick-topics-row">
+            <span class="quick-topic-label">Quick Suggestions:</span>
+            <button class="chip-topic" data-topic="Python">🐍 Python</button>
+            <button class="chip-topic" data-topic="Artificial Intelligence">🧠 Artificial Intelligence</button>
+            <button class="chip-topic" data-topic="Machine Learning">🤖 Machine Learning</button>
+            <button class="chip-topic" data-topic="Natural Language Processing">💬 NLP</button>
+          </div>
+
+          <!-- Step 2: "How would you like to learn this topic?" -->
+          <div class="mode-choice-section">
+            <div class="choice-question-label">How would you like to learn this topic?</div>
+            <div class="mode-cards-grid">
+              <!-- Mode A: Answer Only -->
+              <div id="modeCardAnswer" class="mode-card-select selected" data-mode="answer">
+                <div class="mode-card-icon">📖</div>
+                <div class="mode-card-info">
+                  <h4>Answer Only</h4>
+                  <p>Comprehensive structured explanation, key concepts, practical code examples, and step-by-step points for beginners.</p>
+                </div>
+              </div>
+
+              <!-- Mode B: Mind Map -->
+              <div id="modeCardMindmap" class="mode-card-select" data-mode="mindmap">
+                <div class="mode-card-icon">🗺️</div>
+                <div class="mode-card-info">
+                  <h4>Mind Map</h4>
+                  <p>Visual interactive concept map with central topic, radiating branches, hierarchical subtopics, and zoom/pan controls.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Language Choice (Strictly Tamil, English, Hindi) -->
+            <div class="language-choice-row">
+              <span class="lang-choice-label">Preferred Explanation Language:</span>
+              <div class="lang-btn-group" id="studioLangGroup">
+                <button class="btn-lang-choice" data-lang="ta">🇮🇳 தமிழ் (Tamil)</button>
+                <button class="btn-lang-choice active" data-lang="en">🇬🇧 English</button>
+                <button class="btn-lang-choice" data-lang="hi">🇮🇳 हिन्दी (Hindi)</button>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <button id="btnGenerateStudio" class="btn-generate-main">
+              <span>🚀 Generate Learning Experience</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="studioSpinner" class="generation-spinner-box">
+          <div class="spinner-ring"></div>
+          <span id="spinnerText">Synthesizing comprehensive multilingual learning experience...</span>
+        </div>
+
+        <!-- 2. Studio Output Container (Answer Only or Mind Map) -->
+        <div id="studioOutputContainer" class="studio-output-container">
+          <div class="output-top-bar">
+            <div class="output-topic-badge" id="outputTopicTitle">Python Programming</div>
+            <div class="output-actions-row">
+              <!-- Fast language toggle for current result -->
+              <div class="lang-btn-group" id="resultLangGroup" style="transform: scale(0.92); transform-origin: right center;">
+                <button class="btn-lang-choice" data-lang="ta">தமிழ்</button>
+                <button class="btn-lang-choice active" data-lang="en">English</button>
+                <button class="btn-lang-choice" data-lang="hi">हिन्दी</button>
+              </div>
+
+              <!-- Seamless Bridge to Module 6 Tutor -->
+              <button id="btnBridgeToTutor" class="btn-bridge-tutor" title="Continue discussing this topic with the AI Tutor">
+                <span>💬</span>
+                <span>Continue with AI Tutor →</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sub-View A: Answer Only Content Area -->
+          <div id="answerOnlyView">
+            <p id="answerOverview" class="answer-overview-text"></p>
+
+            <h3 class="answer-section-heading">
+              <span>🔑</span>
+              <span>Core Key Concepts</span>
+            </h3>
+            <div id="answerConceptsGrid" class="concepts-cards-grid"></div>
+
+            <h3 class="answer-section-heading">
+              <span>💻</span>
+              <span id="answerExampleTitle">Practical Code & Real-World Example</span>
+            </h3>
+            <div class="code-snippet-box">
+              <pre><code id="answerCodeBlock"></code></pre>
+            </div>
+
+            <h3 class="answer-section-heading">
+              <span>📈</span>
+              <span>Step-by-Step Learning Progression</span>
+            </h3>
+            <ul id="answerStepsList" class="steps-progression-list"></ul>
+
+            <div style="background:var(--color-surface-hover); border-left:4px solid var(--color-brand-primary); padding:1rem 1.25rem; border-radius:0 12px 12px 0;">
+              <strong style="color:var(--color-brand-primary); font-size:0.9rem;">Key Takeaway:</strong>
+              <p id="answerSummary" style="font-size:0.88rem; margin:0.35rem 0 0 0; color:var(--color-text-main);"></p>
+            </div>
+          </div>
+
+          <!-- Sub-View B: Visual Mind Map Area -->
+          <div id="mindMapView" style="display:none;">
+            <div class="mindmap-canvas-wrapper" id="mindmapWrapper">
+              <!-- Floating Zoom & Fit Controls -->
+              <div class="mindmap-controls-floating">
+                <button id="btnZoomIn" class="btn-canvas-ctrl" title="Zoom In">+</button>
+                <button id="btnZoomOut" class="btn-canvas-ctrl" title="Zoom Out">−</button>
+                <button id="btnFitScreen" class="btn-canvas-ctrl" title="Fit to Screen">⛶</button>
+              </div>
+
+              <!-- Interactive SVG Mind Map Canvas -->
+              <svg id="mindmapSvg" class="mindmap-svg-viewport" viewBox="0 0 1000 600"></svg>
+            </div>
+
+            <!-- Interactive Node Explanation Panel (Task 3B) -->
+            <div id="mindmapNodeDetailPanel" class="mindmap-node-detail-panel" style="display:none; margin-top:1.25rem; padding:1.25rem 1.5rem; background:var(--color-surface); border:1px solid var(--color-border); border-radius:16px; box-shadow:var(--shadow-card);">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem; gap:1rem;">
+                <div>
+                  <span id="mindmapNodeBadge" style="display:inline-block; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; padding:0.2rem 0.6rem; border-radius:6px; background:rgba(56,189,248,0.15); color:#38bdf8; margin-bottom:0.35rem;">Topic Concept</span>
+                  <h3 id="mindmapNodeTitle" style="font-size:1.25rem; font-weight:800; color:var(--color-text-main); margin:0;">Node Title</h3>
+                  <div id="mindmapNodeBranch" style="font-size:0.82rem; color:var(--color-text-muted); margin-top:0.25rem;">Branch Context</div>
+                </div>
+                <button id="btnCloseNodeDetail" style="background:var(--color-surface-hover); border:1px solid var(--color-border); color:var(--color-text-muted); font-size:1.1rem; cursor:pointer; width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; transition:all 0.2s;" title="Close Details">✕</button>
+              </div>
+
+              <div id="mindmapNodeLoading" style="display:none; padding:1.25rem; text-align:center; color:#38bdf8; font-weight:600;">
+                <span style="display:inline-block; margin-right:0.5rem; animation:spin 1s linear infinite;">⏳</span> Generating detailed topic explanation...
+              </div>
+
+              <div id="mindmapNodeContent" style="display:block;">
+                <div style="margin-bottom:0.85rem;">
+                  <strong style="font-size:0.85rem; color:#38bdf8; display:block; margin-bottom:0.25rem; text-transform:uppercase; letter-spacing:0.04em;">Definition & Overview:</strong>
+                  <div id="mindmapNodeDefinition" style="font-size:0.95rem; line-height:1.6; color:var(--color-text-main);"></div>
+                </div>
+
+                <div style="margin-bottom:0.85rem;">
+                  <strong style="font-size:0.85rem; color:#38bdf8; display:block; margin-bottom:0.25rem; text-transform:uppercase; letter-spacing:0.04em;">Why It Matters:</strong>
+                  <div id="mindmapNodeWhy" style="font-size:0.92rem; line-height:1.6; color:var(--color-text-muted);"></div>
+                </div>
+
+                <div id="mindmapNodeExampleWrap" style="margin-bottom:1rem;">
+                  <strong style="font-size:0.85rem; color:#38bdf8; display:block; margin-bottom:0.25rem; text-transform:uppercase; letter-spacing:0.04em;">Practical Example / Code:</strong>
+                  <pre id="mindmapNodeExample" style="background:#090d16; border:1px solid rgba(56,189,248,0.25); padding:0.85rem 1rem; border-radius:10px; font-family:'Fira Code', 'Courier New', monospace; font-size:0.85rem; color:#e2e8f0; overflow-x:auto; line-height:1.45; margin:0;"></pre>
+                </div>
+
+                <!-- Bridge to AI Tutor Action -->
+                <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.85rem; padding-top:0.85rem; border-top:1px solid var(--color-border);">
+                  <button id="btnAskTutorAboutNode" class="btn-action-primary" style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.55rem 1.1rem; font-size:0.85rem; font-weight:700; border-radius:8px; cursor:pointer;">
+                    <span>💬 Continue Discussion in AI Tutor →</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Study Materials & NotebookLM-Style Study Help -->
+        <div class="notebooklm-study-card">
+          <div class="prompt-section-header">
+            <h2 class="prompt-section-title">
+              <span>📚</span>
+              <span>NotebookLM-Style Study Assistant</span>
+            </h2>
+            <p class="prompt-section-desc">
+              Upload study materials (PDF, text notes) or paste excerpts to summarize, explain concepts, ask grounded questions with citations, or create revision notes.
+            </p>
+          </div>
+
+          <!-- File Upload Dropzone -->
+          <div class="study-material-dropzone" id="studyDropzone">
+            <input type="file" id="studyFileInput" accept=".pdf,.txt,.md,.json,.py,.csv" style="display:none;">
+            <div style="font-size:2rem; margin-bottom:0.4rem;">📄</div>
+            <div style="font-weight:700; font-size:0.95rem; margin-bottom:0.25rem;">
+              Click to choose a file or drag & drop here
+            </div>
+            <div style="font-size:0.78rem; color:var(--color-text-muted);">
+              Supports PDF, TXT, Markdown, code, or study notes
+            </div>
+            <div id="uploadedFileStatus" style="margin-top:0.65rem; font-size:0.82rem; font-weight:700; color:var(--color-brand-primary); display:none;"></div>
+          </div>
+
+          <!-- Textarea for Direct Note Pasting -->
+          <textarea id="studyTextarea" class="study-textarea-input" placeholder="Or paste your lecture notes, book paragraphs, or syllabus excerpts here..."></textarea>
+
+          <!-- Study Assistance Action Buttons -->
+          <div class="study-actions-row">
+            <button class="btn-study-action" data-action="summarize">
+              <span>📝</span>
+              <span>Summarize Material</span>
+            </button>
+            <button class="btn-study-action" data-action="explain">
+              <span>💡</span>
+              <span>Explain Difficult Concepts</span>
+            </button>
+            <button class="btn-study-action" data-action="qa">
+              <span>❓</span>
+              <span>Ask Grounded Question</span>
+            </button>
+            <button class="btn-study-action" data-action="revision">
+              <span>📌</span>
+              <span>Create Revision Notes</span>
+            </button>
+          </div>
+
+          <!-- Optional Question Input for Q&A action -->
+          <div id="qaInputRow" style="display:none; margin-bottom:1rem;">
+            <input type="text" id="inputQaQuestion" class="input-topic-field" placeholder="Type your specific question about the uploaded document...">
+            <button id="btnSubmitQa" class="btn-generate-main" style="margin-top:0.6rem; padding:0.65rem 1.4rem; font-size:0.9rem;">Ask Question</button>
+          </div>
+
+          <!-- Grounded Document Response Display -->
+          <div id="groundedResponseBox" class="grounded-response-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.85rem;">
+              <h4 style="font-family:var(--font-display); font-size:1.05rem; font-weight:800; color:var(--color-text-main); margin:0;">
+                Document Analysis & Evidence
+              </h4>
+              <span style="font-size:0.75rem; font-weight:700; padding:0.2rem 0.6rem; border-radius:12px; background:rgba(16,185,129,0.15); color:#059669; border:1px solid #10b981;">
+                Verified Citations
+              </span>
+            </div>
+
+            <div id="groundedCitationsRow" style="margin-bottom:0.75rem;"></div>
+            <div id="groundedPointsList" style="margin-bottom:1rem; font-size:0.9rem; line-height:1.6;"></div>
+            <div id="generalSynthesisBox" style="background:var(--color-surface); padding:0.85rem 1rem; border-radius:12px; border:1px solid var(--color-border); font-size:0.85rem; color:var(--color-text-muted); line-height:1.5;"></div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TAB 2: MODULE 6 — AI TUTOR & VOICE ASSISTANT
+         ========================================== -->
+    <section id="panelTutor" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnTutor">
+      <div class="tutor-panel-layout">
+
+        <!-- Robot Avatar Panel (Futuristic Blue & White Mascot) -->
+        <aside class="robot-avatar-panel" aria-label="AI Tutor Voice Assistant">
+          <div id="avatarWrapper" class="avatar-wrapper">
+            <!-- Inline Responsive Vector Robot Avatar -->
+            <img src="robot_avatar.svg" alt="AI Tutor Voice Assistant Robot Avatar" class="avatar-img-element" id="robotAvatarImg">
+          </div>
+
+          <div class="robot-name-label">AI Tutor Partner</div>
+          <div id="robotStatusPill" class="robot-status-pill">
+            <span class="status-dot-indicator"></span>
+            <span id="robotStatusText">Ready to assist you</span>
+          </div>
+
+          <div class="tutor-sidebar-lang-box">
+            <div class="tutor-sidebar-lang-label">Tutor Conversation Language</div>
+            <div class="lang-btn-group" id="tutorLangGroup" style="flex-direction:column; width:100%;">
+              <button class="btn-lang-choice" data-lang="ta" style="justify-content:flex-start;">🇮🇳 தமிழ் (Tamil)</button>
+              <button class="btn-lang-choice active" data-lang="en" style="justify-content:flex-start;">🇬🇧 English</button>
+              <button class="btn-lang-choice" data-lang="hi" style="justify-content:flex-start;">🇮🇳 हिन्दी (Hindi)</button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Chat Stream -->
+        <div class="tutor-chat-panel">
+          <div class="chat-header-bar">
+            <div class="chat-topic-indicator">
+              <span>🎯</span>
+              <span id="chatActiveTopic">General Learning Conversation</span>
+            </div>
+            <button id="btnClearChat" class="btn-msg-action" title="Clear conversation history">
+              <span>🗑️</span>
+              <span>Clear History</span>
+            </button>
+          </div>
+
+          <!-- Messages Stream Area -->
+          <div id="chatStream" class="chat-messages-stream">
+            <!-- Default Welcome Message from AI Tutor -->
+            <div class="chat-message-row tutor-msg">
+              <div class="message-bubble" id="initialTutorMsg">
+                Hello! I am your AI Tutor. What would you like to learn today? You can type any question or click the microphone to speak with me in English, Tamil, or Hindi!
+              </div>
+              <div class="message-actions-bar">
+                <button class="btn-msg-action btn-copy-msg" title="Copy message text">📋 Copy</button>
+                <button class="btn-msg-action btn-select-msg" title="Select all text in this message">🔲 Select All</button>
+                <button class="btn-msg-action btn-speak-msg" title="Listen to spoken audio">🔊 Listen</button>
+              </div>
+              <div class="followup-suggestions-row">
+                <button class="chip-followup">What is Python?</button>
+                <button class="chip-followup">Explain Artificial Intelligence</button>
+                <button class="chip-followup">How does Machine Learning work?</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Input & Voice Bar -->
+          <div class="chat-bottom-input-bar">
+            <!-- Real-time Speech Recognition Feedback Banner -->
+            <div id="speechFeedbackRow" class="input-speech-feedback">
+              <span>🎙️ Listening to your microphone...</span>
+              <span id="interimSpeechText" style="color:var(--color-brand-primary); font-style:italic;"></span>
+            </div>
+
+            <div class="chat-input-controls-row">
+              <textarea id="chatInputText" class="chat-textarea" placeholder="Ask anything about Python, AI, ML, or concepts (Press Enter to send, Shift+Enter for new line)..." rows="1"></textarea>
+              
+              <!-- Voice Microphone Button -->
+              <button id="btnMicInput" class="btn-mic-voice" title="Click to speak (Tamil, English, Hindi)">
+                🎙️
+              </button>
+
+              <!-- Send Button -->
+              <button id="btnSendChat" class="btn-send-chat" title="Send question">
+                <span>Send</span>
+                <span>✈️</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast Notification Box -->
+  <div id="hubToast" class="toast-popup">Copied!</div>
+
+  <!-- Shared Theme JS -->
+  <script src="theme.js"></script>
+
+  <script>
+    /* =========================================================================
+       MODULE 5 & MODULE 6 CONNECTED CONTROLLER
+       ========================================================================= */
+
+    // Global State
+    const HubState = {
+      activeTab: 'studio',          // 'studio' | 'tutor'
+      currentTopic: 'Python',
+      currentMode: 'answer',         // 'answer' | 'mindmap'
+      currentLang: 'en',            // 'ta' | 'en' | 'hi'
+      conversationHistory: [],
+      uploadedText: '',
+      uploadedFileName: '',
+      isListening: false,
+      isSpeaking: false,
+      speechRecognizer: null,
+      currentUtterance: null,
+      mindmapScale: 1,
+      mindmapPanX: 0,
+      mindmapPanY: 0,
+      isDraggingMindmap: false,
+      dragStartX: 0,
+      dragStartY: 0
+    };
+
+    // DOM Elements
+    const tabBtnStudio = document.getElementById('tabBtnStudio');
+    const tabBtnTutor = document.getElementById('tabBtnTutor');
+    const panelStudio = document.getElementById('panelStudio');
+    const panelTutor = document.getElementById('panelTutor');
+
+    // Studio Elements
+    const inputTopicText = document.getElementById('inputTopicText');
+    const modeCardAnswer = document.getElementById('modeCardAnswer');
+    const modeCardMindmap = document.getElementById('modeCardMindmap');
+    const btnGenerateStudio = document.getElementById('btnGenerateStudio');
+    const studioSpinner = document.getElementById('studioSpinner');
+    const studioOutputContainer = document.getElementById('studioOutputContainer');
+    const outputTopicTitle = document.getElementById('outputTopicTitle');
+    const answerOnlyView = document.getElementById('answerOnlyView');
+    const mindMapView = document.getElementById('mindMapView');
+    const btnBridgeToTutor = document.getElementById('btnBridgeToTutor');
+
+    // Tutor Elements
+    const avatarWrapper = document.getElementById('avatarWrapper');
+    const robotStatusPill = document.getElementById('robotStatusPill');
+    const robotStatusText = document.getElementById('robotStatusText');
+    const chatStream = document.getElementById('chatStream');
+    const chatInputText = document.getElementById('chatInputText');
+    const btnMicInput = document.getElementById('btnMicInput');
+    const btnSendChat = document.getElementById('btnSendChat');
+    const chatActiveTopic = document.getElementById('chatActiveTopic');
+    const speechFeedbackRow = document.getElementById('speechFeedbackRow');
+    const interimSpeechText = document.getElementById('interimSpeechText');
+
+    // Toast Helper
+    function showToast(msg) {
+      const toast = document.getElementById('hubToast');
+      toast.textContent = msg;
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), 2200);
+    }
+
+    /* -------------------------------------------------------------------------
+       1. TAB SWITCHING & URL QUERY PARAMS
+       ------------------------------------------------------------------------- */
+    function switchTab(tabName) {
+      HubState.activeTab = tabName;
+      if (tabName === 'tutor') {
+        tabBtnStudio.classList.remove('active');
+        tabBtnStudio.setAttribute('aria-selected', 'false');
+        panelStudio.classList.remove('active');
+
+        tabBtnTutor.classList.add('active');
+        tabBtnTutor.setAttribute('aria-selected', 'true');
+        panelTutor.classList.add('active');
+
+        // Scroll chat stream to bottom
+        chatStream.scrollTop = chatStream.scrollHeight;
+      } else {
+        tabBtnTutor.classList.remove('active');
+        tabBtnTutor.setAttribute('aria-selected', 'false');
+        panelTutor.classList.remove('active');
+
+        tabBtnStudio.classList.add('active');
+        tabBtnStudio.setAttribute('aria-selected', 'true');
+        panelStudio.classList.add('active');
+      }
+    }
+
+    tabBtnStudio.addEventListener('click', () => switchTab('studio'));
+    tabBtnTutor.addEventListener('click', () => switchTab('tutor'));
+
+    // Quick Topic Chips
+    document.querySelectorAll('.chip-topic').forEach(chip => {
+      chip.addEventListener('click', () => {
+        inputTopicText.value = chip.dataset.topic;
+        HubState.currentTopic = chip.dataset.topic;
+      });
+    });
+
+    // Learning Mode Cards Selection
+    modeCardAnswer.addEventListener('click', () => {
+      HubState.currentMode = 'answer';
+      modeCardAnswer.classList.add('selected');
+      modeCardMindmap.classList.remove('selected');
+    });
+
+    modeCardMindmap.addEventListener('click', () => {
+      HubState.currentMode = 'mindmap';
+      modeCardMindmap.classList.add('selected');
+      modeCardAnswer.classList.remove('selected');
+    });
+
+    // Language Selection sync
+    function setAppLanguage(lang) {
+      if (!['ta', 'en', 'hi'].includes(lang)) return;
+      HubState.currentLang = lang;
+
+      // Sync studio lang pills
+      document.querySelectorAll('#studioLangGroup .btn-lang-choice').forEach(b => {
+        b.classList.toggle('active', b.dataset.lang === lang);
+      });
+      // Sync result lang pills
+      document.querySelectorAll('#resultLangGroup .btn-lang-choice').forEach(b => {
+        b.classList.toggle('active', b.dataset.lang === lang);
+      });
+      // Sync tutor lang pills
+      document.querySelectorAll('#tutorLangGroup .btn-lang-choice').forEach(b => {
+        b.classList.toggle('active', b.dataset.lang === lang);
+      });
+
+      // If a mind map node is open in detail panel, refresh its explanation in newly selected language
+      const nodeDetailPanel = document.getElementById('mindmapNodeDetailPanel');
+      if (nodeDetailPanel && nodeDetailPanel.style.display !== 'none' && currentSelectedNodeInfo) {
+        selectMindmapNode(currentSelectedNodeInfo, activeSelectedNodeGroup);
+      }
+    }
+
+    document.querySelectorAll('#studioLangGroup .btn-lang-choice').forEach(b => {
+      b.addEventListener('click', () => setAppLanguage(b.dataset.lang));
+    });
+    document.querySelectorAll('#resultLangGroup .btn-lang-choice').forEach(b => {
+      b.addEventListener('click', () => {
+        setAppLanguage(b.dataset.lang);
+        // Automatically re-generate for selected topic in this language
+        generateStudioContent();
+      });
+    });
+    document.querySelectorAll('#tutorLangGroup .btn-lang-choice').forEach(b => {
+      b.addEventListener('click', () => {
+        setAppLanguage(b.dataset.lang);
+        showToast(`Tutor language set to ${b.textContent}`);
+      });
+    });
+
+    /* -------------------------------------------------------------------------
+       2. MODULE 5: GENERATE LEARNING EXPERIENCE (ANSWER ONLY & MIND MAP)
+       ------------------------------------------------------------------------- */
+    async function generateStudioContent() {
+      const topic = inputTopicText.value.trim();
+      if (!topic) {
+        showToast("Please enter a topic to learn!");
+        inputTopicText.focus();
+        return;
+      }
+
+      HubState.currentTopic = topic;
+      chatActiveTopic.textContent = `Topic Context: ${topic}`;
+
+      btnGenerateStudio.disabled = true;
+      studioSpinner.style.display = 'flex';
+      studioOutputContainer.classList.remove('visible');
+
+      try {
+        const res = await fetch('/api/studio/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            topic: topic,
+            mode: HubState.currentMode,
+            language: HubState.currentLang
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.message || 'Generation failed');
+        }
+
+        renderStudioOutput(data);
+      } catch (err) {
+        console.error('Generation error:', err);
+        showToast(`Error: ${err.message}`);
+      } finally {
+        btnGenerateStudio.disabled = false;
+        studioSpinner.style.display = 'none';
+      }
+    }
+
+    btnGenerateStudio.addEventListener('click', generateStudioContent);
+
+    function renderStudioOutput(data) {
+      outputTopicTitle.textContent = data.topic;
+      studioOutputContainer.classList.add('visible');
+
+      if (data.mode === 'mindmap' && data.mindmap) {
+        answerOnlyView.style.display = 'none';
+        mindMapView.style.display = 'block';
+        renderVisualMindMap(data.mindmap);
+      } else {
+        mindMapView.style.display = 'none';
+        answerOnlyView.style.display = 'block';
+        renderAnswerOnly(data.content);
+      }
+
+      // Smooth scroll into view
+      studioOutputContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderAnswerOnly(content) {
+      if (!content) return;
+      document.getElementById('answerOverview').textContent = content.overview || '';
+      
+      // Concepts Grid
+      const conceptsGrid = document.getElementById('answerConceptsGrid');
+      conceptsGrid.innerHTML = '';
+      (content.keyConcepts || []).forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'concept-card-item';
+        card.innerHTML = `<h5>${escapeHtml(c.name)}</h5><p>${escapeHtml(c.desc)}</p>`;
+        conceptsGrid.appendChild(card);
+      });
+
+      // Code / Example
+      if (content.example) {
+        document.getElementById('answerExampleTitle').textContent = content.example.title || 'Practical Example';
+        document.getElementById('answerCodeBlock').textContent = content.example.code || '';
+      }
+
+      // Steps List
+      const stepsList = document.getElementById('answerStepsList');
+      stepsList.innerHTML = '';
+      (content.steps || []).forEach((st, idx) => {
+        const li = document.createElement('li');
+        li.className = 'step-progression-item';
+        li.innerHTML = `<span class="step-badge-num">${idx + 1}</span><span>${escapeHtml(st)}</span>`;
+        stepsList.appendChild(li);
+      });
+
+      // Summary
+      document.getElementById('answerSummary').textContent = content.summary || '';
+    }
+
+    /* -------------------------------------------------------------------------
+       3. INTERACTIVE VISUAL MIND MAP (Dynamic Bounds, Zero Crop, Clickable Nodes)
+       ------------------------------------------------------------------------- */
+    let currentMindmapData = null;
+    let activeSelectedNodeGroup = null;
+    let currentSelectedNodeInfo = null;
+
+    function renderVisualMindMap(mapData) {
+      if (!mapData || !mapData.branches) return;
+      currentMindmapData = mapData;
+
+      const svg = document.getElementById('mindmapSvg');
+      svg.innerHTML = '';
+
+      // Clean old transform group
+      const rootG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      rootG.id = 'mindmapTransformGroup';
+      svg.appendChild(rootG);
+
+      // Defs (Gradients and Glow filters)
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      defs.innerHTML = `
+        <filter id="centerGlow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="8" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <filter id="nodeHoverGlow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="6" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="brandGradCenter" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#0284c7" />
+          <stop offset="100%" stop-color="#0369a1" />
+        </linearGradient>
+        <linearGradient id="branchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#0f172a" />
+          <stop offset="100%" stop-color="#1e293b" />
+        </linearGradient>
+      `;
+      rootG.appendChild(defs);
+
+      const branches = mapData.branches || [];
+      const numBranches = branches.length;
+      const branchRadius = Math.max(260, 220 + numBranches * 15);
+
+      // Track bounding box for dynamic viewBox calculation (Prevents all cropping)
+      let minX = -80, maxX = 80, minY = -80, maxY = 80;
+
+      // 1. Calculate positions for branches and subtopics
+      const branchNodes = [];
+      branches.forEach((b, idx) => {
+        const angle = (idx / numBranches) * 2 * Math.PI - Math.PI / 2;
+        const bx = branchRadius * Math.cos(angle);
+        const by = branchRadius * Math.sin(angle);
+
+        const branchTitle = b.title || `Branch ${idx + 1}`;
+        const branchW = Math.max(160, Math.min(260, branchTitle.length * 10 + 36));
+        const branchH = 46;
+
+        minX = Math.min(minX, bx - branchW / 2);
+        maxX = Math.max(maxX, bx + branchW / 2);
+        minY = Math.min(minY, by - branchH / 2);
+        maxY = Math.max(maxY, by + branchH / 2);
+
+        const subtopics = b.subtopics || [];
+        const numSub = subtopics.length;
+        const subtopicNodes = [];
+
+        subtopics.forEach((st, sIdx) => {
+          let subAngle = angle;
+          if (numSub > 1) {
+            const spread = Math.min(0.65, 1.4 / Math.max(2, numSub));
+            subAngle = angle + (sIdx - (numSub - 1) / 2) * spread;
+          }
+          const subDist = 175;
+          const sx = bx + subDist * Math.cos(subAngle);
+          const sy = by + subDist * Math.sin(subAngle);
+
+          const subTitle = st.title || `Subtopic ${sIdx + 1}`;
+          const subW = Math.max(140, Math.min(230, subTitle.length * 8.5 + 28));
+          const subH = 36;
+
+          minX = Math.min(minX, sx - subW / 2);
+          maxX = Math.max(maxX, sx + subW / 2);
+          minY = Math.min(minY, sy - subH / 2);
+          maxY = Math.max(maxY, sy + subH / 2);
+
+          subtopicNodes.push({
+            title: subTitle,
+            x: sx,
+            y: sy,
+            w: subW,
+            h: subH
+          });
+        });
+
+        branchNodes.push({
+          title: branchTitle,
+          x: bx,
+          y: by,
+          w: branchW,
+          h: branchH,
+          angle: angle,
+          subtopics: subtopicNodes
+        });
+      });
+
+      // 2. Compute dynamic SVG ViewBox with 70px breathing margin
+      const margin = 70;
+      const totalWidth = Math.ceil((maxX - minX) + margin * 2);
+      const totalHeight = Math.ceil((maxY - minY) + margin * 2);
+      const viewBoxX = Math.floor(minX - margin);
+      const viewBoxY = Math.floor(minY - margin);
+
+      svg.setAttribute('viewBox', `${viewBoxX} ${viewBoxY} ${totalWidth} ${totalHeight}`);
+      svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
+      // 3. Render Branch Connectors & Subtopic Connectors
+      branchNodes.forEach(b => {
+        // Curve from Center (0,0) to Branch (b.x, b.y)
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const c1x = (branchRadius * 0.45) * Math.cos(b.angle);
+        const c1y = (branchRadius * 0.45) * Math.sin(b.angle);
+        path.setAttribute('d', `M 0 0 Q ${c1x} ${c1y} ${b.x} ${b.y}`);
+        path.setAttribute('stroke', '#38bdf8');
+        path.setAttribute('stroke-width', '3');
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke-linecap', 'round');
+        rootG.appendChild(path);
+
+        // Subtopic connectors
+        b.subtopics.forEach(st => {
+          const subPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          subPath.setAttribute('d', `M ${b.x} ${b.y} L ${st.x} ${st.y}`);
+          subPath.setAttribute('stroke', '#64748b');
+          subPath.setAttribute('stroke-width', '1.5');
+          subPath.setAttribute('stroke-dasharray', '4,4');
+          subPath.setAttribute('fill', 'none');
+          rootG.appendChild(subPath);
+        });
+      });
+
+      // 4. Render Subtopic Leaf Nodes (Interactive)
+      branchNodes.forEach(b => {
+        b.subtopics.forEach(st => {
+          const subG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          subG.setAttribute('class', 'mindmap-interactive-node');
+          subG.setAttribute('transform', `translate(${st.x}, ${st.y})`);
+          subG.setAttribute('tabindex', '0');
+          subG.setAttribute('role', 'button');
+          subG.setAttribute('aria-label', `Subtopic: ${st.title}`);
+
+          subG.innerHTML = `
+            <rect x="${-st.w / 2}" y="${-st.h / 2}" width="${st.w}" height="${st.h}" rx="12" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1.6" />
+            <text text-anchor="middle" dy="4" fill="var(--color-text-main)" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="11">${escapeHtml(st.title)}</text>
+          `;
+
+          subG.addEventListener('click', (e) => {
+            e.stopPropagation();
+            selectMindmapNode({
+              centralTopic: mapData.central,
+              branchTitle: b.title,
+              nodeTitle: st.title,
+              nodeType: 'subtopic'
+            }, subG);
+          });
+
+          rootG.appendChild(subG);
+        });
+      });
+
+      // 5. Render Branch Nodes (Interactive)
+      branchNodes.forEach(b => {
+        const branchG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        branchG.setAttribute('class', 'mindmap-interactive-node');
+        branchG.setAttribute('transform', `translate(${b.x}, ${b.y})`);
+        branchG.setAttribute('tabindex', '0');
+        branchG.setAttribute('role', 'button');
+        branchG.setAttribute('aria-label', `Branch: ${b.title}`);
+
+        branchG.innerHTML = `
+          <rect x="${-b.w / 2}" y="${-b.h / 2}" width="${b.w}" height="${b.h}" rx="14" fill="url(#branchGrad)" stroke="#0284c7" stroke-width="2.2" />
+          <text text-anchor="middle" dy="4" fill="#38bdf8" font-family="'Outfit', sans-serif" font-weight="700" font-size="12.5">${escapeHtml(b.title)}</text>
+        `;
+
+        branchG.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectMindmapNode({
+            centralTopic: mapData.central,
+            branchTitle: b.title,
+            nodeTitle: b.title,
+            nodeType: 'branch'
+          }, branchG);
+        });
+
+        rootG.appendChild(branchG);
+      });
+
+      // 6. Render Central Topic Node (Interactive)
+      const centerNode = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      centerNode.setAttribute('class', 'mindmap-interactive-node');
+      centerNode.setAttribute('transform', 'translate(0, 0)');
+      centerNode.setAttribute('tabindex', '0');
+      centerNode.setAttribute('role', 'button');
+      centerNode.setAttribute('aria-label', `Central Topic: ${mapData.central}`);
+
+      centerNode.innerHTML = `
+        <circle r="65" fill="url(#brandGradCenter)" filter="url(#centerGlow)" stroke="#38bdf8" stroke-width="3.5" />
+        <text text-anchor="middle" dy="5" fill="#ffffff" font-family="'Outfit', sans-serif" font-weight="800" font-size="14.5">${escapeHtml(mapData.central)}</text>
+      `;
+
+      centerNode.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectMindmapNode({
+          centralTopic: mapData.central,
+          branchTitle: '',
+          nodeTitle: mapData.central,
+          nodeType: 'central'
+        }, centerNode);
+      });
+
+      rootG.appendChild(centerNode);
+
+      // Reset Pan/Zoom transform
+      HubState.mindmapScale = 1;
+      HubState.mindmapPanX = 0;
+      HubState.mindmapPanY = 0;
+      updateMindmapTransform();
+    }
+
+    function updateMindmapTransform() {
+      const g = document.getElementById('mindmapTransformGroup');
+      if (g) {
+        g.setAttribute('transform', `translate(${HubState.mindmapPanX}, ${HubState.mindmapPanY}) scale(${HubState.mindmapScale})`);
+      }
+    }
+
+    async function selectMindmapNode(info, nodeGroupElement) {
+      currentSelectedNodeInfo = info;
+
+      // Update active highlight visual state
+      if (activeSelectedNodeGroup && activeSelectedNodeGroup !== nodeGroupElement) {
+        activeSelectedNodeGroup.classList.remove('active-selected');
+      }
+      activeSelectedNodeGroup = nodeGroupElement;
+      if (nodeGroupElement) {
+        nodeGroupElement.classList.add('active-selected');
+      }
+
+      // Open detail panel
+      const panel = document.getElementById('mindmapNodeDetailPanel');
+      const badge = document.getElementById('mindmapNodeBadge');
+      const title = document.getElementById('mindmapNodeTitle');
+      const branch = document.getElementById('mindmapNodeBranch');
+      const loading = document.getElementById('mindmapNodeLoading');
+      const content = document.getElementById('mindmapNodeContent');
+      const defEl = document.getElementById('mindmapNodeDefinition');
+      const whyEl = document.getElementById('mindmapNodeWhy');
+      const exampleEl = document.getElementById('mindmapNodeExample');
+      const exampleWrap = document.getElementById('mindmapNodeExampleWrap');
+
+      panel.style.display = 'block';
+      badge.textContent = info.nodeType === 'central' ? 'Central Topic' : (info.nodeType === 'branch' ? 'Major Branch' : 'Subtopic Concept');
+      title.textContent = info.nodeTitle;
+      branch.textContent = info.branchTitle ? `Branch: ${info.branchTitle} • Central Topic: ${info.centralTopic}` : `Core Topic: ${info.centralTopic}`;
+
+      loading.style.display = 'block';
+      content.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/studio/node-explain', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            centralTopic: info.centralTopic,
+            branchTitle: info.branchTitle,
+            nodeTitle: info.nodeTitle,
+            nodeType: info.nodeType,
+            language: HubState.currentLang
+          })
+        });
+
+        const contentType = res.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+          throw new Error(`Server returned HTTP ${res.status}`);
+        }
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.message || 'Failed to explain node');
+        }
+
+        defEl.textContent = data.definition || '';
+        whyEl.textContent = data.whyItMatters || '';
+        if (data.practicalExample) {
+          exampleEl.textContent = data.practicalExample;
+          exampleWrap.style.display = 'block';
+        } else {
+          exampleWrap.style.display = 'none';
+        }
+
+        loading.style.display = 'none';
+        content.style.display = 'block';
+      } catch (err) {
+        console.error('Node explanation fetch error:', err);
+        defEl.textContent = `Could not load explanation for ${info.nodeTitle}: ${err.message}`;
+        whyEl.textContent = 'Please check your connection and try again.';
+        exampleWrap.style.display = 'none';
+        loading.style.display = 'none';
+        content.style.display = 'block';
+      }
+    }
+
+    // Node Detail Panel Close and Bridge Buttons
+    document.getElementById('btnCloseNodeDetail').addEventListener('click', () => {
+      document.getElementById('mindmapNodeDetailPanel').style.display = 'none';
+      if (activeSelectedNodeGroup) {
+        activeSelectedNodeGroup.classList.remove('active-selected');
+        activeSelectedNodeGroup = null;
+      }
+    });
+
+    document.getElementById('btnAskTutorAboutNode').addEventListener('click', () => {
+      if (!currentSelectedNodeInfo) return;
+      const topicName = currentSelectedNodeInfo.nodeTitle;
+      switchTab('tutor');
+
+      let questionText = "";
+      if (HubState.currentLang === 'ta') {
+        questionText = `'${topicName}' பற்றி எனக்கு விளக்குங்கள். இதன் நடைமுறைப் பயன்பாடு என்ன?`;
+      } else if (HubState.currentLang === 'hi') {
+        questionText = `'${topicName}' के बारे में विस्तार से बताएं। इसका व्यावहारिक उपयोग क्या है?`;
+      } else {
+        questionText = `Explain '${topicName}' in detail with a practical real-world example.`;
+      }
+
+      chatInputText.value = questionText;
+      sendChatMessage();
+    });
+
+    // Zoom & Fit Handlers
+    document.getElementById('btnZoomIn').addEventListener('click', () => {
+      HubState.mindmapScale = Math.min(2.5, HubState.mindmapScale + 0.2);
+      updateMindmapTransform();
+    });
+
+    document.getElementById('btnZoomOut').addEventListener('click', () => {
+      HubState.mindmapScale = Math.max(0.4, HubState.mindmapScale - 0.2);
+      updateMindmapTransform();
+    });
+
+    document.getElementById('btnFitScreen').addEventListener('click', () => {
+      HubState.mindmapScale = 1;
+      HubState.mindmapPanX = 0;
+      HubState.mindmapPanY = 0;
+      updateMindmapTransform();
+    });
+
+    // Pan Dragging
+    const mindmapSvg = document.getElementById('mindmapSvg');
+    mindmapSvg.addEventListener('mousedown', (e) => {
+      HubState.isDraggingMindmap = true;
+      HubState.dragStartX = e.clientX - HubState.mindmapPanX;
+      HubState.dragStartY = e.clientY - HubState.mindmapPanY;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!HubState.isDraggingMindmap) return;
+      HubState.mindmapPanX = e.clientX - HubState.dragStartX;
+      HubState.mindmapPanY = e.clientY - HubState.dragStartY;
+      updateMindmapTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      HubState.isDraggingMindmap = false;
+    });
+
+    // Mouse wheel zoom
+    mindmapSvg.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? -0.1 : 0.1;
+      HubState.mindmapScale = Math.max(0.4, Math.min(2.5, HubState.mindmapScale + delta));
+      updateMindmapTransform();
+    }, { passive: false });
+
+    /* -------------------------------------------------------------------------
+       4. NOTEBOOKLM-STYLE STUDY MATERIALS ASSISTANT
+       ------------------------------------------------------------------------- */
+    const studyDropzone = document.getElementById('studyDropzone');
+    const studyFileInput = document.getElementById('studyFileInput');
+    const studyTextarea = document.getElementById('studyTextarea');
+    const uploadedFileStatus = document.getElementById('uploadedFileStatus');
+    const qaInputRow = document.getElementById('qaInputRow');
+    const inputQaQuestion = document.getElementById('inputQaQuestion');
+    const btnSubmitQa = document.getElementById('btnSubmitQa');
+    const groundedResponseBox = document.getElementById('groundedResponseBox');
+    const groundedCitationsRow = document.getElementById('groundedCitationsRow');
+    const groundedPointsList = document.getElementById('groundedPointsList');
+    const generalSynthesisBox = document.getElementById('generalSynthesisBox');
+
+    studyDropzone.addEventListener('click', () => studyFileInput.click());
+
+    studyDropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      studyDropzone.classList.add('dragover');
+    });
+
+    studyDropzone.addEventListener('dragleave', () => {
+      studyDropzone.classList.remove('dragover');
+    });
+
+    studyDropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      studyDropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length > 0) {
+        handleUploadedFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    studyFileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        handleUploadedFile(e.target.files[0]);
+      }
+    });
+
+    async function handleUploadedFile(file) {
+      HubState.uploadedFileName = file.name;
+      const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+
+      if (isPdf) {
+        uploadedFileStatus.textContent = `⏳ Processing & extracting text from ${file.name}...`;
+        uploadedFileStatus.style.display = 'block';
+        showToast(`Extracting readable text from ${file.name}...`);
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          try {
+            const dataUrl = e.target.result;
+            const res = await fetch('/api/studio/extract-pdf', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                pdfBase64: dataUrl,
+                fileName: file.name
+              })
+            });
+
+            const contentType = res.headers.get('content-type') || '';
+            if (!contentType.includes('application/json')) {
+              const raw = await res.text();
+              throw new Error(`Server returned HTTP ${res.status}: Unexpected response`);
+            }
+
+            const data = await res.json();
+            if (!res.ok || !data.success) {
+              throw new Error(data.message || 'PDF extraction failed');
+            }
+
+            HubState.uploadedText = data.text;
+            studyTextarea.value = data.text;
+            uploadedFileStatus.textContent = `✓ Extracted: ${file.name} (${data.pages || 1} pages, ${data.wordCount || 0} words)`;
+            uploadedFileStatus.style.color = '#38bdf8';
+            showToast(`Successfully extracted ${data.pages || 1} pages from ${file.name}`);
+          } catch (err) {
+            console.error('PDF extraction error:', err);
+            uploadedFileStatus.textContent = `⚠️ PDF Extraction Failed: ${err.message}`;
+            uploadedFileStatus.style.color = '#ef4444';
+            showToast(`Document Error: ${err.message}`);
+          }
+        };
+        reader.onerror = () => {
+          uploadedFileStatus.textContent = `⚠️ Could not read file: ${file.name}`;
+          uploadedFileStatus.style.color = '#ef4444';
+          showToast(`File read error for ${file.name}`);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        // Plain text / markdown / code file
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const text = e.target.result;
+          HubState.uploadedText = text;
+          studyTextarea.value = text;
+          uploadedFileStatus.textContent = `✓ Uploaded: ${file.name} (${Math.round(file.size / 1024)} KB)`;
+          uploadedFileStatus.style.color = '#38bdf8';
+          uploadedFileStatus.style.display = 'block';
+          showToast(`Loaded ${file.name}`);
+        };
+        reader.onerror = () => {
+          uploadedFileStatus.textContent = `⚠️ Failed to read ${file.name}`;
+          uploadedFileStatus.style.color = '#ef4444';
+          showToast(`Could not read ${file.name}`);
+        };
+        reader.readAsText(file);
+      }
+    }
+
+    document.querySelectorAll('.btn-study-action').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const action = btn.dataset.action;
+        if (action === 'qa') {
+          qaInputRow.style.display = 'block';
+          inputQaQuestion.focus();
+        } else {
+          qaInputRow.style.display = 'none';
+          executeStudyHelp(action);
+        }
+      });
+    });
+
+    btnSubmitQa.addEventListener('click', () => {
+      const q = inputQaQuestion.value.trim();
+      if (!q) {
+        showToast("Please enter a question!");
+        return;
+      }
+      executeStudyHelp('qa', q);
+    });
+
+    async function executeStudyHelp(action, question = '') {
+      const text = studyTextarea.value.trim() || HubState.uploadedText;
+      if (!text) {
+        showToast("Please upload a file or paste text first!");
+        studyTextarea.focus();
+        return;
+      }
+
+      showToast("Analyzing study material with AI...");
+      try {
+        const res = await fetch('/api/studio/document-help', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            documentText: text,
+            fileName: HubState.uploadedFileName || 'Study Material',
+            action: action,
+            question: question,
+            language: HubState.currentLang
+          })
+        });
+
+        const contentType = res.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+          const rawText = await res.text();
+          throw new Error(`Server returned HTTP ${res.status}: Unexpected response format`);
+        }
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.message || data.error || 'Analysis failed');
+        }
+
+        renderGroundedResponse(data);
+      } catch (err) {
+        console.error('Study assistant error:', err);
+        showToast(`Document Error: ${err.message}`);
+      }
+    }
+
+    function renderGroundedResponse(data) {
+      groundedResponseBox.style.display = 'block';
+      groundedCitationsRow.innerHTML = '';
+      (data.citations || []).forEach(cit => {
+        const badge = document.createElement('span');
+        badge.className = 'grounded-citation-badge';
+        badge.innerHTML = `📌 <span>${escapeHtml(cit)}</span>`;
+        groundedCitationsRow.appendChild(badge);
+      });
+
+      groundedPointsList.innerHTML = '';
+      (data.groundedPoints || []).forEach(pt => {
+        const div = document.createElement('div');
+        div.style.marginBottom = '0.5rem';
+        div.innerHTML = `<strong>•</strong> ${escapeHtml(pt)}`;
+        groundedPointsList.appendChild(div);
+      });
+
+      generalSynthesisBox.innerHTML = `<strong>AI Synthesis:</strong> ${escapeHtml(data.generalSynthesis || '')}`;
+      groundedResponseBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    /* -------------------------------------------------------------------------
+       5. CONNECTED EXPERIENCE: "CONTINUE WITH AI TUTOR →"
+       ------------------------------------------------------------------------- */
+    btnBridgeToTutor.addEventListener('click', () => {
+      switchTab('tutor');
+      const introPrompt = HubState.currentLang === 'ta'
+        ? `'${HubState.currentTopic}' பற்றிய எனது கற்றலைத் தொடர விரும்புகிறேன். இதன் நடைமுறைப் பயன்பாடுகளை விளக்குங்கள்.`
+        : (HubState.currentLang === 'hi'
+          ? `मैं '${HubState.currentTopic}' पर अपनी पढ़ाई जारी रखना चाहता हूँ। इसके व्यावहारिक उपयोग समझाएं।`
+          : `I want to continue studying '${HubState.currentTopic}'. Could you give me an interactive walkthrough and test my knowledge?`);
+
+      chatInputText.value = introPrompt;
+      sendChatMessage();
+    });
+
+    /* -------------------------------------------------------------------------
+       6. MODULE 6: AI TUTOR CONVERSATION & ROBOT AVATAR
+       ------------------------------------------------------------------------- */
+    async function sendChatMessage() {
+      const msg = chatInputText.value.trim();
+      if (!msg) return;
+
+      // Append User message
+      appendMessage('user', msg);
+      chatInputText.value = '';
+      btnSendChat.disabled = true;
+
+      // Robot state: thinking
+      setRobotState('thinking');
+
+      try {
+        const res = await fetch('/api/tutor/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: msg,
+            language: HubState.currentLang,
+            conversationHistory: HubState.conversationHistory,
+            topicContext: HubState.currentTopic
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.message || 'Chat service error');
+        }
+
+        // Append Assistant reply
+        appendMessage('assistant', data.reply, data.followUps);
+      } catch (err) {
+        appendMessage('assistant', `⚠️ Sorry, I encountered an issue: ${err.message}. Please try asking again.`);
+      } finally {
+        btnSendChat.disabled = false;
+        setRobotState('idle');
+      }
+    }
+
+    btnSendChat.addEventListener('click', sendChatMessage);
+
+    chatInputText.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendChatMessage();
+      }
+    });
+
+    function setRobotState(state) {
+      avatarWrapper.classList.remove('avatar-listening', 'avatar-speaking');
+      robotStatusPill.classList.remove('status-listening', 'status-speaking');
+
+      if (state === 'listening') {
+        avatarWrapper.classList.add('avatar-listening');
+        robotStatusPill.classList.add('status-listening');
+        robotStatusText.textContent = "Listening to your microphone...";
+      } else if (state === 'speaking') {
+        avatarWrapper.classList.add('avatar-speaking');
+        robotStatusPill.classList.add('status-speaking');
+        robotStatusText.textContent = "Speaking explanation aloud...";
+      } else if (state === 'thinking') {
+        robotStatusText.textContent = "AI Tutor is synthesizing answer...";
+      } else {
+        robotStatusText.textContent = "Ready to assist you";
+      }
+    }
+
+    function appendMessage(role, text, followUps = []) {
+      HubState.conversationHistory.push({ role, content: text });
+
+      const row = document.createElement('div');
+      row.className = `chat-message-row ${role === 'user' ? 'user-msg' : 'tutor-msg'}`;
+
+      const bubble = document.createElement('div');
+      bubble.className = 'message-bubble';
+      bubble.innerHTML = formatMessageText(text);
+      row.appendChild(bubble);
+
+      // Actions bar (Copy, Edit, Select All, Speak)
+      const actionsBar = document.createElement('div');
+      actionsBar.className = 'message-actions-bar';
+
+      // 1. Copy
+      const btnCopy = document.createElement('button');
+      btnCopy.className = 'btn-msg-action';
+      btnCopy.innerHTML = '📋 Copy';
+      btnCopy.addEventListener('click', () => {
+        navigator.clipboard.writeText(text).then(() => showToast("Message copied!"));
+      });
+      actionsBar.appendChild(btnCopy);
+
+      // 2. Edit (User messages)
+      if (role === 'user') {
+        const btnEdit = document.createElement('button');
+        btnEdit.className = 'btn-msg-action';
+        btnEdit.innerHTML = '✏️ Edit';
+        btnEdit.addEventListener('click', () => {
+          chatInputText.value = text;
+          chatInputText.focus();
+          showToast("Loaded message into input for editing");
+        });
+        actionsBar.appendChild(btnEdit);
+      }
+
+      // 3. Select All
+      const btnSelectAll = document.createElement('button');
+      btnSelectAll.className = 'btn-msg-action';
+      btnSelectAll.innerHTML = '🔲 Select All';
+      btnSelectAll.addEventListener('click', () => {
+        const range = document.createRange();
+        range.selectNodeContents(bubble);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        showToast("Text selected");
+      });
+      actionsBar.appendChild(btnSelectAll);
+
+      // 4. Speak aloud (Assistant messages)
+      if (role === 'assistant') {
+        const btnSpeak = document.createElement('button');
+        btnSpeak.className = 'btn-msg-action btn-speak-action';
+        btnSpeak.innerHTML = '🔊 Listen';
+        btnSpeak.addEventListener('click', () => toggleSpeechPlayback(text, btnSpeak));
+        actionsBar.appendChild(btnSpeak);
+      }
+
+      row.appendChild(actionsBar);
+
+      // Follow-up chips
+      if (followUps && followUps.length > 0) {
+        const followUpsRow = document.createElement('div');
+        followUpsRow.className = 'followup-suggestions-row';
+        followUps.forEach(f => {
+          const chip = document.createElement('button');
+          chip.className = 'chip-followup';
+          chip.textContent = f;
+          chip.addEventListener('click', () => {
+            chatInputText.value = f;
+            sendChatMessage();
+          });
+          followUpsRow.appendChild(chip);
+        });
+        row.appendChild(followUpsRow);
+      }
+
+      chatStream.appendChild(row);
+      chatStream.scrollTop = chatStream.scrollHeight;
+    }
+
+    function formatMessageText(text) {
+      // Escape HTML and format code blocks
+      const safe = escapeHtml(text);
+      return safe
+        .replace(/```python([\s\S]*?)```/g, '<div class="code-snippet-box"><pre><code>$1</code></pre></div>')
+        .replace(/```([\s\S]*?)```/g, '<div class="code-snippet-box"><pre><code>$1</code></pre></div>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br>');
+    }
+
+    /* -------------------------------------------------------------------------
+       7. VOICE INPUT (Web Speech API Recognition in Tamil, English, Hindi)
+       ------------------------------------------------------------------------- */
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    function getSpeechLangCode(lang) {
+      if (lang === 'ta') return 'ta-IN';
+      if (lang === 'hi') return 'hi-IN';
+      return 'en-US';
+    }
+
+    function initSpeechRecognition() {
+      if (!SpeechRecognition) {
+        showToast("Speech recognition is not supported in this browser. Please type your question.");
+        return null;
+      }
+
+      const recognizer = new SpeechRecognition();
+      recognizer.continuous = true;
+      recognizer.interimResults = true;
+      recognizer.lang = getSpeechLangCode(HubState.currentLang);
+
+      recognizer.onstart = () => {
+        HubState.isListening = true;
+        btnMicInput.classList.add('mic-active');
+        speechFeedbackRow.style.display = 'flex';
+        setRobotState('listening');
+      };
+
+      recognizer.onresult = (event) => {
+        let interim = '';
+        let final = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            final += event.results[i][0].transcript;
+          } else {
+            interim += event.results[i][0].transcript;
+          }
+        }
+        if (final) {
+          chatInputText.value = (chatInputText.value + ' ' + final).trim();
+        }
+        interimSpeechText.textContent = interim;
+      };
+
+      recognizer.onerror = (event) => {
+        console.warn('Speech error:', event.error);
+        if (event.error === 'not-allowed') {
+          showToast("Microphone permission denied. Please enable microphone access.");
+        } else if (event.error === 'no-speech') {
+          // silent ignore
+        } else {
+          showToast(`Voice input: ${event.error}`);
+        }
+        stopListening();
+      };
+
+      recognizer.onend = () => {
+        stopListening();
+      };
+
+      return recognizer;
+    }
+
+    function stopListening() {
+      HubState.isListening = false;
+      btnMicInput.classList.remove('mic-active');
+      speechFeedbackRow.style.display = 'none';
+      interimSpeechText.textContent = '';
+      if (!HubState.isSpeaking) {
+        setRobotState('idle');
+      }
+    }
+
+    btnMicInput.addEventListener('click', () => {
+      if (HubState.isListening) {
+        if (HubState.speechRecognizer) {
+          HubState.speechRecognizer.stop();
+        }
+        stopListening();
+        return;
+      }
+
+      HubState.speechRecognizer = initSpeechRecognition();
+      if (HubState.speechRecognizer) {
+        try {
+          HubState.speechRecognizer.start();
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    });
+
+    /* -------------------------------------------------------------------------
+       8. VOICE OUTPUT (Speech Synthesis with Stop Control)
+       ------------------------------------------------------------------------- */
+    function toggleSpeechPlayback(text, triggerBtn) {
+      if (!window.speechSynthesis) {
+        showToast("Speech synthesis is not supported on this device.");
+        return;
+      }
+
+      // If already speaking, stop it
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        HubState.isSpeaking = false;
+        setRobotState('idle');
+        document.querySelectorAll('.btn-speak-action').forEach(b => {
+          b.innerHTML = '🔊 Listen';
+          b.classList.remove('speaking-now');
+        });
+        return;
+      }
+
+      // Prepare speech text (strip markdown code blocks for clean listening)
+      const cleanSpeechText = text.replace(/```[\s\S]*?```/g, '').replace(/[*_#]/g, '');
+
+      const utterance = new SpeechSynthesisUtterance(cleanSpeechText);
+      utterance.lang = getSpeechLangCode(HubState.currentLang);
+      utterance.rate = 0.95;
+
+      utterance.onstart = () => {
+        HubState.isSpeaking = true;
+        setRobotState('speaking');
+        triggerBtn.innerHTML = '⏹️ Stop Playback';
+        triggerBtn.classList.add('speaking-now');
+      };
+
+      utterance.onend = () => {
+        HubState.isSpeaking = false;
+        setRobotState('idle');
+        triggerBtn.innerHTML = '🔊 Listen';
+        triggerBtn.classList.remove('speaking-now');
+      };
+
+      utterance.onerror = () => {
+        HubState.isSpeaking = false;
+        setRobotState('idle');
+        triggerBtn.innerHTML = '🔊 Listen';
+        triggerBtn.classList.remove('speaking-now');
+      };
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // Clear Chat
+    document.getElementById('btnClearChat').addEventListener('click', () => {
+      HubState.conversationHistory = [];
+      const welcome = document.querySelector('.tutor-msg');
+      chatStream.innerHTML = '';
+      if (welcome) chatStream.appendChild(welcome);
+      showToast("Conversation cleared");
+    });
+
+    // Helper: Escape HTML
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Check URL parameters on load (e.g., ?tab=tutor or ?tab=studio)
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('tab');
+      if (tabParam === 'tutor') {
+        switchTab('tutor');
+      } else {
+        switchTab('studio');
+      }
+
+      const topicParam = params.get('topic');
+      if (topicParam) {
+        inputTopicText.value = topicParam;
+        HubState.currentTopic = topicParam;
+      }
+
+      const langParam = params.get('lang');
+      if (langParam && ['ta', 'en', 'hi'].includes(langParam)) {
+        setAppLanguage(langParam);
+      }
+    });
+  </script>
+</body>
+</html>

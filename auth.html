@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Sign In & Sign Up — Multilingual AI Learning Hub</title>
+  
+  <!-- High-legibility Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+
+  <style>
+    :root {
+      /* Clean Light Blue and White Visual Palette */
+      --sky-lightest: #f0f9ff;
+      --sky-light: #e0f2fe;
+      --sky-soft: #bae6fd;
+      --sky-accent: #38bdf8;
+      --sky-blue: #0284c7;
+      --ocean-deep: #0369a1;
+      --brand-indigo: #2563eb;
+      --brand-dark: #0f172a;
+      
+      --surface-white: #ffffff;
+      --surface-card: rgba(255, 255, 255, 0.94);
+      --surface-input: #f8fafc;
+      --surface-input-border: #cbd5e1;
+      
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      
+      --success-green: #10b981;
+      --success-bg: #ecfdf5;
+      --success-border: #a7f3d0;
+      
+      --error-red: #ef4444;
+      --error-bg: #fef2f2;
+      --error-border: #fecaca;
+      
+      --warning-amber: #f59e0b;
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+      
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      
+      --shadow-sm: 0 2px 4px rgba(2, 132, 199, 0.04);
+      --shadow-card: 0 20px 45px -12px rgba(2, 132, 199, 0.16), 0 0 1px 1px rgba(2, 132, 199, 0.08);
+      --shadow-modal: 0 25px 60px -15px rgba(15, 23, 42, 0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 45%, #bae6fd 100%);
+      font-family: var(--font-body);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Ambient soft background glow shapes */
+    .bg-glow-1 {
+      position: fixed;
+      top: -10vw;
+      left: -10vw;
+      width: 45vw;
+      height: 45vw;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, rgba(224, 242, 254, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-glow-2 {
+      position: fixed;
+      bottom: -15vw;
+      right: -10vw;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, rgba(224, 242, 254, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top Navigation Bar (Mobile-First) */
+    .top-nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 0.85rem;
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+      gap: 0.5rem;
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--brand-dark);
+      min-width: 0;
+    }
+
+    .brand-icon-box {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.25);
+      flex-shrink: 0;
+    }
+
+    .brand-icon-box img {
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+    }
+
+    .brand-name-group {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ocean-deep);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-tagline-small {
+      display: none;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .nav-intro-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ocean-deep);
+      text-decoration: none;
+      padding: 0.4rem 0.75rem;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(2, 132, 199, 0.18);
+      border-radius: var(--radius-md);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-intro-link:hover {
+      background: #ffffff;
+      border-color: var(--sky-blue);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+      transform: translateY(-1px);
+    }
+
+    /* Main Container */
+    .auth-main-wrapper {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 0.75rem 2.5rem 0.75rem;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 460px;
+      min-width: 0;
+      background: var(--surface-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 1.6rem 1.15rem 1.9rem 1.15rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    /* Expanded styles for tablets and desktop */
+    @media (min-width: 768px) {
+      .top-nav {
+        padding: 1.1rem 2rem;
+        gap: 1rem;
+      }
+      .brand-icon-box {
+        width: 42px;
+        height: 42px;
+      }
+      .brand-icon-box img {
+        width: 32px;
+        height: 32px;
+      }
+      .brand-title {
+        font-size: 1.15rem;
+      }
+      .brand-tagline-small {
+        display: block;
+      }
+      .nav-intro-link {
+        font-size: 0.88rem;
+        padding: 0.55rem 1.1rem;
+      }
+      .auth-main-wrapper {
+        padding: 1.5rem 1rem 3rem 1rem;
+      }
+      .auth-card {
+        padding: 2.2rem 2.2rem 2.4rem 2.2rem;
+        border-radius: var(--radius-xl);
+      }
+    }
+
+    /* Robot Assistant Header Illustration */
+    .robot-mascot-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+
+    .mascot-avatar-circle {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e0f2fe 55%, #bae6fd 100%);
+      border: 3px solid #ffffff;
+      box-shadow: 0 8px 22px rgba(2, 132, 199, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: gentleFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .mascot-avatar-circle img {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+    }
+
+    .speech-bubble {
+      position: relative;
+      background: #ffffff;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ocean-deep);
+      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.12);
+      border: 1px solid var(--sky-soft);
+      white-space: nowrap;
+      animation: bubblePop 0.4s ease-out;
+    }
+
+    @keyframes bubblePop {
+      0% { opacity: 0; transform: scale(0.8) translateY(5px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* Card Header */
+    .card-heading-box {
+      text-align: center;
+      margin-bottom: 1.7rem;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.68rem;
+      font-weight: 800;
+      color: var(--brand-dark);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Tab Switcher: Sign In vs Sign Up */
+    .auth-tab-bar {
+      display: flex;
+      background: #e2e8f0;
+      padding: 4px;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.6rem;
+      position: relative;
+    }
+
+    .auth-tab-btn {
+      flex: 1;
+      padding: 0.65rem 0.5rem;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-subtle);
+      background: transparent;
+      border: none;
+      border-radius: calc(var(--radius-md) - 3px);
+      cursor: pointer;
+      transition: all 0.22s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .auth-tab-btn.active {
+      background: #ffffff;
+      color: var(--ocean-deep);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    }
+
+    /* Alert / Error / Success Banners */
+    .status-alert {
+      display: none;
+      align-items: flex-start;
+      gap: 0.65rem;
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.86rem;
+      line-height: 1.45;
+      margin-bottom: 1.25rem;
+      animation: alertSlide 0.25s ease-out;
+    }
+
+    @keyframes alertSlide {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .status-alert.error {
+      display: flex;
+      background: var(--error-bg);
+      border: 1px solid var(--error-border);
+      color: #b91c1c;
+    }
+
+    .status-alert.success {
+      display: flex;
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      color: #047857;
+    }
+
+    .status-alert.warning {
+      display: flex;
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: #b45309;
+    }
+
+    .status-alert-icon {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+    }
+
+    /* Form Styles */
+    .form-view {
+      display: none;
+    }
+
+    .form-view.active {
+      display: block;
+      animation: fadeInView 0.22s ease-out;
+    }
+
+    @keyframes fadeInView {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-group {
+      margin-bottom: 1.15rem;
+      position: relative;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      width: 18px;
+      height: 18px;
+      color: var(--text-subtle);
+      pointer-events: none;
+      transition: color 0.2s ease;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 46px;
+      padding: 0 42px 0 42px;
+      background: var(--surface-input);
+      border: 1.5px solid var(--surface-input-border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 0.93rem;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      background: #ffffff;
+      border-color: var(--sky-blue);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+
+    .input-wrapper:focus-within .input-icon {
+      color: var(--ocean-deep);
+    }
+
+    .toggle-password-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-subtle);
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      transition: color 0.2s;
+    }
+
+    .toggle-password-btn:hover {
+      color: var(--ocean-deep);
+    }
+
+    .field-hint {
+      font-size: 0.76rem;
+      color: var(--text-subtle);
+      margin-top: 0.3rem;
+    }
+
+    /* Live Password Strength Indicator */
+    .strength-meter-bar {
+      height: 4px;
+      width: 100%;
+      background: #e2e8f0;
+      border-radius: 4px;
+      margin-top: 0.4rem;
+      overflow: hidden;
+      display: none;
+    }
+
+    .strength-meter-fill {
+      height: 100%;
+      width: 0%;
+      transition: all 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .strength-caption {
+      font-size: 0.73rem;
+      font-weight: 600;
+      margin-top: 0.2rem;
+      text-align: right;
+      display: none;
+    }
+
+    /* Remember Me & Forgot Password Row */
+    .options-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0.4rem 0 1.35rem 0;
+      font-size: 0.84rem;
+    }
+
+    .remember-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      user-select: none;
+    }
+
+    .remember-checkbox {
+      width: 17px;
+      height: 17px;
+      border-radius: 4px;
+      accent-color: var(--sky-blue);
+      cursor: pointer;
+    }
+
+    .forgot-link {
+      color: var(--ocean-deep);
+      font-weight: 600;
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.84rem;
+      transition: color 0.15s ease;
+    }
+
+    .forgot-link:hover {
+      color: var(--brand-indigo);
+      text-decoration: underline;
+    }
+
+    /* Primary Action Button */
+    .submit-btn {
+      width: 100%;
+      height: 48px;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: var(--font-display);
+      font-size: 1.02rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.68;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Spinner */
+    .btn-spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(255, 255, 255, 0.4);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .submit-btn.loading .btn-spinner {
+      display: inline-block;
+    }
+
+    .submit-btn.loading .btn-text {
+      opacity: 0.85;
+    }
+
+    /* Divider */
+    .divider-row {
+      display: flex;
+      align-items: center;
+      margin: 1.4rem 0;
+      color: var(--text-subtle);
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .divider-row::before,
+    .divider-row::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .divider-row span {
+      padding: 0 0.8rem;
+    }
+
+    /* Google Sign In Button (Official spec design) */
+    .google-signin-btn {
+      width: 100%;
+      height: 48px;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      font-family: var(--font-body);
+      font-size: 0.94rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .google-signin-btn:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .google-signin-btn svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Card Footer Switch Link */
+    .card-footer-switch {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .switch-tab-link {
+      color: var(--ocean-deep);
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: inherit;
+      transition: color 0.15s ease;
+    }
+
+    .switch-tab-link:hover {
+      color: var(--brand-indigo);
+      text-decoration: underline;
+    }
+
+    /* ===================================================
+       RECOVERY CODE MODAL (POST-SIGNUP & RECOVERY)
+       =================================================== */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+      animation: modalFadeIn 0.25s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 500px;
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-modal);
+      padding: 2.2rem;
+      position: relative;
+      animation: modalScaleUp 0.25s ease-out;
+    }
+
+    @keyframes modalScaleUp {
+      from { transform: scale(0.94); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-icon-badge {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #e0f2fe;
+      color: var(--ocean-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.2rem auto;
+      font-size: 1.8rem;
+      border: 3px solid #ffffff;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.18);
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 800;
+      text-align: center;
+      color: var(--brand-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .modal-description {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.5;
+      margin-bottom: 1.4rem;
+    }
+
+    .recovery-code-box {
+      background: #f8fafc;
+      border: 2px dashed var(--sky-blue);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .recovery-code-text {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--ocean-deep);
+      user-select: all;
+    }
+
+    .code-action-row {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .code-action-btn {
+      flex: 1;
+      padding: 0.6rem;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .code-action-btn:hover {
+      background: #e2e8f0;
+      border-color: #94a3b8;
+    }
+
+    .safeguard-acknowledgment {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.82rem;
+      color: #92400e;
+      line-height: 1.4;
+    }
+
+    .safeguard-acknowledgment input {
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: var(--warning-amber);
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+
+    /* Google Setup Guide Modal */
+    .guide-step-list {
+      text-align: left;
+      margin: 1rem 0 1.4rem 0;
+      padding-left: 1.2rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .guide-step-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    .guide-code-snippet {
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: monospace;
+      padding: 0.2rem 0.45rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+    }
+
+    /* Ultra-small screens fine-tuning (e.g. 320px–360px) */
+    @media (max-width: 380px) {
+      .top-nav {
+        padding: 0.5rem 0.65rem;
+      }
+      .brand-title {
+        max-width: 135px;
+        font-size: 0.85rem;
+      }
+      .nav-intro-link {
+        padding: 0.35rem 0.5rem;
+        font-size: 0.74rem;
+      }
+      .auth-card {
+        padding: 1.3rem 0.9rem 1.6rem 0.9rem;
+      }
+      .code-action-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Sky Glow Elements -->
+  <div class="bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow-2" aria-hidden="true"></div>
+
+  <!-- Top Navigation Header -->
+  <header class="top-nav">
+    <a href="intro.html" class="brand-link" aria-label="Go to Welcome Intro">
+      <div class="brand-icon-box">
+        <img src="robot_clean.png" alt="Multilingual AI Robot" onerror="this.src='robot.png'">
+      </div>
+      <div class="brand-name-group">
+        <span class="brand-title">Multilingual AI Learning Hub</span>
+        <span class="brand-tagline-small">Bridging Cultures with Adaptive AI Education.</span>
+      </div>
+    </a>
+    <a href="intro.html" class="nav-intro-link" title="Return to Animated Intro">
+      <span>← Welcome Intro</span>
+    </a>
+  </header>
+
+  <!-- Main Authentication Form Card -->
+  <main class="auth-main-wrapper">
+    <div class="auth-card" role="region" aria-label="Authentication Portal">
+      
+      <!-- Friendly Assistant Mascot -->
+      <div class="robot-mascot-container">
+        <div class="mascot-avatar-circle">
+          <img src="robot_clean.png" alt="Friendly Assistant Robot Mascot" onerror="this.src='robot.png'">
+        </div>
+        <div id="mascotBubble" class="speech-bubble">Hello! Welcome back 👋</div>
+      </div>
+
+      <!-- Card Title and Tagline -->
+      <div class="card-heading-box">
+        <h1 id="cardMainHeading" class="card-title">Welcome Back</h1>
+        <p id="cardMainSubtitle" class="card-subtitle">Sign in to continue your multilingual AI learning journey</p>
+      </div>
+
+      <!-- Primary Tab Switcher: Sign In & Sign Up -->
+      <div id="authTabBar" class="auth-tab-bar" role="tablist" aria-label="Authentication options">
+        <button id="tabSignIn" class="auth-tab-btn active" role="tab" aria-selected="true" aria-controls="viewSignIn">
+          Sign In
+        </button>
+        <button id="tabSignUp" class="auth-tab-btn" role="tab" aria-selected="false" aria-controls="viewSignUp">
+          Create Account
+        </button>
+      </div>
+
+      <!-- Live Notification Banner -->
+      <div id="statusAlert" class="status-alert" role="alert" aria-live="assertive">
+        <svg id="alertIcon" class="status-alert-icon" viewBox="0 0 20 20" fill="currentColor">
+          <!-- Icon replaced dynamically -->
+        </svg>
+        <div id="alertMessage"></div>
+      </div>
+
+      <!-- ==========================================
+           VIEW 1: SIGN IN FORM
+           ========================================== -->
+      <div id="viewSignIn" class="form-view active" role="tabpanel" aria-labelledby="tabSignIn">
+        <form id="signInForm" novalidate autocomplete="on">
+          
+          <!-- Username / Email Field -->
+          <div class="form-group">
+            <label for="loginIdentifier" class="form-label">Email Address or Username</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" id="loginIdentifier" class="form-input" placeholder="e.g., student@example.com or sophia_ai" required autocomplete="username">
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group">
+            <label for="loginPassword" class="form-label">Password</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+              <button type="button" class="toggle-password-btn" data-target="loginPassword" aria-label="Toggle password visibility">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Remember Me & Forgot Password Row -->
+          <div class="options-row">
+            <label class="remember-label">
+              <input type="checkbox" id="loginRememberMe" class="remember-checkbox">
+              <span>Remember me</span>
+            </label>
+            <button type="button" id="btnOpenForgot" class="forgot-link">Forgot password?</button>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="btnSignInSubmit" class="submit-btn">
+            <span class="btn-spinner" aria-hidden="true"></span>
+            <span class="btn-text">Sign In</span>
+          </button>
+        </form>
+
+
+        <div class="card-footer-switch">
+          Don't have an account? <button type="button" class="switch-tab-link" data-switch="signup">Sign Up</button>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           VIEW 2: SIGN UP (REGISTRATION) FORM
+           ========================================== -->
+      <div id="viewSignUp" class="form-view" role="tabpanel" aria-labelledby="tabSignUp">
+        <form id="signUpForm" novalidate autocomplete="on">
+          
+          <!-- 1. Full Name -->
+          <div class="form-group">
+            <label for="regFullName" class="form-label">Full Name</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" id="regFullName" class="form-input" placeholder="e.g., Sophia Patel" required autocomplete="name">
+            </div>
+          </div>
+
+          <!-- 2. Username -->
+          <div class="form-group">
+            <label for="regUsername" class="form-label">Username</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+              </svg>
+              <input type="text" id="regUsername" class="form-input" placeholder="e.g., sophia_ai" required autocomplete="username">
+            </div>
+            <div class="field-hint">3–30 characters, letters, numbers, and underscores only</div>
+          </div>
+
+          <!-- 3. Email Address -->
+          <div class="form-group">
+            <label for="regEmail" class="form-label">Email Address</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <input type="email" id="regEmail" class="form-input" placeholder="e.g., sophia@example.com" required autocomplete="email">
+            </div>
+          </div>
+
+          <!-- 4. Password -->
+          <div class="form-group">
+            <label for="regPassword" class="form-label">Password</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input type="password" id="regPassword" class="form-input" placeholder="Minimum 8 characters" required autocomplete="new-password">
+              <button type="button" class="toggle-password-btn" data-target="regPassword" aria-label="Toggle password visibility">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+            <!-- Live Password Strength Meter -->
+            <div id="passwordStrengthBar" class="strength-meter-bar">
+              <div id="passwordStrengthFill" class="strength-meter-fill"></div>
+            </div>
+            <div id="passwordStrengthText" class="strength-caption"></div>
+          </div>
+
+          <!-- 5. Confirm Password -->
+          <div class="form-group">
+            <label for="regConfirmPassword" class="form-label">Confirm Password</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input type="password" id="regConfirmPassword" class="form-input" placeholder="Re-enter password" required autocomplete="new-password">
+              <button type="button" class="toggle-password-btn" data-target="regConfirmPassword" aria-label="Toggle password visibility">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="btnSignUpSubmit" class="submit-btn" style="margin-top: 1.4rem;">
+            <span class="btn-spinner" aria-hidden="true"></span>
+            <span class="btn-text">Create Account</span>
+          </button>
+        </form>
+
+        <div class="card-footer-switch">
+          Already have an account? <button type="button" class="switch-tab-link" data-switch="signin">Sign In</button>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           VIEW 3: NO-EMAIL FORGOT PASSWORD (RECOVERY)
+           ========================================== -->
+      <div id="viewForgot" class="form-view" role="tabpanel" aria-labelledby="btnOpenForgot">
+        <div style="background:#e0f2fe; border:1px solid #bae6fd; border-radius:var(--radius-md); padding:0.8rem 1rem; margin-bottom:1.3rem; font-size:0.82rem; color:var(--ocean-deep); line-height:1.45;">
+          <strong>No-Email Privacy Shield:</strong> This hub does not send emails. Enter your unique 16-character Recovery Code provided during registration to securely reset your password.
+        </div>
+
+        <form id="recoverForm" novalidate>
+          <div class="form-group">
+            <label for="recoverIdentifier" class="form-label">Username or Email Address</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" id="recoverIdentifier" class="form-input" placeholder="e.g., student@example.com or sophia_ai" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="recoverCode" class="form-label">16-Character Recovery Code</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+              <input type="text" id="recoverCode" class="form-input" placeholder="e.g., HUB-XXXX-XXXX-XXXX" style="font-family:monospace; font-weight:600; text-transform:uppercase;" required>
+            </div>
+            <div class="field-hint">Max 5 attempts allowed before a 15-minute lockout</div>
+          </div>
+
+          <div class="form-group">
+            <label for="recoverNewPassword" class="form-label">New Password</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input type="password" id="recoverNewPassword" class="form-input" placeholder="Minimum 8 characters" required>
+              <button type="button" class="toggle-password-btn" data-target="recoverNewPassword" aria-label="Toggle password visibility">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="recoverConfirmPassword" class="form-label">Confirm New Password</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input type="password" id="recoverConfirmPassword" class="form-input" placeholder="Re-enter new password" required>
+              <button type="button" class="toggle-password-btn" data-target="recoverConfirmPassword" aria-label="Toggle password visibility">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" id="btnRecoverSubmit" class="submit-btn" style="margin-top: 1.4rem;">
+            <span class="btn-spinner" aria-hidden="true"></span>
+            <span class="btn-text">Reset Password</span>
+          </button>
+        </form>
+
+        <div class="card-footer-switch">
+          Remember your password? <button type="button" class="switch-tab-link" data-switch="signin">Back to Sign In</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===================================================
+       MODAL 1: ONE-TIME RECOVERY CODE ISSUANCE
+       =================================================== -->
+  <div id="recoveryCodeModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="recoveryModalTitle">
+    <div class="modal-card">
+      <div class="modal-icon-badge">🔐</div>
+      <h2 id="recoveryModalTitle" class="modal-title">Save Your Recovery Code</h2>
+      <p class="modal-description">
+        We do <strong>NOT</strong> send emails. This 16-character recovery code is the <strong>ONLY</strong> way to regain access if you ever forget your password. It will never be displayed again.
+      </p>
+
+      <div class="recovery-code-box">
+        <div id="displayRecoveryCode" class="recovery-code-text">HUB-XXXX-XXXX-XXXX</div>
+      </div>
+
+      <div class="code-action-row">
+        <button type="button" id="btnCopyCode" class="code-action-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span id="copyBtnText">Copy Code</span>
+        </button>
+        <button type="button" id="btnDownloadCode" class="code-action-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Download (.txt)</span>
+        </button>
+      </div>
+
+      <div class="safeguard-acknowledgment">
+        <input type="checkbox" id="ackCodeSaved">
+        <label for="ackCodeSaved">
+          I have securely recorded this recovery code. I understand that if I lose both my password and this code, account recovery will be impossible.
+        </label>
+      </div>
+
+      <button type="button" id="btnProceedDashboard" class="submit-btn" disabled>
+        <span>Proceed to Hub Dashboard →</span>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Client-side Logic Script -->
+  <script>
+    /**
+     * MULTILINGUAL AI LEARNING HUB — MODULE 2 CLIENT LOGIC
+     * Handles Sign In, Sign Up, No-Email Recovery, and Google OAuth
+     */
+
+    // State
+    let activeRecoveryCode = '';
+
+    // Elements
+    const tabSignIn = document.getElementById('tabSignIn');
+    const tabSignUp = document.getElementById('tabSignUp');
+    const authTabBar = document.getElementById('authTabBar');
+    const viewSignIn = document.getElementById('viewSignIn');
+    const viewSignUp = document.getElementById('viewSignUp');
+    const viewForgot = document.getElementById('viewForgot');
+    const btnOpenForgot = document.getElementById('btnOpenForgot');
+    const cardMainHeading = document.getElementById('cardMainHeading');
+    const cardMainSubtitle = document.getElementById('cardMainSubtitle');
+    const mascotBubble = document.getElementById('mascotBubble');
+    const statusAlert = document.getElementById('statusAlert');
+    const alertIcon = document.getElementById('alertIcon');
+    const alertMessage = document.getElementById('alertMessage');
+
+    // Forms
+    const signInForm = document.getElementById('signInForm');
+    const signUpForm = document.getElementById('signUpForm');
+    const recoverForm = document.getElementById('recoverForm');
+    const btnSignInSubmit = document.getElementById('btnSignInSubmit');
+    const btnSignUpSubmit = document.getElementById('btnSignUpSubmit');
+    const btnRecoverSubmit = document.getElementById('btnRecoverSubmit');
+
+    // Recovery Modal Elements
+    const recoveryCodeModal = document.getElementById('recoveryCodeModal');
+    const displayRecoveryCode = document.getElementById('displayRecoveryCode');
+    const btnCopyCode = document.getElementById('btnCopyCode');
+    const copyBtnText = document.getElementById('copyBtnText');
+    const btnDownloadCode = document.getElementById('btnDownloadCode');
+    const ackCodeSaved = document.getElementById('ackCodeSaved');
+    const btnProceedDashboard = document.getElementById('btnProceedDashboard');
+
+    // Password strength elements
+    const regPasswordInput = document.getElementById('regPassword');
+    const passwordStrengthBar = document.getElementById('passwordStrengthBar');
+    const passwordStrengthFill = document.getElementById('passwordStrengthFill');
+    const passwordStrengthText = document.getElementById('passwordStrengthText');
+
+    // Check if redirected from protected route or has URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectUrl = urlParams.get('redirect') || '/dashboard';
+    if (urlParams.get('mode') === 'signup') {
+      switchView('signup');
+    }
+
+    // ==========================================
+    // VIEW SWITCHER
+    // ==========================================
+    function switchView(viewName) {
+      clearAlert();
+      authTabBar.style.display = (viewName === 'forgot') ? 'none' : 'flex';
+
+      viewSignIn.classList.remove('active');
+      viewSignUp.classList.remove('active');
+      viewForgot.classList.remove('active');
+      tabSignIn.classList.remove('active');
+      tabSignUp.classList.remove('active');
+
+      if (viewName === 'signin') {
+        viewSignIn.classList.add('active');
+        tabSignIn.classList.add('active');
+        tabSignIn.setAttribute('aria-selected', 'true');
+        tabSignUp.setAttribute('aria-selected', 'false');
+        cardMainHeading.textContent = 'Welcome Back';
+        cardMainSubtitle.textContent = 'Sign in to continue your multilingual AI learning journey';
+        mascotBubble.textContent = 'Hello! Welcome back 👋';
+      } else if (viewName === 'signup') {
+        viewSignUp.classList.add('active');
+        tabSignUp.classList.add('active');
+        tabSignUp.setAttribute('aria-selected', 'true');
+        tabSignIn.setAttribute('aria-selected', 'false');
+        cardMainHeading.textContent = 'Join the Hub';
+        cardMainSubtitle.textContent = 'Create your free account to unlock AI adaptive education';
+        mascotBubble.textContent = 'Ready to learn languages! 🚀';
+      } else if (viewName === 'forgot') {
+        viewForgot.classList.add('active');
+        cardMainHeading.textContent = 'Password Recovery';
+        cardMainSubtitle.textContent = 'Recover account access with your secure Recovery Code';
+        mascotBubble.textContent = 'Privacy Shield Active 🛡️';
+      }
+    }
+
+    tabSignIn.addEventListener('click', () => switchView('signin'));
+    tabSignUp.addEventListener('click', () => switchView('signup'));
+    btnOpenForgot.addEventListener('click', () => switchView('forgot'));
+
+    document.querySelectorAll('.switch-tab-link').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-switch');
+        switchView(target);
+      });
+    });
+
+    // ==========================================
+    // ALERT HELPER
+    // ==========================================
+    function showAlert(type, message) {
+      statusAlert.className = `status-alert ${type}`;
+      statusAlert.style.display = 'flex';
+      alertMessage.textContent = message;
+
+      if (type === 'error') {
+        alertIcon.innerHTML = `<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />`;
+      } else if (type === 'success') {
+        alertIcon.innerHTML = `<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />`;
+      } else if (type === 'warning') {
+        alertIcon.innerHTML = `<path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />`;
+      }
+    }
+
+    function clearAlert() {
+      statusAlert.style.display = 'none';
+      statusAlert.className = 'status-alert';
+      alertMessage.textContent = '';
+    }
+
+    // ==========================================
+    // SHOW / HIDE PASSWORD CONTROLS
+    // ==========================================
+    document.querySelectorAll('.toggle-password-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        if (!input) return;
+
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+
+        btn.innerHTML = isPassword
+          ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>`
+          : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>`;
+      });
+    });
+
+    // ==========================================
+    // LIVE PASSWORD STRENGTH METER
+    // ==========================================
+    regPasswordInput.addEventListener('input', () => {
+      const val = regPasswordInput.value;
+      if (!val) {
+        passwordStrengthBar.style.display = 'none';
+        passwordStrengthText.style.display = 'none';
+        return;
+      }
+
+      passwordStrengthBar.style.display = 'block';
+      passwordStrengthText.style.display = 'block';
+
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+
+      if (val.length < 8) {
+        passwordStrengthFill.style.width = '25%';
+        passwordStrengthFill.style.background = '#ef4444';
+        passwordStrengthText.textContent = 'Too short (min 8 characters)';
+        passwordStrengthText.style.color = '#ef4444';
+      } else if (score <= 2) {
+        passwordStrengthFill.style.width = '50%';
+        passwordStrengthFill.style.background = '#f59e0b';
+        passwordStrengthText.textContent = 'Fair (add numbers & symbols)';
+        passwordStrengthText.style.color = '#f59e0b';
+      } else if (score === 3) {
+        passwordStrengthFill.style.width = '75%';
+        passwordStrengthFill.style.background = '#0284c7';
+        passwordStrengthText.textContent = 'Good password';
+        passwordStrengthText.style.color = '#0284c7';
+      } else {
+        passwordStrengthFill.style.width = '100%';
+        passwordStrengthFill.style.background = '#10b981';
+        passwordStrengthText.textContent = 'Strong password';
+        passwordStrengthText.style.color = '#10b981';
+      }
+    });
+
+    // ==========================================
+    // 1. SIGN IN SUBMIT
+    // ==========================================
+    signInForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlert();
+
+      const identifier = document.getElementById('loginIdentifier').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const rememberMe = document.getElementById('loginRememberMe').checked;
+
+      if (!identifier) {
+        showAlert('error', 'Please enter your Username or Email address.');
+        return;
+      }
+      if (!password) {
+        showAlert('error', 'Please enter your password.');
+        return;
+      }
+
+      setButtonLoading(btnSignInSubmit, true, 'Signing In...');
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ identifier, password, rememberMe })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          showAlert('success', 'Sign In successful! Navigating to your dashboard...');
+          mascotBubble.textContent = 'Welcome! Taking you in...';
+          setTimeout(() => {
+            window.location.href = redirectUrl;
+          }, 600);
+        } else {
+          showAlert('error', data.message || 'Login failed. Please check your credentials.');
+          setButtonLoading(btnSignInSubmit, false, 'Sign In');
+        }
+      } catch (err) {
+        showAlert('error', 'Unable to connect to server. Please check your network connection.');
+        setButtonLoading(btnSignInSubmit, false, 'Sign In');
+      }
+    });
+
+    // ==========================================
+    // 2. SIGN UP SUBMIT
+    // ==========================================
+    signUpForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlert();
+
+      const fullName = document.getElementById('regFullName').value.trim();
+      const username = document.getElementById('regUsername').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+      // Client-side validations
+      if (!fullName || !username || !email || !password || !confirmPassword) {
+        showAlert('error', 'All registration fields are required.');
+        return;
+      }
+
+      if (fullName.length < 2) {
+        showAlert('error', 'Please enter your full name (at least 2 characters).');
+        return;
+      }
+
+      const usernameRegex = /^[a-zA-Z0-9_]{3,30}$/;
+      if (!usernameRegex.test(username)) {
+        showAlert('error', 'Username must be 3–30 characters long and contain only letters, numbers, and underscores.');
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showAlert('error', 'Please enter a valid email address (e.g. name@domain.com).');
+        return;
+      }
+
+      if (password.length < 8) {
+        showAlert('error', 'Password must be at least 8 characters long.');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showAlert('error', 'Passwords do not match. Please verify both password fields.');
+        return;
+      }
+
+      setButtonLoading(btnSignUpSubmit, true, 'Creating Account...');
+
+      try {
+        const res = await fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fullName, username, email, password, confirmPassword })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          setButtonLoading(btnSignUpSubmit, false, 'Create Account');
+          showAlert('success', 'Account registered successfully! Please store your recovery code.');
+          
+          // Display the one-time generated recovery code modal
+          activeRecoveryCode = data.recoveryCode;
+          displayRecoveryCode.textContent = activeRecoveryCode;
+          ackCodeSaved.checked = false;
+          btnProceedDashboard.disabled = true;
+          recoveryCodeModal.classList.add('open');
+        } else {
+          showAlert('error', data.message || 'Registration failed.');
+          setButtonLoading(btnSignUpSubmit, false, 'Create Account');
+        }
+      } catch (err) {
+        showAlert('error', 'Unable to reach the server. Please check your connection.');
+        setButtonLoading(btnSignUpSubmit, false, 'Create Account');
+      }
+    });
+
+    // Recovery code modal checkbox guard
+    ackCodeSaved.addEventListener('change', () => {
+      btnProceedDashboard.disabled = !ackCodeSaved.checked;
+    });
+
+    // Copy recovery code
+    btnCopyCode.addEventListener('click', async () => {
+      if (!activeRecoveryCode) return;
+      try {
+        await navigator.clipboard.writeText(activeRecoveryCode);
+        copyBtnText.textContent = 'Copied!';
+        setTimeout(() => { copyBtnText.textContent = 'Copy Code'; }, 2500);
+      } catch (err) {
+        // Fallback copy
+        const temp = document.createElement('textarea');
+        temp.value = activeRecoveryCode;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        copyBtnText.textContent = 'Copied!';
+        setTimeout(() => { copyBtnText.textContent = 'Copy Code'; }, 2500);
+      }
+    });
+
+    // Download recovery code as text file
+    btnDownloadCode.addEventListener('click', () => {
+      if (!activeRecoveryCode) return;
+      const content = `====================================================\nMULTILINGUAL AI LEARNING HUB — ACCOUNT RECOVERY CODE\n====================================================\n\nYour Unique Recovery Code:\n${activeRecoveryCode}\n\nIMPORTANT PRIVACY NOTICE:\nThis application does NOT send emails. Keep this file\nsafe and private. If you ever forget your password, this\nrecovery code is the only way to regain access.\n\nGenerated: ${new Date().toISOString()}\n====================================================\n`;
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `multilingual_hub_recovery_code.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
+
+    // Proceed to dashboard from recovery modal
+    btnProceedDashboard.addEventListener('click', () => {
+      recoveryCodeModal.classList.remove('open');
+      window.location.href = redirectUrl;
+    });
+
+    // ==========================================
+    // 3. NO-EMAIL PASSWORD RECOVERY SUBMIT
+    // ==========================================
+    recoverForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlert();
+
+      const identifier = document.getElementById('recoverIdentifier').value.trim();
+      const recoveryCode = document.getElementById('recoverCode').value.trim();
+      const newPassword = document.getElementById('recoverNewPassword').value;
+      const confirmPassword = document.getElementById('recoverConfirmPassword').value;
+
+      if (!identifier || !recoveryCode || !newPassword || !confirmPassword) {
+        showAlert('error', 'All recovery fields are required.');
+        return;
+      }
+
+      if (newPassword.length < 8) {
+        showAlert('error', 'New password must be at least 8 characters long.');
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        showAlert('error', 'New passwords do not match.');
+        return;
+      }
+
+      setButtonLoading(btnRecoverSubmit, true, 'Verifying Recovery Code...');
+
+      try {
+        const res = await fetch('/api/auth/recover', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ identifier, recoveryCode, newPassword, confirmPassword })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          setButtonLoading(btnRecoverSubmit, false, 'Reset Password');
+          showAlert('success', 'Password reset successfully! Your new rotated recovery code is shown below.');
+          
+          // Display the newly rotated recovery code modal
+          activeRecoveryCode = data.newRecoveryCode;
+          displayRecoveryCode.textContent = activeRecoveryCode;
+          ackCodeSaved.checked = false;
+          btnProceedDashboard.disabled = true;
+          document.getElementById('recoveryModalTitle').textContent = 'Your New Recovery Code';
+          btnProceedDashboard.innerHTML = '<span>Sign In with New Password →</span>';
+          btnProceedDashboard.onclick = () => {
+            recoveryCodeModal.classList.remove('open');
+            switchView('signin');
+            document.getElementById('loginIdentifier').value = identifier;
+            document.getElementById('loginPassword').value = '';
+          };
+          recoveryCodeModal.classList.add('open');
+        } else {
+          showAlert('error', data.message || 'Recovery failed.');
+          setButtonLoading(btnRecoverSubmit, false, 'Reset Password');
+        }
+      } catch (err) {
+        showAlert('error', 'Unable to reach the server. Please check your connection.');
+        setButtonLoading(btnRecoverSubmit, false, 'Reset Password');
+      }
+    });
+
+    // Helper: Set Button Loading State
+    function setButtonLoading(button, isLoading, text) {
+      if (isLoading) {
+        button.classList.add('loading');
+        button.disabled = true;
+        button.querySelector('.btn-text').textContent = text;
+      } else {
+        button.classList.remove('loading');
+        button.disabled = false;
+        button.querySelector('.btn-text').textContent = text;
+      }
+    }
+
+    // Keyboard support: Escape closes modals
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (recoveryCodeModal && recoveryCodeModal.classList.contains('open') && ackCodeSaved && ackCodeSaved.checked) {
+          recoveryCodeModal.classList.remove('open');
+        }
+      }
+    });
+  </script>
+</body>
+</html>

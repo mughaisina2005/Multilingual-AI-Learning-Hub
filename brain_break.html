@@ -1,0 +1,3850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Brain Break — Multilingual AI Learning Hub</title>
+  <meta name="description" content="Take a brain break and refresh your mind with interactive multilingual learning games.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Tamil:wght@400;700&family=Noto+Sans+Telugu:wght@400;700&family=Noto+Sans+Malayalam:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Universal Theme System -->
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
+
+  <style>
+    /* ===================================================
+       BRAIN BREAK COMPONENT STYLES
+       =================================================== */
+    :root {
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--color-bg-gradient);
+      color: var(--color-text-main);
+      font-family: var(--font-body);
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation */
+    .top-navbar {
+      height: 70px;
+      padding: 0 1.5rem;
+      background: var(--color-surface-translucent);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      font-weight: 500;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1rem;
+      border-radius: 10px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-main);
+    }
+
+    .nav-btn:hover {
+      background: var(--color-surface-hover);
+      border-color: var(--color-border-active);
+    }
+
+    .nav-btn-primary {
+      background: var(--color-brand-primary);
+      color: white;
+      border-color: transparent;
+    }
+
+    .nav-btn-primary:hover {
+      background: var(--color-brand-hover);
+      color: white;
+    }
+
+    /* Main Container */
+    .main-content {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Welcome Hero Banner */
+    .hero-banner {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--color-brand-light) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+
+    .hero-welcome-msg {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--color-text-main);
+      line-height: 1.25;
+    }
+
+    .hero-subtext {
+      color: var(--color-text-muted);
+      font-size: 0.975rem;
+      max-width: 780px;
+      line-height: 1.5;
+    }
+
+    .hero-stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 0.75rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 12px;
+      background: var(--color-surface-subtle);
+      border: 1px solid var(--color-border);
+      font-size: 0.85rem;
+    }
+
+    .stat-pill strong {
+      color: var(--color-brand-primary);
+      font-weight: 700;
+    }
+
+    /* Game Selection Grid */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      .game-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .game-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 18px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card);
+      border-color: var(--color-border-active);
+    }
+
+    .game-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .game-icon-box {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    .icon-memory   { background: linear-gradient(135deg, #ec4899, #f43f5e); color: white; }
+    .icon-word     { background: linear-gradient(135deg, #06b6d4, #0284c7); color: white; }
+    .icon-quiz     { background: linear-gradient(135deg, #f59e0b, #ea580c); color: white; }
+    .icon-logic    { background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; }
+    .icon-search   { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+    .icon-sentence { background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; }
+    .icon-listen   { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; }
+    .icon-odd      { background: linear-gradient(135deg, #f97316, #dc2626); color: white; }
+    .icon-recall   { background: linear-gradient(135deg, #8b5cf6, #a855f7); color: white; }
+    .icon-riddle   { background: linear-gradient(135deg, #14b8a6, #0d9488); color: white; }
+
+    .game-tag {
+      font-size: 0.725rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--color-surface-subtle);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+    }
+
+    .game-card-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .game-card-desc {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      line-height: 1.45;
+      margin-bottom: 0.85rem;
+      flex-grow: 1;
+    }
+
+    .game-card-hint {
+      font-size: 0.8rem;
+      color: var(--color-brand-primary);
+      background: var(--color-brand-light);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
+      line-height: 1.35;
+    }
+
+    .game-card-hint strong {
+      color: var(--color-text-main);
+    }
+
+    .game-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .game-info-badge {
+      font-size: 0.75rem;
+      color: var(--color-text-subtle);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-play-game {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      border: none;
+      background: var(--color-brand-primary);
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px var(--color-brand-shadow);
+    }
+
+    .btn-play-game:hover {
+      background: var(--color-brand-hover);
+      transform: scale(1.02);
+    }
+
+    /* Active Game Container */
+    .game-play-section {
+      display: none;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 2rem;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Game Header Bar */
+    .game-header-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 1.5rem;
+    }
+
+    .game-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-return-menu {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: var(--color-surface-subtle);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-return-menu:hover {
+      background: var(--color-surface-hover);
+      border-color: var(--color-border-active);
+    }
+
+    .game-active-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .game-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-round {
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .badge-score {
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      background: var(--color-success-bg);
+      color: var(--color-success-text);
+      border: 1px solid var(--color-success-border);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .badge-progress {
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      background: var(--color-surface-subtle);
+      border: 1px solid var(--color-border);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+
+    .btn-restart-round {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 10px;
+      font-size: 0.825rem;
+      font-weight: 600;
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-restart-round:hover {
+      background: var(--color-surface-hover);
+      color: var(--color-text-main);
+    }
+
+    /* ----------------------------------------------------
+       GAME 1: MEMORY MATCH STYLES
+       ---------------------------------------------------- */
+    .memory-board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      max-width: 800px;
+      margin: 1.5rem auto;
+      perspective: 1000px;
+    }
+
+    @media (max-width: 640px) {
+      .memory-board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.65rem;
+      }
+    }
+
+    .memory-card {
+      height: 120px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      border-radius: 14px;
+      user-select: none;
+    }
+
+    .memory-card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .memory-card.matched {
+      transform: rotateY(180deg);
+      cursor: default;
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      border: 2px solid var(--color-border);
+    }
+
+    .card-front {
+      background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-subtle) 100%);
+      color: var(--color-brand-primary);
+      font-size: 1.75rem;
+    }
+
+    .card-front:hover {
+      border-color: var(--color-brand-primary);
+      background: var(--color-surface-hover);
+    }
+
+    .card-back {
+      background: var(--color-surface);
+      transform: rotateY(180deg);
+      color: var(--color-text-main);
+    }
+
+    .card-back.type-target {
+      border-color: #38bdf8;
+      background: linear-gradient(135deg, var(--color-surface) 0%, rgba(56, 189, 248, 0.08) 100%);
+    }
+
+    .card-back.type-explanation {
+      border-color: #a855f7;
+      background: linear-gradient(135deg, var(--color-surface) 0%, rgba(168, 85, 247, 0.08) 100%);
+    }
+
+    .memory-card.matched .card-back {
+      border-color: var(--color-success);
+      background: var(--color-success-bg);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+    }
+
+    .card-word {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      word-break: break-word;
+    }
+
+    .card-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--color-text-subtle);
+    }
+
+    /* ----------------------------------------------------
+       GAME 2: WORD PUZZLE STYLES
+       ---------------------------------------------------- */
+    .puzzle-container {
+      max-width: 650px;
+      margin: 1.5rem auto;
+      text-align: center;
+    }
+
+    .clue-box {
+      background: var(--color-surface-subtle);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+
+    .clue-label {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .clue-text {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--color-brand-primary);
+    }
+
+    .answer-tray {
+      min-height: 64px;
+      padding: 0.75rem 1rem;
+      border: 2px dashed var(--color-border-active);
+      border-radius: 14px;
+      background: var(--color-surface-subtle);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .tray-placeholder {
+      color: var(--color-text-subtle);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    .scrambled-bank {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .letter-chip {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      color: var(--color-text-main);
+      cursor: pointer;
+      user-select: none;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.15s ease;
+    }
+
+    .letter-chip:hover {
+      transform: translateY(-2px);
+      border-color: var(--color-brand-primary);
+      background: var(--color-surface-hover);
+    }
+
+    .letter-chip.placed {
+      opacity: 0.25;
+      cursor: not-allowed;
+      transform: none;
+      pointer-events: none;
+    }
+
+    .letter-chip.tray-chip {
+      background: var(--color-brand-light);
+      border-color: var(--color-brand-primary);
+      color: var(--color-brand-primary);
+    }
+
+    .puzzle-input-box {
+      margin-bottom: 1.25rem;
+    }
+
+    .puzzle-text-input {
+      width: 100%;
+      max-width: 320px;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-main);
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-align: center;
+      text-transform: uppercase;
+      outline: none;
+      letter-spacing: 0.1em;
+      transition: border-color 0.2s ease;
+    }
+
+    .puzzle-text-input:focus {
+      border-color: var(--color-brand-primary);
+    }
+
+    .puzzle-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    /* ----------------------------------------------------
+       GAME 3: QUICK QUIZ STYLES
+       ---------------------------------------------------- */
+    .quiz-container {
+      max-width: 720px;
+      margin: 1rem auto;
+    }
+
+    .quiz-category-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .quiz-question-text {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+      line-height: 1.35;
+      margin-bottom: 1.75rem;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .quiz-option-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 1.1rem 1.25rem;
+      border-radius: 14px;
+      background: var(--color-surface-subtle);
+      border: 2px solid var(--color-border);
+      color: var(--color-text-main);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .quiz-option-btn:hover:not(:disabled) {
+      background: var(--color-surface-hover);
+      border-color: var(--color-border-active);
+      transform: translateY(-2px);
+    }
+
+    .quiz-option-btn.selected {
+      border-color: var(--color-brand-primary);
+      background: var(--color-brand-light);
+    }
+
+    .quiz-option-btn.correct {
+      border-color: var(--color-success);
+      background: var(--color-success-bg);
+      color: var(--color-success-text);
+      font-weight: 700;
+    }
+
+    .quiz-option-btn.wrong {
+      border-color: var(--color-error);
+      background: var(--color-error-bg);
+      color: var(--color-error-text);
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    /* ----------------------------------------------------
+       GAME 4: PATTERN & LOGIC CHALLENGE STYLES
+       ---------------------------------------------------- */
+    .logic-container {
+      max-width: 720px;
+      margin: 1rem auto;
+    }
+
+    .sequence-card {
+      background: var(--color-surface-subtle);
+      border: 2px solid var(--color-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.75rem;
+      text-align: center;
+    }
+
+    .sequence-items {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+
+    .seq-box {
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .seq-box.target-box {
+      border: 2px dashed var(--color-brand-primary);
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+    }
+
+    /* ----------------------------------------------------
+       GAME 5: WORD SEARCH STYLES
+       ---------------------------------------------------- */
+    .search-container {
+      max-width: 760px;
+      margin: 1rem auto;
+    }
+
+    .search-header-info {
+      background: var(--color-surface-subtle);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-words-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.65rem;
+    }
+
+    .search-word-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .search-word-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      color: var(--color-text-main);
+      transition: all 0.2s ease;
+    }
+
+    .search-word-pill.found {
+      background: var(--color-success-bg);
+      border-color: var(--color-success-border);
+      color: var(--color-success-text);
+      text-decoration: line-through;
+    }
+
+    .search-grid-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-grid-board {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 6px;
+      padding: 12px;
+      background: var(--color-surface-subtle);
+      border: 2px solid var(--color-border);
+      border-radius: 16px;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    .search-cell {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: 10px;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    @media (max-width: 480px) {
+      .search-cell {
+        width: 34px;
+        height: 34px;
+        font-size: 1.05rem;
+      }
+    }
+
+    .search-cell:hover {
+      border-color: var(--color-brand-primary);
+      transform: scale(1.05);
+    }
+
+    .search-cell.selected {
+      background: var(--color-brand-primary);
+      color: white;
+      border-color: var(--color-brand-primary);
+      box-shadow: 0 2px 8px var(--color-brand-shadow);
+    }
+
+    .search-cell.found {
+      background: #10b981;
+      color: white;
+      border-color: #059669;
+    }
+
+    .search-selection-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 1.25rem;
+      background: var(--color-surface-subtle);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ----------------------------------------------------
+       GAME 6: SENTENCE BUILDER STYLES
+       ---------------------------------------------------- */
+    .sentence-builder-container {
+      max-width: 760px;
+      margin: 1rem auto;
+    }
+
+    .sentence-clue-card {
+      background: var(--color-surface-subtle);
+      border: 1.5px solid var(--color-border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sentence-prompt-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+
+    .sentence-prompt-text {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+    }
+
+    .sentence-drop-tray {
+      min-height: 70px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.25rem;
+      background: var(--color-surface);
+      border: 2px dashed var(--color-brand-primary);
+      border-radius: 16px;
+      margin-bottom: 1.25rem;
+      transition: all 0.2s ease;
+    }
+
+    .sentence-bank-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.65rem;
+    }
+
+    .sentence-word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sentence-chip {
+      padding: 0.65rem 1.15rem;
+      border-radius: 12px;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sentence-chip:hover {
+      border-color: var(--color-brand-primary);
+      transform: translateY(-2px);
+    }
+
+    .sentence-chip.placed {
+      opacity: 0.3;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .sentence-chip.tray-word {
+      background: var(--color-brand-light);
+      border-color: var(--color-brand-primary);
+      color: var(--color-brand-primary);
+    }
+
+    /* ----------------------------------------------------
+       GAME 7: LISTEN & CHOOSE STYLES
+       ---------------------------------------------------- */
+    .listen-choose-container {
+      max-width: 720px;
+      margin: 1rem auto;
+    }
+
+    .audio-prompt-card {
+      background: var(--color-surface-subtle);
+      border: 2px solid var(--color-border);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.75rem;
+      text-align: center;
+    }
+
+    .audio-prompt-instruction {
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.4;
+    }
+
+    .audio-action-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-play-audio-large {
+      padding: 1rem 2rem;
+      border-radius: 16px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 6px 18px rgba(59, 130, 246, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .btn-play-audio-large:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 22px rgba(59, 130, 246, 0.45);
+    }
+
+    .btn-play-audio-large.playing {
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+
+    .audio-lang-pill {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      background: var(--color-brand-light);
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+    }
+
+    .audio-error-banner {
+      background: var(--color-error-bg);
+      border: 1px solid var(--color-error-border);
+      color: var(--color-error-text);
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    /* ----------------------------------------------------
+       GAME 8: ODD ONE OUT STYLES
+       ---------------------------------------------------- */
+    .odd-out-container {
+      max-width: 720px;
+      margin: 1rem auto;
+    }
+
+    .odd-prompt-card {
+      background: var(--color-surface-subtle);
+      border: 2px solid var(--color-border);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .odd-subtext-clue {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      margin-top: 0.35rem;
+    }
+
+    /* ----------------------------------------------------
+       GAME 9: QUICK RECALL STYLES
+       ---------------------------------------------------- */
+    .quick-recall-container {
+      max-width: 740px;
+      margin: 1rem auto;
+    }
+
+    .recall-memorize-card {
+      background: var(--color-surface-subtle);
+      border: 2px solid var(--color-border);
+      border-radius: 18px;
+      padding: 2rem 1.5rem;
+      margin-bottom: 1.75rem;
+      text-align: center;
+    }
+
+    .recall-countdown-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+    }
+
+    .recall-timer-badge {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #ea580c;
+      background: #ffedd5;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      border: 1px solid #fed7aa;
+    }
+
+    .recall-items-display {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .recall-item-box {
+      min-width: 90px;
+      padding: 1rem 1.5rem;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: 16px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .recall-item-pos {
+      font-size: 0.725rem;
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      text-transform: uppercase;
+    }
+
+    .recall-instructions {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+
+    /* ----------------------------------------------------
+       GAME 10: RIDDLE CHALLENGE STYLES
+       ---------------------------------------------------- */
+    .riddle-container {
+      max-width: 720px;
+      margin: 1rem auto;
+    }
+
+    .riddle-prompt-card {
+      background: var(--color-surface-subtle);
+      border: 2px solid var(--color-border);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .btn-riddle-hint {
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-riddle-hint:hover {
+      background: #fde68a;
+    }
+
+    .riddle-question-text {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+      line-height: 1.45;
+      margin-bottom: 0.75rem;
+    }
+
+    .riddle-hint-box {
+      background: #fffbeb;
+      border: 1.5px dashed #f59e0b;
+      color: #92400e;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      margin-top: 0.75rem;
+    }
+
+    /* Common Feedback & Explanation Box */
+    .feedback-banner {
+      padding: 1.25rem 1.5rem;
+      border-radius: 14px;
+      margin-bottom: 1.5rem;
+      display: none;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .feedback-banner.feedback-success {
+      background: var(--color-success-bg);
+      border: 1px solid var(--color-success-border);
+      color: var(--color-success-text);
+    }
+
+    .feedback-banner.feedback-error {
+      background: var(--color-error-bg);
+      border: 1px solid var(--color-error-border);
+      color: var(--color-error-text);
+    }
+
+    .feedback-header {
+      font-weight: 800;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .feedback-text {
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    /* Action Buttons in Games */
+    .btn-action-primary {
+      padding: 0.75rem 1.75rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      background: var(--color-brand-primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px var(--color-brand-shadow);
+    }
+
+    .btn-action-primary:hover:not(:disabled) {
+      background: var(--color-brand-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-action-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-action-secondary {
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: var(--color-surface-subtle);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action-secondary:hover {
+      background: var(--color-surface-hover);
+      border-color: var(--color-border-active);
+    }
+
+    /* ----------------------------------------------------
+       ROUND COMPLETION MODAL / VIEW
+       ---------------------------------------------------- */
+    .round-completion-view {
+      display: none;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .completion-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+      animation: bounce 0.6s ease infinite alternate;
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
+
+    .completion-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .completion-subtitle {
+      color: var(--color-text-muted);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .round-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .round-stat-card {
+      background: var(--color-surface-subtle);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 1.25rem 0.75rem;
+    }
+
+    .round-stat-val {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--color-brand-primary);
+    }
+
+    .round-stat-lbl {
+      font-size: 0.775rem;
+      color: var(--color-text-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.25rem;
+      font-weight: 600;
+    }
+
+    .completion-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    /* Footer */
+    .app-footer {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--color-text-subtle);
+      border-top: 1px solid var(--color-border);
+      margin-top: auto;
+    }
+
+    /* Screen reader only utility */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="top-navbar" role="banner">
+    <a href="dashboard.html" class="nav-brand" aria-label="Go to Dashboard">
+      <div class="nav-logo" aria-hidden="true">🧠</div>
+      <div>
+        <div class="brand-title">Brain Break</div>
+        <div class="brand-subtitle">Multilingual AI Learning Hub</div>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <a href="dashboard.html" class="nav-btn" id="btn-back-dashboard">
+        <span aria-hidden="true">←</span> Dashboard
+      </a>
+      <button class="nav-btn theme-toggle" id="theme-toggle" aria-label="Toggle light or dark theme">
+        <span class="theme-icon" aria-hidden="true">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content" id="main-container">
+
+    <!-- Welcome Hero Banner -->
+    <section class="hero-banner" id="hero-banner" aria-labelledby="welcome-heading">
+      <div class="hero-badge">Mind Refresh &bull; Micro-Learning</div>
+      <h1 class="hero-welcome-msg" id="welcome-heading">
+        Take a little break, refresh your mind, and enjoy learning through games!
+      </h1>
+      <p class="hero-subtext">
+        Brain Break offers engaging micro-games designed to strengthen vocabulary memory, test your quick intellect, unscramble language puzzles, and stimulate logical pattern reasoning across progressive rounds.
+      </p>
+      <div class="hero-stats-row" id="hero-stats-row">
+        <div class="stat-pill">
+          <span>Total Games:</span> <strong id="stat-total-games">0</strong>
+        </div>
+        <div class="stat-pill">
+          <span>Overall Points:</span> <strong id="stat-total-score">0</strong>
+        </div>
+        <div class="stat-pill">
+          <span>Active Language:</span> <strong id="stat-active-lang">Hindi / English</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- Game Selection Screen (4 Cards) -->
+    <section class="game-selector-view" id="game-selector-view" aria-label="Brain Break Games">
+      <div class="game-grid">
+
+        <!-- Card 1: Memory Match -->
+        <article class="game-card" id="card-memory-match">
+          <div>
+            <div class="game-card-top">
+              <div class="game-icon-box icon-memory" aria-hidden="true">🃏</div>
+              <span class="game-tag">Multi-Round</span>
+            </div>
+            <h2 class="game-card-title">Memory Match</h2>
+            <p class="game-card-desc">
+              Flip and match bilingual word pairs and translations. Test your visual and lexical memory across increasingly challenging pair grids.
+            </p>
+            <div class="game-card-hint">
+              <span class="hint-icon" aria-hidden="true">💡</span>
+              <span><strong>Hint:</strong> Flip cards to find matching pairs and remember locations.</span>
+            </div>
+          </div>
+          <div class="game-card-footer">
+            <span class="game-info-badge">
+              <span aria-hidden="true">⚡</span> 4&ndash;8 Pairs / Round
+            </span>
+            <button class="btn-play-game" id="btn-play-memory" onclick="startSelectedGame('memory')">
+              Play Game <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 2: Word Puzzle -->
+        <article class="game-card" id="card-word-puzzle">
+          <div>
+            <div class="game-card-top">
+              <div class="game-icon-box icon-word" aria-hidden="true">🔤</div>
+              <span class="game-tag">Vocabulary</span>
+            </div>
+            <h2 class="game-card-title">Word Puzzle</h2>
+            <p class="game-card-desc">
+              Unscramble scrambled target-language vocabulary with contextual clues and interactive letter tiles, moving to longer words as rounds advance.
+            </p>
+            <div class="game-card-hint">
+              <span class="hint-icon" aria-hidden="true">💡</span>
+              <span><strong>Hint:</strong> Unscramble letters using the clue to form the word.</span>
+            </div>
+          </div>
+          <div class="game-card-footer">
+            <span class="game-info-badge">
+              <span aria-hidden="true">⚡</span> 4 Words / Round
+            </span>
+            <button class="btn-play-game" id="btn-play-word" onclick="startSelectedGame('word')">
+              Play Game <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 3: Quick Quiz -->
+        <article class="game-card" id="card-quick-quiz">
+          <div>
+            <div class="game-card-top">
+              <div class="game-icon-box icon-quiz" aria-hidden="true">💡</div>
+              <span class="game-tag">Trivia & Facts</span>
+            </div>
+            <h2 class="game-card-title">Quick Quiz</h2>
+            <p class="game-card-desc">
+              Fast-paced trivia questions testing vocabulary, science, math, technology, and world culture with detailed explanations for every answer.
+            </p>
+            <div class="game-card-hint">
+              <span class="hint-icon" aria-hidden="true">💡</span>
+              <span><strong>Hint:</strong> Read carefully and choose the best answer.</span>
+            </div>
+          </div>
+          <div class="game-card-footer">
+            <span class="game-info-badge">
+              <span aria-hidden="true">⚡</span> 4 Questions / Round
+            </span>
+            <button class="btn-play-game" id="btn-play-quiz" onclick="startSelectedGame('quiz')">
+              Play Game <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 4: Pattern & Logic Challenge -->
+        <article class="game-card" id="card-pattern-logic">
+          <div>
+            <div class="game-card-top">
+              <div class="game-icon-box icon-logic" aria-hidden="true">🧩</div>
+              <span class="game-tag">Logic & Reasoning</span>
+            </div>
+            <h2 class="game-card-title">Pattern & Logic Challenge</h2>
+            <p class="game-card-desc">
+              Crack mathematical sequences, visual symbol progressions, and deductive logic puzzles with step-by-step reasoning solutions.
+            </p>
+            <div class="game-card-hint">
+              <span class="hint-icon" aria-hidden="true">💡</span>
+              <span><strong>Hint:</strong> Observe the sequence or rule to find the missing item.</span>
+            </div>
+          </div>
+          <div class="game-card-footer">
+            <span class="game-info-badge">
+              <span aria-hidden="true">⚡</span> 4 Challenges / Round
+            </span>
+            <button class="btn-play-game" id="btn-play-logic" onclick="startSelectedGame('logic')">
+              Play Game <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 5: Word Search -->
+        <article class="game-card" id="card-word-search">
+          <div>
+            <div class="game-card-top">
+              <div class="game-icon-box icon-search" aria-hidden="true">🔍</div>
+              <span class="game-tag">Visual Search</span>
+            </div>
+            <h2 class="game-card-title">Word Search</h2>
+            <p class="game-card-desc">
+              Find vocabulary words hidden inside the letter grid across multiple directions. Sharpen your visual scanning and word recognition.
+            </p>
+            <div class="game-card-hint">
+              <span class="hint-icon" aria-hidden="true">💡</span>
+              <span><strong>Hint:</strong> Search horizontally, vertically, and diagonally.</span>
+            </div>
+          </div>
+          <div class="game-card-footer">
+            <span class="game-info-badge">
+              <span aria-hidden="true">⚡</span> 4 Words / Grid
+            </span>
+            <button class="btn-play-game" id="btn-play-search" onclick="startSelectedGame('search')">
+              Play Game <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 6: Sentence Builder -->
+        <article class="game-card" id="card-sentence-builder">
+          <div>
+            <div class="game-card-top">
+              <div class="game-icon-box icon-sentence" aria-hidden="true">🏗️</div>
+              <span class="game-tag">Grammar & Syntax</span>
+            </div>
+            <h2 class="game-card-title">Sentence Builder</h2>
+            <p class="game-card-desc">
+              Arrange shuffled word chips into grammatically correct sentences matching target meanings and syntactic patterns.
+            </p>
+            <div class="game-card-hint">
+              <span class="hint-icon" aria-hidden="true">💡</span>
+              <span><strong>Hint:</strong> Find the subject and verb first.</span>
+            </div>
+          </div>
+          <div class="game-card-footer">
+            <span class="game-info-badge">
+              <span aria-hidden="true">⚡</span> 4 Challenges / Round
+            </span>
+            <button class="btn-play-game" id="btn-play-sentence" onclick="startSelectedGame('sentence')">
+              Play Game <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 7: Listen & Choose -->
+        <article class="game-card" id="card-listen-choose">
+          <div>
+            <div class="game-card-top">
+              <div class="game-icon-box icon-listen" aria-hidden="true">🎧</div>
+              <span class="game-tag">Listening Audio</span>
+            </div>
+            <h2 class="game-card-title">Listen & Choose</h2>
+            <p class="game-card-desc">
+              Hear native voice audio pronunciations in target languages and pick the accurate translation or meaning from multiple options.
+            </p>
+            <div class="game-card-hint">
+              <span class="hint-icon" aria-hidden="true">💡</span>
+              <span><strong>Hint:</strong> Listen carefully for the key sounds.</span>
+            </div>
+          </div>
+          <div class="game-card-footer">
+            <span class="game-info-badge">
+              <span aria-hidden="true">⚡</span> 4 Audio / Round
+            </span>
+            <button class="btn-play-game" id="btn-play-listen" onclick="startSelectedGame('listen')">
+              Play Game <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 8: Odd One Out -->
+        <article class="game-card" id="card-odd-one-out">
+          <div>
+            <div class="game-card-top">
+              <div class="game-icon-box icon-odd" aria-hidden="true">🎯</div>
+              <span class="game-tag">Category Logic</span>
+            </div>
+            <h2 class="game-card-title">Odd One Out</h2>
+            <p class="game-card-desc">
+              Identify the word or concept that does not belong among related options, using analytical category deduction.
+            </p>
+            <div class="game-card-hint">
+              <span class="hint-icon" aria-hidden="true">💡</span>
+              <span><strong>Hint:</strong> Find what most options have in common.</span>
+            </div>
+          </div>
+          <div class="game-card-footer">
+            <span class="game-info-badge">
+              <span aria-hidden="true">⚡</span> 4 Puzzles / Round
+            </span>
+            <button class="btn-play-game" id="btn-play-odd" onclick="startSelectedGame('odd')">
+              Play Game <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 9: Quick Recall -->
+        <article class="game-card" id="card-quick-recall">
+          <div>
+            <div class="game-card-top">
+              <div class="game-icon-box icon-recall" aria-hidden="true">⏱️</div>
+              <span class="game-tag">Working Memory</span>
+            </div>
+            <h2 class="game-card-title">Quick Recall</h2>
+            <p class="game-card-desc">
+              Memorize a timed sequence of words or symbols before they vanish, then test your short-term working memory recall.
+            </p>
+            <div class="game-card-hint">
+              <span class="hint-icon" aria-hidden="true">💡</span>
+              <span><strong>Hint:</strong> Pay attention to the order, not just the items.</span>
+            </div>
+          </div>
+          <div class="game-card-footer">
+            <span class="game-info-badge">
+              <span aria-hidden="true">⚡</span> 4 Recalls / Round
+            </span>
+            <button class="btn-play-game" id="btn-play-recall" onclick="startSelectedGame('recall')">
+              Play Game <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 10: Riddle Challenge -->
+        <article class="game-card" id="card-riddle-challenge">
+          <div>
+            <div class="game-card-top">
+              <div class="game-icon-box icon-riddle" aria-hidden="true">🔮</div>
+              <span class="game-tag">Brain Teasers</span>
+            </div>
+            <h2 class="game-card-title">Riddle Challenge</h2>
+            <p class="game-card-desc">
+              Unravel clever wordplay riddles and cultural brain teasers, using helpful contextual hints when you need an extra nudge.
+            </p>
+            <div class="game-card-hint">
+              <span class="hint-icon" aria-hidden="true">💡</span>
+              <span><strong>Hint:</strong> Read the clues carefully before answering.</span>
+            </div>
+          </div>
+          <div class="game-card-footer">
+            <span class="game-info-badge">
+              <span aria-hidden="true">⚡</span> 4 Riddles / Round
+            </span>
+            <button class="btn-play-game" id="btn-play-riddle" onclick="startSelectedGame('riddle')">
+              Play Game <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Active Game Gameplay View -->
+    <section class="game-play-section" id="game-play-section" aria-live="polite">
+
+      <!-- Game Header Bar -->
+      <div class="game-header-bar">
+        <div class="game-header-left">
+          <button class="btn-return-menu" id="btn-return-menu-top" onclick="returnToBrainBreak()">
+            <span aria-hidden="true">←</span> Brain Break Menu
+          </button>
+          <div class="game-active-title" id="game-active-title">
+            <span id="game-title-icon">🎮</span>
+            <span id="game-title-text">Game</span>
+          </div>
+        </div>
+
+        <div class="game-header-right">
+          <span class="badge-round" id="badge-round-num">Round 1</span>
+          <span class="badge-progress" id="badge-challenge-progress">Progress: 1/4</span>
+          <span class="badge-score" id="badge-score-num">Score: 0</span>
+          <button class="btn-restart-round" id="btn-restart-round-header" onclick="restartCurrentRound()">
+            <span aria-hidden="true">↻</span> Restart Round
+          </button>
+        </div>
+      </div>
+
+      <!-- Feedback Banner (Shared) -->
+      <div class="feedback-banner" id="game-feedback-banner" role="status">
+        <div class="feedback-header" id="feedback-banner-title">Correct!</div>
+        <div class="feedback-text" id="feedback-banner-body">Great job!</div>
+      </div>
+
+      <!-- Container: Game 1 Memory Match -->
+      <div id="container-memory-match" style="display: none;">
+        <div class="memory-board" id="memory-board-grid"></div>
+      </div>
+
+      <!-- Container: Game 2 Word Puzzle -->
+      <div id="container-word-puzzle" style="display: none;">
+        <div class="puzzle-container">
+          <div class="clue-box">
+            <div class="clue-label">Clue / Translation</div>
+            <div class="clue-text" id="puzzle-clue-text">Meaning</div>
+          </div>
+
+          <div class="answer-tray" id="puzzle-answer-tray" onclick="focusPuzzleInput()">
+            <span class="tray-placeholder" id="tray-placeholder">Click letters below or type your answer</span>
+          </div>
+
+          <div class="scrambled-bank" id="puzzle-letter-bank"></div>
+
+          <div class="puzzle-input-box">
+            <input type="text" id="puzzle-text-input" class="puzzle-text-input" placeholder="OR TYPE ANSWER" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
+          </div>
+
+          <div class="puzzle-controls">
+            <button class="btn-action-secondary" id="btn-clear-tray" onclick="clearWordTray()">
+              Clear
+            </button>
+            <button class="btn-action-primary" id="btn-check-word" onclick="checkWordPuzzle()">
+              Check Answer
+            </button>
+            <button class="btn-action-primary" id="btn-next-word" style="display: none;" onclick="nextWordPuzzle()">
+              Next Word →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container: Game 3 Quick Quiz -->
+      <div id="container-quick-quiz" style="display: none;">
+        <div class="quiz-container">
+          <span class="quiz-category-tag" id="quiz-category-tag">Subject</span>
+          <div class="quiz-question-text" id="quiz-question-text">Question prompt</div>
+          <div class="options-grid" id="quiz-options-grid"></div>
+          <div style="text-align: right; margin-top: 1rem;">
+            <button class="btn-action-primary" id="btn-next-quiz" style="display: none;" onclick="nextQuizQuestion()">
+              Next Question →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container: Game 4 Pattern & Logic Challenge -->
+      <div id="container-pattern-logic" style="display: none;">
+        <div class="logic-container">
+          <span class="quiz-category-tag" id="logic-category-tag">Pattern Sequence</span>
+          <div class="sequence-card">
+            <div class="quiz-question-text" id="logic-question-text" style="margin-bottom: 0.75rem;">Sequence</div>
+            <div class="sequence-items" id="logic-sequence-items"></div>
+          </div>
+          <div class="options-grid" id="logic-options-grid"></div>
+          <div style="text-align: right; margin-top: 1rem;">
+            <button class="btn-action-primary" id="btn-next-logic" style="display: none;" onclick="nextLogicChallenge()">
+              Next Challenge →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container: Game 5 Word Search -->
+      <div id="container-word-search" style="display: none;">
+        <div class="search-container">
+          <div class="search-header-info">
+            <div class="search-words-title">Words to find in the grid:</div>
+            <div class="search-word-pills" id="search-word-pills"></div>
+          </div>
+
+          <div class="search-grid-wrapper">
+            <div class="search-grid-board" id="search-grid-board"></div>
+          </div>
+
+          <div class="search-selection-bar">
+            <div>
+              <span style="font-size: 0.85rem; color: var(--color-text-muted);">Current Selection: </span>
+              <strong id="search-selected-word" style="font-size: 1.1rem; color: var(--color-brand-primary); letter-spacing: 0.05em;">-</strong>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn-action-secondary" id="btn-clear-search" onclick="clearWordSearchSelection()">
+                Clear
+              </button>
+              <button class="btn-action-primary" id="btn-submit-search" onclick="submitWordSearchWord()">
+                Check Word
+              </button>
+            </div>
+          </div>
+
+          <div style="text-align: right; margin-top: 1rem;">
+            <button class="btn-action-primary" id="btn-next-search" style="display: none;" onclick="nextWordSearchChallenge()">
+              Next Word Search →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container: Game 6 Sentence Builder -->
+      <div id="container-sentence-builder" style="display: none;">
+        <div class="sentence-builder-container">
+          <div class="sentence-clue-card">
+            <span class="quiz-category-tag" id="sentence-category-tag">Grammar & Syntax</span>
+            <div class="sentence-prompt-label">Construct the target sentence for:</div>
+            <div class="sentence-prompt-text" id="sentence-prompt-text">Translation meaning</div>
+          </div>
+
+          <div class="sentence-tray-label" style="font-size: 0.8rem; font-weight: 700; color: var(--color-text-muted); text-transform: uppercase; margin-bottom: 0.4rem;">
+            Your Sentence Tray (tap words to return):
+          </div>
+          <div class="sentence-drop-tray" id="sentence-drop-tray">
+            <span class="tray-placeholder" id="sentence-tray-placeholder" style="color: var(--color-text-subtle); font-size: 0.9rem;">Tap available words below to build the sentence</span>
+          </div>
+
+          <div class="sentence-bank-label">Available Word Bank:</div>
+          <div class="sentence-word-bank" id="sentence-word-bank"></div>
+
+          <div class="puzzle-controls" style="margin-top: 1.5rem;">
+            <button class="btn-action-secondary" id="btn-clear-sentence" onclick="clearSentenceTray()">
+              Clear Tray
+            </button>
+            <button class="btn-action-primary" id="btn-check-sentence" onclick="checkSentenceBuilder()">
+              Check Sentence
+            </button>
+            <button class="btn-action-primary" id="btn-next-sentence" style="display: none;" onclick="nextSentenceChallenge()">
+              Next Sentence →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container: Game 7 Listen & Choose -->
+      <div id="container-listen-choose" style="display: none;">
+        <div class="listen-choose-container">
+          <div class="audio-prompt-card">
+            <span class="quiz-category-tag" id="listen-category-tag">Audio Listening</span>
+            <div class="audio-prompt-instruction" id="listen-prompt-instruction">
+              Listen carefully to the spoken voice, then choose the correct translation:
+            </div>
+            <div class="audio-action-row">
+              <button class="btn-play-audio-large" id="btn-play-listen-audio" onclick="playCurrentListenAudio()">
+                <span aria-hidden="true">🔊</span> Play Voice Audio
+              </button>
+              <div class="audio-lang-pill" id="listen-lang-pill">Language: Hindi</div>
+            </div>
+            <div id="audio-error-banner" class="audio-error-banner" style="display: none;"></div>
+          </div>
+
+          <div class="options-grid" id="listen-options-grid"></div>
+
+          <div style="text-align: right; margin-top: 1rem;">
+            <button class="btn-action-primary" id="btn-next-listen" style="display: none;" onclick="nextListenChallenge()">
+              Next Audio →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container: Game 8 Odd One Out -->
+      <div id="container-odd-one-out" style="display: none;">
+        <div class="odd-out-container">
+          <div class="odd-prompt-card">
+            <span class="quiz-category-tag" id="odd-category-tag">Category Logic</span>
+            <div class="quiz-question-text" id="odd-question-text" style="margin-bottom: 0.5rem;">Which item does NOT belong?</div>
+            <div class="odd-subtext-clue" id="odd-subtext-clue">Three share a common feature; one is the odd one out.</div>
+          </div>
+
+          <div class="options-grid" id="odd-options-grid"></div>
+
+          <div style="text-align: right; margin-top: 1rem;">
+            <button class="btn-action-primary" id="btn-next-odd" style="display: none;" onclick="nextOddChallenge()">
+              Next Challenge →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container: Game 9 Quick Recall -->
+      <div id="container-quick-recall" style="display: none;">
+        <div class="quick-recall-container">
+          <span class="quiz-category-tag" id="recall-category-tag">Working Memory</span>
+
+          <!-- Phase 1: Memorization Display -->
+          <div class="recall-memorize-card" id="recall-memorize-card">
+            <div class="recall-countdown-bar">
+              <span>Memorize the items and sequence order!</span>
+              <span class="recall-timer-badge" id="recall-timer-badge">⏳ 4s</span>
+            </div>
+            <div class="recall-items-display" id="recall-items-display"></div>
+            <div class="recall-instructions">Focus carefully — the sequence will hide in a few seconds!</div>
+          </div>
+
+          <!-- Phase 2: Recall Question & Answers -->
+          <div class="recall-question-card" id="recall-question-card" style="display: none;">
+            <div class="quiz-question-text" id="recall-question-prompt" style="margin-bottom: 1.5rem;">Which item was at position 3?</div>
+            <div class="options-grid" id="recall-options-grid"></div>
+          </div>
+
+          <div style="text-align: right; margin-top: 1rem;">
+            <button class="btn-action-primary" id="btn-next-recall" style="display: none;" onclick="nextRecallChallenge()">
+              Next Challenge →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container: Game 10 Riddle Challenge -->
+      <div id="container-riddle-challenge" style="display: none;">
+        <div class="riddle-container">
+          <div class="riddle-prompt-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <span class="quiz-category-tag" id="riddle-category-tag">Brain Teaser</span>
+              <button class="btn-riddle-hint" id="btn-toggle-riddle-hint" onclick="toggleRiddleHint()">
+                💡 Show Hint
+              </button>
+            </div>
+            <div class="riddle-question-text" id="riddle-question-text">Riddle prompt here</div>
+            <div class="riddle-hint-box" id="riddle-hint-box" style="display: none;">
+              <strong>Hint:</strong> <span id="riddle-hint-text">Hint text</span>
+            </div>
+          </div>
+
+          <div class="options-grid" id="riddle-options-grid"></div>
+
+          <div style="text-align: right; margin-top: 1rem;">
+            <button class="btn-action-primary" id="btn-next-riddle" style="display: none;" onclick="nextRiddleChallenge()">
+              Next Riddle →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Round Completion Screen (Shared across all 10 games) -->
+      <div class="round-completion-view" id="round-completion-view">
+        <div class="completion-icon" aria-hidden="true">🎉</div>
+        <h2 class="completion-title" id="completion-title">Round 1 Completed!</h2>
+        <p class="completion-subtitle" id="completion-message">You did great! Ready to take on the next round?</p>
+
+        <div class="round-stats-grid">
+          <div class="round-stat-card">
+            <div class="round-stat-val" id="stat-round-score">80</div>
+            <div class="round-stat-lbl">Round Score</div>
+          </div>
+          <div class="round-stat-card">
+            <div class="round-stat-val" id="stat-round-accuracy">100%</div>
+            <div class="round-stat-lbl">Accuracy</div>
+          </div>
+          <div class="round-stat-card">
+            <div class="round-stat-val" id="stat-cumulative-score">80</div>
+            <div class="round-stat-lbl">Total Score</div>
+          </div>
+        </div>
+
+        <div class="completion-actions">
+          <button class="btn-action-secondary" id="btn-restart-round-modal" onclick="restartCurrentRound()">
+            ↻ Restart Round
+          </button>
+          <button class="btn-action-secondary" id="btn-return-menu-modal" onclick="returnToBrainBreak()">
+            ← Return to Brain Break
+          </button>
+          <button class="btn-action-primary" id="btn-next-round" onclick="advanceToNextRound()">
+            Next Round →
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>Multilingual AI Learning Hub &bull; Brain Break Games &bull; Bridging Cultures with Adaptive AI Education</p>
+  </footer>
+
+  <!-- Brain Break Game Engine Script -->
+  <script>
+    /* ========================================================
+       BRAIN BREAK MULTI-GAME & MULTI-ROUND CONTROLLER
+       ======================================================== */
+
+    // Global App State
+    let activeGame = null;       // 'memory' | 'word' | 'quiz' | 'logic'
+    let currentRound = 1;
+    let roundContent = null;
+    let roundScore = 0;
+    let cumulativeScore = 0;
+    let roundAttempts = 0;
+    let roundSuccesses = 0;
+    let totalRoundsPlayed = 0;
+    let targetLang = 'hi';
+    let explanationLang = 'en';
+
+    // Game Specific Sub-States
+    // 1. Memory Match State
+    let memoryFlippedCards = [];
+    let memoryMatchedPairsCount = 0;
+    let memoryTotalPairsCount = 0;
+    let memoryLock = false;
+
+    // 2. Word Puzzle State
+    let wordIndex = 0;
+    let currentPuzzle = null;
+    let wordSelectedChips = [];
+    let wordEvaluated = false;
+
+    // 3. Quick Quiz State
+    let quizIndex = 0;
+    let currentQuizQ = null;
+    let quizEvaluated = false;
+
+    // 4. Pattern Logic State
+    let logicIndex = 0;
+    let currentLogicQ = null;
+    let logicEvaluated = false;
+
+    // 5. Word Search State
+    let searchGrid = [];
+    let searchTargetWords = [];
+    let searchSelectedCells = [];
+    let searchFoundWords = [];
+    let searchEvaluated = false;
+
+    // 6. Sentence Builder State
+    let sentenceIndex = 0;
+    let currentSentenceQ = null;
+    let sentenceTrayWords = [];
+    let sentenceEvaluated = false;
+
+    // 7. Listen & Choose State
+    let listenIndex = 0;
+    let currentListenQ = null;
+    let listenEvaluated = false;
+
+    // 8. Odd One Out State
+    let oddIndex = 0;
+    let currentOddQ = null;
+    let oddEvaluated = false;
+
+    // 9. Quick Recall State
+    let recallIndex = 0;
+    let currentRecallQ = null;
+    let recallEvaluated = false;
+    let recallCountdownTimer = null;
+
+    // 10. Riddle Challenge State
+    let riddleIndex = 0;
+    let currentRiddleQ = null;
+    let riddleEvaluated = false;
+    let riddleHintShown = false;
+
+    // Initialize Page
+    document.addEventListener('DOMContentLoaded', async () => {
+      initTheme();
+      await loadUserSettings();
+      await loadGameStats();
+
+      // Setup puzzle text input sync
+      const pInput = document.getElementById('puzzle-text-input');
+      if (pInput) {
+        pInput.addEventListener('input', (e) => {
+          syncInputToTray(e.target.value);
+        });
+        pInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            checkWordPuzzle();
+          }
+        });
+      }
+    });
+
+    // Load user active languages
+    async function loadUserSettings() {
+      try {
+        const res = await fetch('/api/user/settings');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.settings) {
+            targetLang = data.settings.target_language || 'hi';
+            explanationLang = data.settings.explanation_language || 'en';
+            const langPill = document.getElementById('stat-active-lang');
+            if (langPill) {
+              langPill.textContent = `${targetLang.toUpperCase()} / ${explanationLang.toUpperCase()}`;
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('Using default languages:', e);
+      }
+    }
+
+    // Load overall game statistics
+    async function loadGameStats() {
+      try {
+        const res = await fetch('/api/games/stats');
+        if (res.ok) {
+          const stats = await res.json();
+          const totalGamesEl = document.getElementById('stat-total-games');
+          const totalScoreEl = document.getElementById('stat-total-score');
+          if (totalGamesEl && stats.totalSessions !== undefined) {
+            totalGamesEl.textContent = stats.totalSessions;
+          }
+          if (totalScoreEl && stats.totalScore !== undefined) {
+            totalScoreEl.textContent = stats.totalScore;
+          }
+        }
+      } catch (e) {
+        console.warn('Could not load game stats:', e);
+      }
+    }
+
+    // ========================================================
+    // GAME ROUTING & FLOW
+    // ========================================================
+
+    async function startSelectedGame(gameKey) {
+      activeGame = gameKey;
+      currentRound = 1;
+      cumulativeScore = 0;
+
+      // Update UI Views
+      document.getElementById('hero-banner').style.display = 'none';
+      document.getElementById('game-selector-view').style.display = 'none';
+      document.getElementById('game-play-section').style.display = 'block';
+
+      // Hide all game containers
+      const allContainers = [
+        'container-memory-match', 'container-word-puzzle', 'container-quick-quiz',
+        'container-pattern-logic', 'container-word-search', 'container-sentence-builder',
+        'container-listen-choose', 'container-odd-one-out', 'container-quick-recall',
+        'container-riddle-challenge', 'round-completion-view'
+      ];
+      allContainers.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+
+      // Setup Header
+      const titles = {
+        memory:   { icon: '🃏', text: 'Memory Match' },
+        word:     { icon: '🔤', text: 'Word Puzzle' },
+        quiz:     { icon: '💡', text: 'Quick Quiz' },
+        logic:    { icon: '🧩', text: 'Pattern & Logic Challenge' },
+        search:   { icon: '🔍', text: 'Word Search' },
+        sentence: { icon: '🏗️', text: 'Sentence Builder' },
+        listen:   { icon: '🎧', text: 'Listen & Choose' },
+        odd:      { icon: '🎯', text: 'Odd One Out' },
+        recall:   { icon: '⏱️', text: 'Quick Recall' },
+        riddle:   { icon: '🔮', text: 'Riddle Challenge' }
+      };
+
+      const titleInfo = titles[gameKey] || { icon: '🎮', text: 'Game' };
+      document.getElementById('game-title-icon').textContent = titleInfo.icon;
+      document.getElementById('game-title-text').textContent = titleInfo.text;
+
+      // Load Round 1
+      await loadRound(currentRound);
+    }
+
+    function returnToBrainBreak() {
+      activeGame = null;
+      if (recallCountdownTimer) {
+        clearInterval(recallCountdownTimer);
+        recallCountdownTimer = null;
+      }
+      document.getElementById('game-play-section').style.display = 'none';
+      document.getElementById('hero-banner').style.display = 'flex';
+      document.getElementById('game-selector-view').style.display = 'block';
+      hideFeedback();
+      loadGameStats(); // refresh stats
+    }
+
+    async function restartCurrentRound() {
+      hideFeedback();
+      await loadRound(currentRound);
+    }
+
+    async function advanceToNextRound() {
+      currentRound += 1;
+      hideFeedback();
+      await loadRound(currentRound);
+    }
+
+    async function loadRound(roundNum) {
+      hideFeedback();
+      if (recallCountdownTimer) {
+        clearInterval(recallCountdownTimer);
+        recallCountdownTimer = null;
+      }
+      document.getElementById('round-completion-view').style.display = 'none';
+
+      // Hide all game containers
+      const allContainers = [
+        'container-memory-match', 'container-word-puzzle', 'container-quick-quiz',
+        'container-pattern-logic', 'container-word-search', 'container-sentence-builder',
+        'container-listen-choose', 'container-odd-one-out', 'container-quick-recall',
+        'container-riddle-challenge'
+      ];
+      allContainers.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+
+      // Update badges
+      document.getElementById('badge-round-num').textContent = `Round ${roundNum}`;
+      document.getElementById('badge-score-num').textContent = `Score: ${cumulativeScore}`;
+
+      try {
+        const url = `/api/games/content?game=${activeGame}&round=${roundNum}&targetLang=${targetLang}&explanationLang=${explanationLang}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Failed to load round content');
+        roundContent = await res.json();
+      } catch (err) {
+        console.error('Error fetching game content, using fallback:', err);
+        showFeedback(false, 'Notice', 'Using offline game challenge set.');
+        roundContent = getFallbackRoundContent(activeGame, roundNum);
+      }
+
+      // Reset round trackers
+      roundScore = 0;
+      roundAttempts = 0;
+      roundSuccesses = 0;
+
+      // Mount game engine
+      if (activeGame === 'memory') {
+        document.getElementById('container-memory-match').style.display = 'block';
+        initMemoryMatchGame(roundContent);
+      } else if (activeGame === 'word') {
+        document.getElementById('container-word-puzzle').style.display = 'block';
+        initWordPuzzleGame(roundContent);
+      } else if (activeGame === 'quiz') {
+        document.getElementById('container-quick-quiz').style.display = 'block';
+        initQuickQuizGame(roundContent);
+      } else if (activeGame === 'logic') {
+        document.getElementById('container-pattern-logic').style.display = 'block';
+        initPatternLogicGame(roundContent);
+      } else if (activeGame === 'search') {
+        document.getElementById('container-word-search').style.display = 'block';
+        initWordSearchGame(roundContent);
+      } else if (activeGame === 'sentence') {
+        document.getElementById('container-sentence-builder').style.display = 'block';
+        initSentenceBuilderGame(roundContent);
+      } else if (activeGame === 'listen') {
+        document.getElementById('container-listen-choose').style.display = 'block';
+        initListenChooseGame(roundContent);
+      } else if (activeGame === 'odd') {
+        document.getElementById('container-odd-one-out').style.display = 'block';
+        initOddOneOutGame(roundContent);
+      } else if (activeGame === 'recall') {
+        document.getElementById('container-quick-recall').style.display = 'block';
+        initQuickRecallGame(roundContent);
+      } else if (activeGame === 'riddle') {
+        document.getElementById('container-riddle-challenge').style.display = 'block';
+        initRiddleChallengeGame(roundContent);
+      }
+    }
+
+    // ========================================================
+    // 1. GAME: MEMORY MATCH ENGINE
+    // ========================================================
+
+    function initMemoryMatchGame(content) {
+      let deck = [];
+      if (content.cards && Array.isArray(content.cards)) {
+        memoryTotalPairsCount = content.pairCount || Math.floor(content.cards.length / 2);
+        deck = content.cards.map(c => ({
+          cardId: c.cardId,
+          pairId: c.pairId,
+          text: c.content,
+          type: c.role === 'target' ? 'target' : 'explanation',
+          tag: c.subtext || (c.role === 'target' ? targetLang.toUpperCase() : explanationLang.toUpperCase())
+        }));
+      } else {
+        const pairs = content.pairs || [];
+        memoryTotalPairsCount = pairs.length;
+        pairs.forEach((p, index) => {
+          deck.push({
+            cardId: `c_${index}_t`,
+            pairId: p.pairId,
+            text: p.targetWord,
+            type: 'target',
+            tag: targetLang.toUpperCase()
+          });
+          deck.push({
+            cardId: `c_${index}_e`,
+            pairId: p.pairId,
+            text: p.explanationWord,
+            type: 'explanation',
+            tag: explanationLang.toUpperCase()
+          });
+        });
+        deck.sort(() => Math.random() - 0.5);
+      }
+
+      memoryMatchedPairsCount = 0;
+      memoryFlippedCards = [];
+      memoryLock = false;
+
+      document.getElementById('badge-challenge-progress').textContent = `Pairs: 0/${memoryTotalPairsCount}`;
+
+      // Render board
+      const board = document.getElementById('memory-board-grid');
+      board.innerHTML = '';
+
+      deck.forEach(card => {
+        const cardEl = document.createElement('div');
+        cardEl.className = 'memory-card';
+        cardEl.id = card.cardId;
+        cardEl.dataset.pairId = card.pairId;
+        cardEl.setAttribute('role', 'button');
+        cardEl.setAttribute('tabindex', '0');
+        cardEl.setAttribute('aria-label', `Memory card`);
+
+        cardEl.innerHTML = `
+          <div class="card-face card-front" aria-hidden="true">?</div>
+          <div class="card-face card-back type-${card.type}">
+            <span class="card-tag">${card.tag}</span>
+            <span class="card-word">${card.text}</span>
+          </div>
+        `;
+
+        cardEl.addEventListener('click', () => handleMemoryCardClick(cardEl, card));
+        cardEl.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleMemoryCardClick(cardEl, card);
+          }
+        });
+
+        board.appendChild(cardEl);
+      });
+    }
+
+    function handleMemoryCardClick(cardEl, cardData) {
+      if (memoryLock) return;
+      if (cardEl.classList.contains('flipped') || cardEl.classList.contains('matched')) return;
+
+      // Flip card
+      cardEl.classList.add('flipped');
+      memoryFlippedCards.push({ el: cardEl, data: cardData });
+
+      if (memoryFlippedCards.length === 2) {
+        roundAttempts += 1;
+        memoryLock = true;
+        const [c1, c2] = memoryFlippedCards;
+
+        if (c1.data.pairId === c2.data.pairId && c1.data.cardId !== c2.data.cardId) {
+          // Matched Pair!
+          setTimeout(() => {
+            c1.el.classList.add('matched');
+            c2.el.classList.add('matched');
+            memoryMatchedPairsCount += 1;
+            roundSuccesses += 1;
+            roundScore += 20;
+            cumulativeScore += 20;
+
+            document.getElementById('badge-score-num').textContent = `Score: ${cumulativeScore}`;
+            document.getElementById('badge-challenge-progress').textContent = `Pairs: ${memoryMatchedPairsCount}/${memoryTotalPairsCount}`;
+            memoryFlippedCards = [];
+            memoryLock = false;
+
+            // Check if all matched
+            if (memoryMatchedPairsCount >= memoryTotalPairsCount) {
+              completeCurrentRound('Memory Match');
+            }
+          }, 350);
+        } else {
+          // Mismatch: flip back after short delay
+          setTimeout(() => {
+            c1.el.classList.remove('flipped');
+            c2.el.classList.remove('flipped');
+            memoryFlippedCards = [];
+            memoryLock = false;
+          }, 900);
+        }
+      }
+    }
+
+    // ========================================================
+    // 2. GAME: WORD PUZZLE ENGINE
+    // ========================================================
+
+    function initWordPuzzleGame(content) {
+      wordIndex = 0;
+      loadWordPuzzleIndex(0);
+    }
+
+    function loadWordPuzzleIndex(idx) {
+      hideFeedback();
+      wordEvaluated = false;
+      const puzzles = roundContent.puzzles || [];
+      if (idx >= puzzles.length) {
+        completeCurrentRound('Word Puzzle');
+        return;
+      }
+
+      currentPuzzle = puzzles[idx];
+      document.getElementById('badge-challenge-progress').textContent = `Word: ${idx + 1}/${puzzles.length}`;
+
+      document.getElementById('puzzle-clue-text').textContent = currentPuzzle.clue || currentPuzzle.translation || 'Clue';
+      document.getElementById('puzzle-text-input').value = '';
+      document.getElementById('puzzle-text-input').disabled = false;
+      document.getElementById('btn-check-word').style.display = 'inline-flex';
+      document.getElementById('btn-next-word').style.display = 'none';
+
+      // Setup tiles
+      wordSelectedChips = [];
+      renderPuzzleChips();
+    }
+
+    function renderPuzzleChips() {
+      const bank = document.getElementById('puzzle-letter-bank');
+      bank.innerHTML = '';
+
+      const letters = (currentPuzzle.scrambled || '').split('');
+      letters.forEach((ltr, i) => {
+        const isPlaced = wordSelectedChips.some(c => c.index === i);
+        const chip = document.createElement('button');
+        chip.className = `letter-chip ${isPlaced ? 'placed' : ''}`;
+        chip.textContent = ltr;
+        chip.setAttribute('aria-label', `Letter ${ltr}`);
+        chip.onclick = () => {
+          if (!isPlaced && !wordEvaluated) {
+            wordSelectedChips.push({ letter: ltr, index: i });
+            renderPuzzleChips();
+            updateTrayFromChips();
+          }
+        };
+        bank.appendChild(chip);
+      });
+
+      renderAnswerTray();
+    }
+
+    function renderAnswerTray() {
+      const tray = document.getElementById('puzzle-answer-tray');
+      tray.innerHTML = '';
+
+      if (wordSelectedChips.length === 0) {
+        tray.innerHTML = `<span class="tray-placeholder">Click letter chips below or type in the box</span>`;
+        return;
+      }
+
+      wordSelectedChips.forEach((chipObj, trayIdx) => {
+        const chip = document.createElement('button');
+        chip.className = 'letter-chip tray-chip';
+        chip.textContent = chipObj.letter;
+        chip.onclick = () => {
+          if (!wordEvaluated) {
+            wordSelectedChips.splice(trayIdx, 1);
+            renderPuzzleChips();
+            updateTrayFromChips();
+          }
+        };
+        tray.appendChild(chip);
+      });
+    }
+
+    function updateTrayFromChips() {
+      const assembled = wordSelectedChips.map(c => c.letter).join('');
+      document.getElementById('puzzle-text-input').value = assembled;
+    }
+
+    function syncInputToTray(text) {
+      if (wordEvaluated) return;
+      const chars = text.toUpperCase().split('');
+      const scrambledChars = (currentPuzzle.scrambled || '').split('');
+      const usedIndices = new Set();
+      const newChips = [];
+
+      for (const char of chars) {
+        const foundIdx = scrambledChars.findIndex((l, idx) => l === char && !usedIndices.has(idx));
+        if (foundIdx !== -1) {
+          usedIndices.add(foundIdx);
+          newChips.push({ letter: char, index: foundIdx });
+        } else {
+          newChips.push({ letter: char, index: -1 });
+        }
+      }
+
+      wordSelectedChips = newChips;
+      renderPuzzleChips();
+    }
+
+    function clearWordTray() {
+      if (wordEvaluated) return;
+      wordSelectedChips = [];
+      document.getElementById('puzzle-text-input').value = '';
+      renderPuzzleChips();
+    }
+
+    function focusPuzzleInput() {
+      if (!wordEvaluated) {
+        document.getElementById('puzzle-text-input').focus();
+      }
+    }
+
+    function checkWordPuzzle() {
+      if (wordEvaluated) return;
+      const userWord = (document.getElementById('puzzle-text-input').value || '').trim().toUpperCase();
+      if (!userWord) {
+        showFeedback(false, 'Empty Answer', 'Please arrange or type letters to form a word.');
+        return;
+      }
+
+      wordEvaluated = true;
+      roundAttempts += 1;
+      document.getElementById('puzzle-text-input').disabled = true;
+
+      const target = (currentPuzzle.targetWord || '').trim().toUpperCase();
+      const isCorrect = userWord === target;
+
+      if (isCorrect) {
+        roundSuccesses += 1;
+        roundScore += 25;
+        cumulativeScore += 25;
+        document.getElementById('badge-score-num').textContent = `Score: ${cumulativeScore}`;
+        showFeedback(true, 'Excellent!', `"${target}" is correct! (${currentPuzzle.clue || ''})`);
+      } else {
+        showFeedback(false, 'Incorrect', `The correct word was: "${target}" (${currentPuzzle.clue || ''})`);
+      }
+
+      document.getElementById('btn-check-word').style.display = 'none';
+      document.getElementById('btn-next-word').style.display = 'inline-flex';
+    }
+
+    function nextWordPuzzle() {
+      wordIndex += 1;
+      loadWordPuzzleIndex(wordIndex);
+    }
+
+    // ========================================================
+    // 3. GAME: QUICK QUIZ ENGINE
+    // ========================================================
+
+    function initQuickQuizGame(content) {
+      quizIndex = 0;
+      loadQuizQuestionIndex(0);
+    }
+
+    function loadQuizQuestionIndex(idx) {
+      hideFeedback();
+      quizEvaluated = false;
+      const questions = roundContent.questions || [];
+      if (idx >= questions.length) {
+        completeCurrentRound('Quick Quiz');
+        return;
+      }
+
+      currentQuizQ = questions[idx];
+      document.getElementById('badge-challenge-progress').textContent = `Question: ${idx + 1}/${questions.length}`;
+
+      document.getElementById('quiz-category-tag').textContent = currentQuizQ.category || 'Trivia';
+      document.getElementById('quiz-question-text').textContent = currentQuizQ.question;
+      document.getElementById('btn-next-quiz').style.display = 'none';
+
+      const grid = document.getElementById('quiz-options-grid');
+      grid.innerHTML = '';
+
+      const letters = ['A', 'B', 'C', 'D'];
+      (currentQuizQ.options || []).forEach((opt, oIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option-btn';
+        btn.id = `quiz-opt-${oIdx}`;
+        btn.innerHTML = `
+          <span class="option-letter">${letters[oIdx] || ''}</span>
+          <span>${opt}</span>
+        `;
+        btn.onclick = () => selectQuizOption(btn, opt);
+        grid.appendChild(btn);
+      });
+    }
+
+    function selectQuizOption(selectedBtn, selectedText) {
+      if (quizEvaluated) return;
+      quizEvaluated = true;
+      roundAttempts += 1;
+
+      const correctAns = currentQuizQ.answer;
+      const isCorrect = selectedText.trim().toLowerCase() === correctAns.trim().toLowerCase();
+
+      // Disable all options and highlight
+      const buttons = document.querySelectorAll('.quiz-option-btn');
+      buttons.forEach(b => {
+        b.disabled = true;
+        const text = b.querySelector('span:last-child').textContent.trim().toLowerCase();
+        if (text === correctAns.trim().toLowerCase()) {
+          b.classList.add('correct');
+        } else if (b === selectedBtn && !isCorrect) {
+          b.classList.add('wrong');
+        }
+      });
+
+      if (isCorrect) {
+        roundSuccesses += 1;
+        roundScore += 25;
+        cumulativeScore += 25;
+        document.getElementById('badge-score-num').textContent = `Score: ${cumulativeScore}`;
+        showFeedback(true, 'Correct Answer! 🌟', currentQuizQ.explanation || 'Great job!');
+      } else {
+        showFeedback(false, 'Not Quite', currentQuizQ.explanation || `The correct answer is: ${correctAns}`);
+      }
+
+      document.getElementById('btn-next-quiz').style.display = 'inline-flex';
+    }
+
+    function nextQuizQuestion() {
+      quizIndex += 1;
+      loadQuizQuestionIndex(quizIndex);
+    }
+
+    // ========================================================
+    // 4. GAME: PATTERN & LOGIC CHALLENGE ENGINE
+    // ========================================================
+
+    function initPatternLogicGame(content) {
+      logicIndex = 0;
+      loadLogicChallengeIndex(0);
+    }
+
+    function loadLogicChallengeIndex(idx) {
+      hideFeedback();
+      logicEvaluated = false;
+      const challenges = roundContent.challenges || [];
+      if (idx >= challenges.length) {
+        completeCurrentRound('Pattern & Logic');
+        return;
+      }
+
+      currentLogicQ = challenges[idx];
+      document.getElementById('badge-challenge-progress').textContent = `Challenge: ${idx + 1}/${challenges.length}`;
+
+      document.getElementById('logic-category-tag').textContent = currentLogicQ.type || 'Logic Pattern';
+      document.getElementById('logic-question-text').textContent = currentLogicQ.prompt || 'What completes the pattern?';
+      document.getElementById('btn-next-logic').style.display = 'none';
+
+      // Render Sequence items
+      const seqItemsContainer = document.getElementById('logic-sequence-items');
+      seqItemsContainer.innerHTML = '';
+      (currentLogicQ.sequence || []).forEach(item => {
+        const box = document.createElement('div');
+        const isTarget = item === '?' || item === '___';
+        box.className = `seq-box ${isTarget ? 'target-box' : ''}`;
+        box.textContent = item;
+        seqItemsContainer.appendChild(box);
+      });
+
+      // Render Options
+      const grid = document.getElementById('logic-options-grid');
+      grid.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+      (currentLogicQ.options || []).forEach((opt, oIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option-btn';
+        btn.id = `logic-opt-${oIdx}`;
+        btn.innerHTML = `
+          <span class="option-letter">${letters[oIdx] || ''}</span>
+          <span>${opt}</span>
+        `;
+        btn.onclick = () => selectLogicOption(btn, opt);
+        grid.appendChild(btn);
+      });
+    }
+
+    function selectLogicOption(selectedBtn, selectedText) {
+      if (logicEvaluated) return;
+      logicEvaluated = true;
+      roundAttempts += 1;
+
+      const correctAns = currentLogicQ.answer;
+      const isCorrect = String(selectedText).trim().toLowerCase() === String(correctAns).trim().toLowerCase();
+
+      // Disable all options and highlight
+      const buttons = document.querySelectorAll('#logic-options-grid .quiz-option-btn');
+      buttons.forEach(b => {
+        b.disabled = true;
+        const text = b.querySelector('span:last-child').textContent.trim().toLowerCase();
+        if (text === String(correctAns).trim().toLowerCase()) {
+          b.classList.add('correct');
+        } else if (b === selectedBtn && !isCorrect) {
+          b.classList.add('wrong');
+        }
+      });
+
+      if (isCorrect) {
+        roundSuccesses += 1;
+        roundScore += 25;
+        cumulativeScore += 25;
+        document.getElementById('badge-score-num').textContent = `Score: ${cumulativeScore}`;
+        showFeedback(true, 'Brilliant Logic! 💡', currentLogicQ.explanation || 'Perfect pattern analysis.');
+      } else {
+        showFeedback(false, 'Logical Rule:', currentLogicQ.explanation || `The correct element is: ${correctAns}`);
+      }
+
+      document.getElementById('btn-next-logic').style.display = 'inline-flex';
+    }
+
+    function nextLogicChallenge() {
+      logicIndex += 1;
+      loadLogicChallengeIndex(logicIndex);
+    }
+
+    // ========================================================
+    // 5. GAME: WORD SEARCH ENGINE
+    // ========================================================
+    function initWordSearchGame(content) {
+      searchFoundWords = [];
+      searchSelectedCells = [];
+      searchTargetWords = content.words || [];
+      searchGrid = content.grid || [];
+
+      document.getElementById('badge-challenge-progress').textContent = `Words: 0/${searchTargetWords.length}`;
+      document.getElementById('btn-next-search').style.display = 'none';
+      document.getElementById('search-selected-word').textContent = '-';
+
+      // Render Word Pills
+      const pillsContainer = document.getElementById('search-word-pills');
+      pillsContainer.innerHTML = '';
+      searchTargetWords.forEach(w => {
+        const pill = document.createElement('div');
+        pill.className = 'search-word-pill';
+        pill.id = `pill-word-${w.word}`;
+        pill.title = w.clue || '';
+        pill.innerHTML = `<span>${w.word}</span> <span style="font-size:0.75rem;opacity:0.7">(${w.length || w.word.length})</span>`;
+        pillsContainer.appendChild(pill);
+      });
+
+      // Render Grid
+      const board = document.getElementById('search-grid-board');
+      board.innerHTML = '';
+      const size = searchGrid.length || 8;
+      board.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          const char = (searchGrid[r] && searchGrid[r][c]) ? searchGrid[r][c] : 'A';
+          const cell = document.createElement('div');
+          cell.className = 'search-cell';
+          cell.dataset.r = r;
+          cell.dataset.c = c;
+          cell.dataset.char = char;
+          cell.textContent = char;
+          cell.onclick = () => handleSearchCellClick(cell, r, c, char);
+          board.appendChild(cell);
+        }
+      }
+    }
+
+    function handleSearchCellClick(cell, r, c, char) {
+      const alreadyIdx = searchSelectedCells.findIndex(item => item.r === r && item.c === c);
+      if (alreadyIdx !== -1) {
+        if (!cell.classList.contains('found')) {
+          cell.classList.remove('selected');
+        }
+        searchSelectedCells.splice(alreadyIdx, 1);
+      } else {
+        cell.classList.add('selected');
+        searchSelectedCells.push({ r, c, char, el: cell });
+      }
+
+      const wordStr = searchSelectedCells.map(x => x.char).join('');
+      document.getElementById('search-selected-word').textContent = wordStr || '-';
+    }
+
+    function clearWordSearchSelection() {
+      searchSelectedCells.forEach(item => {
+        if (!item.el.classList.contains('found')) {
+          item.el.classList.remove('selected');
+        }
+      });
+      searchSelectedCells = [];
+      document.getElementById('search-selected-word').textContent = '-';
+    }
+
+    function submitWordSearchWord() {
+      const selectedWord = searchSelectedCells.map(x => x.char).join('').toUpperCase();
+      const reversedWord = selectedWord.split('').reverse().join('');
+
+      const matched = searchTargetWords.find(w => 
+        (w.word.toUpperCase() === selectedWord || w.word.toUpperCase() === reversedWord) &&
+        !searchFoundWords.includes(w.word.toUpperCase())
+      );
+
+      if (matched) {
+        const foundWord = matched.word.toUpperCase();
+        searchFoundWords.push(foundWord);
+        roundAttempts += 1;
+        roundSuccesses += 1;
+        roundScore += 25;
+        cumulativeScore += 25;
+        document.getElementById('badge-score-num').textContent = `Score: ${cumulativeScore}`;
+        document.getElementById('badge-challenge-progress').textContent = `Words: ${searchFoundWords.length}/${searchTargetWords.length}`;
+
+        const pill = document.getElementById(`pill-word-${matched.word}`);
+        if (pill) pill.classList.add('found');
+
+        searchSelectedCells.forEach(item => {
+          item.el.classList.remove('selected');
+          item.el.classList.add('found');
+        });
+        searchSelectedCells = [];
+        document.getElementById('search-selected-word').textContent = '-';
+
+        showFeedback(true, 'Word Found! 🔍', `Awesome! You found "${foundWord}" (${matched.clue || 'Hidden vocabulary'}).`);
+
+        if (searchFoundWords.length >= searchTargetWords.length) {
+          document.getElementById('btn-next-search').style.display = 'inline-flex';
+          setTimeout(() => {
+            completeCurrentRound('Word Search');
+          }, 1200);
+        }
+      } else {
+        if (searchSelectedCells.length > 0) {
+          roundAttempts += 1;
+          showFeedback(false, 'Keep Searching', `"${selectedWord}" is not one of the target words. Look for words placed horizontally, vertically, or diagonally.`);
+          clearWordSearchSelection();
+        }
+      }
+    }
+
+    function nextWordSearchChallenge() {
+      completeCurrentRound('Word Search');
+    }
+
+    // ========================================================
+    // 6. GAME: SENTENCE BUILDER ENGINE
+    // ========================================================
+    function initSentenceBuilderGame(content) {
+      sentenceIndex = 0;
+      loadSentenceChallengeIndex(0);
+    }
+
+    function loadSentenceChallengeIndex(idx) {
+      hideFeedback();
+      sentenceEvaluated = false;
+      sentenceTrayWords = [];
+      const challenges = roundContent.challenges || [];
+      if (idx >= challenges.length) {
+        completeCurrentRound('Sentence Builder');
+        return;
+      }
+
+      currentSentenceQ = challenges[idx];
+      document.getElementById('badge-challenge-progress').textContent = `Sentence: ${idx + 1}/${challenges.length}`;
+      document.getElementById('sentence-prompt-text').textContent = currentSentenceQ.meaning || 'Construct the sentence:';
+      document.getElementById('btn-next-sentence').style.display = 'none';
+
+      // Clear Tray
+      const tray = document.getElementById('sentence-drop-tray');
+      tray.innerHTML = '<span class="tray-placeholder" id="sentence-tray-placeholder" style="color: var(--color-text-subtle); font-size: 0.9rem;">Tap available words below to build the sentence</span>';
+
+      // Render Word Bank
+      const bank = document.getElementById('sentence-word-bank');
+      bank.innerHTML = '';
+      const words = currentSentenceQ.shuffled || currentSentenceQ.words || [];
+      words.forEach((w, wIdx) => {
+        const chip = document.createElement('button');
+        chip.className = 'sentence-chip';
+        chip.id = `sent-bank-chip-${wIdx}`;
+        chip.textContent = w;
+        chip.onclick = () => addWordToSentenceTray(w, chip);
+        bank.appendChild(chip);
+      });
+    }
+
+    function addWordToSentenceTray(word, bankChip) {
+      if (sentenceEvaluated) return;
+      bankChip.classList.add('placed');
+
+      const tray = document.getElementById('sentence-drop-tray');
+      const placeholder = document.getElementById('sentence-tray-placeholder');
+      if (placeholder) placeholder.style.display = 'none';
+
+      const trayWord = document.createElement('button');
+      trayWord.className = 'sentence-chip tray-word';
+      trayWord.textContent = word;
+      trayWord.title = 'Click to return to bank';
+      trayWord.onclick = () => {
+        if (sentenceEvaluated) return;
+        trayWord.remove();
+        bankChip.classList.remove('placed');
+        sentenceTrayWords = sentenceTrayWords.filter(x => x.el !== trayWord);
+        if (sentenceTrayWords.length === 0 && placeholder) {
+          placeholder.style.display = 'inline';
+        }
+      };
+
+      tray.appendChild(trayWord);
+      sentenceTrayWords.push({ word, el: trayWord, bankChip });
+    }
+
+    function clearSentenceTray() {
+      if (sentenceEvaluated) return;
+      sentenceTrayWords.forEach(item => {
+        item.bankChip.classList.remove('placed');
+        item.el.remove();
+      });
+      sentenceTrayWords = [];
+      const placeholder = document.getElementById('sentence-tray-placeholder');
+      if (placeholder) placeholder.style.display = 'inline';
+    }
+
+    function checkSentenceBuilder() {
+      if (sentenceEvaluated) return;
+      if (sentenceTrayWords.length === 0) {
+        showFeedback(false, 'Sentence Incomplete', 'Tap the word chips below to construct your sentence first.');
+        return;
+      }
+
+      sentenceEvaluated = true;
+      roundAttempts += 1;
+
+      const built = sentenceTrayWords.map(x => x.word).join(' ').trim();
+      const target = (currentSentenceQ.targetSentence || '').trim();
+
+      const cleanBuilt = built.replace(/[.,?!]/g, '').toLowerCase();
+      const cleanTarget = target.replace(/[.,?!]/g, '').toLowerCase();
+      const isCorrect = cleanBuilt === cleanTarget;
+
+      if (isCorrect) {
+        roundSuccesses += 1;
+        roundScore += 25;
+        cumulativeScore += 25;
+        document.getElementById('badge-score-num').textContent = `Score: ${cumulativeScore}`;
+        showFeedback(true, 'Sentence Verified! 🏗️', currentSentenceQ.explanation || 'Grammatically sound and perfectly structured.');
+      } else {
+        showFeedback(false, 'Syntax Notice:', currentSentenceQ.explanation || `The correct arrangement is: "${target}"`);
+      }
+
+      document.getElementById('btn-next-sentence').style.display = 'inline-flex';
+    }
+
+    function nextSentenceChallenge() {
+      sentenceIndex += 1;
+      loadSentenceChallengeIndex(sentenceIndex);
+    }
+
+    // ========================================================
+    // 7. GAME: LISTEN & CHOOSE ENGINE
+    // ========================================================
+    function initListenChooseGame(content) {
+      listenIndex = 0;
+      loadListenChallengeIndex(0);
+    }
+
+    function loadListenChallengeIndex(idx) {
+      hideFeedback();
+      listenEvaluated = false;
+      const challenges = roundContent.challenges || [];
+      if (idx >= challenges.length) {
+        completeCurrentRound('Listen & Choose');
+        return;
+      }
+
+      currentListenQ = challenges[idx];
+      document.getElementById('badge-challenge-progress').textContent = `Audio: ${idx + 1}/${challenges.length}`;
+      document.getElementById('listen-prompt-instruction').textContent = currentListenQ.prompt || 'Listen to the spoken voice and choose the correct answer:';
+      document.getElementById('listen-lang-pill').textContent = `Language: ${currentListenQ.displayLang || 'Target Voice'}`;
+      document.getElementById('btn-next-listen').style.display = 'none';
+
+      const errBanner = document.getElementById('audio-error-banner');
+      if (errBanner) errBanner.style.display = 'none';
+
+      // Render Options
+      const grid = document.getElementById('listen-options-grid');
+      grid.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+      (currentListenQ.options || []).forEach((opt, oIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option-btn';
+        btn.id = `listen-opt-${oIdx}`;
+        btn.innerHTML = `
+          <span class="option-letter">${letters[oIdx] || ''}</span>
+          <span>${opt}</span>
+        `;
+        btn.onclick = () => selectListenOption(btn, opt);
+        grid.appendChild(btn);
+      });
+
+      // Play prompt audio
+      setTimeout(() => {
+        playCurrentListenAudio();
+      }, 350);
+    }
+
+    function playCurrentListenAudio() {
+      if (!currentListenQ || !currentListenQ.spokenText) return;
+      const text = currentListenQ.spokenText;
+      const lang = currentListenQ.langCode || 'hi-IN';
+      const playBtn = document.getElementById('btn-play-listen-audio');
+      const errBanner = document.getElementById('audio-error-banner');
+
+      if (!('speechSynthesis' in window)) {
+        if (errBanner) {
+          errBanner.textContent = 'Voice audio playback is not supported by your browser. Spoken clue: "' + text + '"';
+          errBanner.style.display = 'block';
+        }
+        return;
+      }
+
+      try {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang;
+        utterance.rate = 0.9;
+
+        if (playBtn) playBtn.classList.add('playing');
+
+        utterance.onend = () => {
+          if (playBtn) playBtn.classList.remove('playing');
+        };
+
+        utterance.onerror = (e) => {
+          console.warn('Speech synthesis error:', e);
+          if (playBtn) playBtn.classList.remove('playing');
+          if (errBanner) {
+            errBanner.textContent = 'Voice audio playback encountered an issue in this browser. Spoken clue: "' + text + '"';
+            errBanner.style.display = 'block';
+          }
+        };
+
+        window.speechSynthesis.speak(utterance);
+      } catch (err) {
+        console.error('Audio playback exception:', err);
+        if (playBtn) playBtn.classList.remove('playing');
+        if (errBanner) {
+          errBanner.textContent = 'Voice audio playback unavailable. Spoken clue: "' + text + '"';
+          errBanner.style.display = 'block';
+        }
+      }
+    }
+
+    function selectListenOption(selectedBtn, selectedText) {
+      if (listenEvaluated) return;
+      listenEvaluated = true;
+      roundAttempts += 1;
+
+      const correctAns = currentListenQ.answer || currentListenQ.correctAnswer;
+      const isCorrect = selectedText.trim().toLowerCase() === correctAns.trim().toLowerCase();
+
+      const buttons = document.querySelectorAll('#listen-options-grid .quiz-option-btn');
+      buttons.forEach(b => {
+        b.disabled = true;
+        const text = b.querySelector('span:last-child').textContent.trim().toLowerCase();
+        if (text === correctAns.trim().toLowerCase()) {
+          b.classList.add('correct');
+        } else if (b === selectedBtn && !isCorrect) {
+          b.classList.add('wrong');
+        }
+      });
+
+      if (isCorrect) {
+        roundSuccesses += 1;
+        roundScore += 25;
+        cumulativeScore += 25;
+        document.getElementById('badge-score-num').textContent = `Score: ${cumulativeScore}`;
+        showFeedback(true, 'Accurate Listening! 🎧', currentListenQ.explanation || 'You identified the spoken vocabulary accurately.');
+      } else {
+        showFeedback(false, 'Translation Check:', currentListenQ.explanation || `The correct meaning is: ${correctAns}`);
+      }
+
+      document.getElementById('btn-next-listen').style.display = 'inline-flex';
+    }
+
+    function nextListenChallenge() {
+      listenIndex += 1;
+      loadListenChallengeIndex(listenIndex);
+    }
+
+    // ========================================================
+    // 8. GAME: ODD ONE OUT ENGINE
+    // ========================================================
+    function initOddOneOutGame(content) {
+      oddIndex = 0;
+      loadOddChallengeIndex(0);
+    }
+
+    function loadOddChallengeIndex(idx) {
+      hideFeedback();
+      oddEvaluated = false;
+      const challenges = roundContent.challenges || [];
+      if (idx >= challenges.length) {
+        completeCurrentRound('Odd One Out');
+        return;
+      }
+
+      currentOddQ = challenges[idx];
+      document.getElementById('badge-challenge-progress').textContent = `Puzzle: ${idx + 1}/${challenges.length}`;
+      document.getElementById('odd-category-tag').textContent = currentOddQ.category || 'Category Deduction';
+      document.getElementById('odd-question-text').textContent = currentOddQ.prompt || 'Which item does NOT belong?';
+      document.getElementById('odd-subtext-clue').textContent = currentOddQ.commonFeature 
+        ? `Common thread: ${currentOddQ.commonFeature}` 
+        : 'Three options share a direct relationship; one is the odd one out.';
+      document.getElementById('btn-next-odd').style.display = 'none';
+
+      // Render Options
+      const grid = document.getElementById('odd-options-grid');
+      grid.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+      (currentOddQ.options || []).forEach((opt, oIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option-btn';
+        btn.id = `odd-opt-${oIdx}`;
+        btn.innerHTML = `
+          <span class="option-letter">${letters[oIdx] || ''}</span>
+          <span>${opt}</span>
+        `;
+        btn.onclick = () => selectOddOption(btn, opt);
+        grid.appendChild(btn);
+      });
+    }
+
+    function selectOddOption(selectedBtn, selectedText) {
+      if (oddEvaluated) return;
+      oddEvaluated = true;
+      roundAttempts += 1;
+
+      const oddAns = currentOddQ.oddItem || currentOddQ.answer || currentOddQ.correctAnswer;
+      const isCorrect = selectedText.trim().toLowerCase() === oddAns.trim().toLowerCase();
+
+      const buttons = document.querySelectorAll('#odd-options-grid .quiz-option-btn');
+      buttons.forEach(b => {
+        b.disabled = true;
+        const text = b.querySelector('span:last-child').textContent.trim().toLowerCase();
+        if (text === oddAns.trim().toLowerCase()) {
+          b.classList.add('correct');
+        } else if (b === selectedBtn && !isCorrect) {
+          b.classList.add('wrong');
+        }
+      });
+
+      if (isCorrect) {
+        roundSuccesses += 1;
+        roundScore += 25;
+        cumulativeScore += 25;
+        document.getElementById('badge-score-num').textContent = `Score: ${cumulativeScore}`;
+        showFeedback(true, 'Spot On! 🎯', currentOddQ.explanation || 'Accurate category deduction.');
+      } else {
+        showFeedback(false, 'Category Distinction:', currentOddQ.explanation || `The odd item out is: ${oddAns}`);
+      }
+
+      document.getElementById('btn-next-odd').style.display = 'inline-flex';
+    }
+
+    function nextOddChallenge() {
+      oddIndex += 1;
+      loadOddChallengeIndex(oddIndex);
+    }
+
+    // ========================================================
+    // 9. GAME: QUICK RECALL ENGINE
+    // ========================================================
+    function initQuickRecallGame(content) {
+      recallIndex = 0;
+      loadRecallChallengeIndex(0);
+    }
+
+    function loadRecallChallengeIndex(idx) {
+      hideFeedback();
+      recallEvaluated = false;
+      if (recallCountdownTimer) {
+        clearInterval(recallCountdownTimer);
+        recallCountdownTimer = null;
+      }
+
+      const challenges = roundContent.challenges || [];
+      if (idx >= challenges.length) {
+        completeCurrentRound('Quick Recall');
+        return;
+      }
+
+      currentRecallQ = challenges[idx];
+      document.getElementById('badge-challenge-progress').textContent = `Recall: ${idx + 1}/${challenges.length}`;
+      document.getElementById('btn-next-recall').style.display = 'none';
+
+      // Phase 1: Memorization Display Active
+      const memCard = document.getElementById('recall-memorize-card');
+      const qCard = document.getElementById('recall-question-card');
+      memCard.style.display = 'block';
+      qCard.style.display = 'none';
+
+      // Render Sequence Items
+      const display = document.getElementById('recall-items-display');
+      display.innerHTML = '';
+      (currentRecallQ.sequence || []).forEach((item, pos) => {
+        const box = document.createElement('div');
+        box.className = 'recall-item-box';
+        box.innerHTML = `
+          <span class="recall-item-pos">#${pos + 1}</span>
+          <span>${item}</span>
+        `;
+        display.appendChild(box);
+      });
+
+      // Countdown Timer
+      let timeLeft = currentRecallQ.memorizeDuration || 4;
+      const timerBadge = document.getElementById('recall-timer-badge');
+      timerBadge.textContent = `⏳ ${timeLeft}s`;
+
+      recallCountdownTimer = setInterval(() => {
+        timeLeft -= 1;
+        if (timeLeft > 0) {
+          timerBadge.textContent = `⏳ ${timeLeft}s`;
+        } else {
+          clearInterval(recallCountdownTimer);
+          recallCountdownTimer = null;
+          // Switch to Phase 2: Question
+          memCard.style.display = 'none';
+          qCard.style.display = 'block';
+          renderRecallQuestion();
+        }
+      }, 1000);
+    }
+
+    function renderRecallQuestion() {
+      document.getElementById('recall-question-prompt').textContent = currentRecallQ.prompt || 'Recall the sequence:';
+
+      const grid = document.getElementById('recall-options-grid');
+      grid.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+      (currentRecallQ.options || []).forEach((opt, oIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option-btn';
+        btn.id = `recall-opt-${oIdx}`;
+        btn.innerHTML = `
+          <span class="option-letter">${letters[oIdx] || ''}</span>
+          <span>${opt}</span>
+        `;
+        btn.onclick = () => selectRecallOption(btn, opt);
+        grid.appendChild(btn);
+      });
+    }
+
+    function selectRecallOption(selectedBtn, selectedText) {
+      if (recallEvaluated) return;
+      recallEvaluated = true;
+      roundAttempts += 1;
+
+      const correctAns = currentRecallQ.answer || currentRecallQ.correctAnswer;
+      const isCorrect = selectedText.trim().toLowerCase() === correctAns.trim().toLowerCase();
+
+      const buttons = document.querySelectorAll('#recall-options-grid .quiz-option-btn');
+      buttons.forEach(b => {
+        b.disabled = true;
+        const text = b.querySelector('span:last-child').textContent.trim().toLowerCase();
+        if (text === correctAns.trim().toLowerCase()) {
+          b.classList.add('correct');
+        } else if (b === selectedBtn && !isCorrect) {
+          b.classList.add('wrong');
+        }
+      });
+
+      if (isCorrect) {
+        roundSuccesses += 1;
+        roundScore += 25;
+        cumulativeScore += 25;
+        document.getElementById('badge-score-num').textContent = `Score: ${cumulativeScore}`;
+        showFeedback(true, 'Sharp Memory! ⏱️', currentRecallQ.explanation || 'Outstanding recall accuracy.');
+      } else {
+        showFeedback(false, 'Sequence Order:', currentRecallQ.explanation || `The correct item is: ${correctAns}`);
+      }
+
+      document.getElementById('btn-next-recall').style.display = 'inline-flex';
+    }
+
+    function nextRecallChallenge() {
+      recallIndex += 1;
+      loadRecallChallengeIndex(recallIndex);
+    }
+
+    // ========================================================
+    // 10. GAME: RIDDLE CHALLENGE ENGINE
+    // ========================================================
+    function initRiddleChallengeGame(content) {
+      riddleIndex = 0;
+      loadRiddleChallengeIndex(0);
+    }
+
+    function loadRiddleChallengeIndex(idx) {
+      hideFeedback();
+      riddleEvaluated = false;
+      riddleHintShown = false;
+      const challenges = roundContent.challenges || [];
+      if (idx >= challenges.length) {
+        completeCurrentRound('Riddle Challenge');
+        return;
+      }
+
+      currentRiddleQ = challenges[idx];
+      document.getElementById('badge-challenge-progress').textContent = `Riddle: ${idx + 1}/${challenges.length}`;
+      document.getElementById('riddle-question-text').textContent = currentRiddleQ.riddle || 'What is the answer to this riddle?';
+      document.getElementById('riddle-hint-text').textContent = currentRiddleQ.hint || 'No hint available.';
+      document.getElementById('riddle-hint-box').style.display = 'none';
+      document.getElementById('btn-toggle-riddle-hint').textContent = '💡 Show Hint';
+      document.getElementById('btn-next-riddle').style.display = 'none';
+
+      // Render Options
+      const grid = document.getElementById('riddle-options-grid');
+      grid.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+      (currentRiddleQ.options || []).forEach((opt, oIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option-btn';
+        btn.id = `riddle-opt-${oIdx}`;
+        btn.innerHTML = `
+          <span class="option-letter">${letters[oIdx] || ''}</span>
+          <span>${opt}</span>
+        `;
+        btn.onclick = () => selectRiddleOption(btn, opt);
+        grid.appendChild(btn);
+      });
+    }
+
+    function toggleRiddleHint() {
+      const box = document.getElementById('riddle-hint-box');
+      const btn = document.getElementById('btn-toggle-riddle-hint');
+      if (box.style.display === 'none') {
+        box.style.display = 'block';
+        btn.textContent = 'Hide Hint';
+      } else {
+        box.style.display = 'none';
+        btn.textContent = '💡 Show Hint';
+      }
+    }
+
+    function selectRiddleOption(selectedBtn, selectedText) {
+      if (riddleEvaluated) return;
+      riddleEvaluated = true;
+      roundAttempts += 1;
+
+      const correctAns = currentRiddleQ.answer || currentRiddleQ.correctAnswer;
+      const isCorrect = selectedText.trim().toLowerCase() === correctAns.trim().toLowerCase();
+
+      const buttons = document.querySelectorAll('#riddle-options-grid .quiz-option-btn');
+      buttons.forEach(b => {
+        b.disabled = true;
+        const text = b.querySelector('span:last-child').textContent.trim().toLowerCase();
+        if (text === correctAns.trim().toLowerCase()) {
+          b.classList.add('correct');
+        } else if (b === selectedBtn && !isCorrect) {
+          b.classList.add('wrong');
+        }
+      });
+
+      if (isCorrect) {
+        roundSuccesses += 1;
+        roundScore += 25;
+        cumulativeScore += 25;
+        document.getElementById('badge-score-num').textContent = `Score: ${cumulativeScore}`;
+        showFeedback(true, 'Riddle Solved! 🔮', currentRiddleQ.explanation || 'Brilliant lateral thinking and clue analysis.');
+      } else {
+        showFeedback(false, 'Riddle Answer:', currentRiddleQ.explanation || `The correct answer is: ${correctAns}`);
+      }
+
+      document.getElementById('btn-next-riddle').style.display = 'inline-flex';
+    }
+
+    function nextRiddleChallenge() {
+      riddleIndex += 1;
+      loadRiddleChallengeIndex(riddleIndex);
+    }
+
+    // ========================================================
+    // ROUND COMPLETION & SESSION PERSISTENCE
+    // ========================================================
+
+    async function completeCurrentRound(gameTitle) {
+      totalRoundsPlayed += 1;
+      hideFeedback();
+
+      if (recallCountdownTimer) {
+        clearInterval(recallCountdownTimer);
+        recallCountdownTimer = null;
+      }
+
+      // Hide all game containers
+      const allContainers = [
+        'container-memory-match', 'container-word-puzzle', 'container-quick-quiz',
+        'container-pattern-logic', 'container-word-search', 'container-sentence-builder',
+        'container-listen-choose', 'container-odd-one-out', 'container-quick-recall',
+        'container-riddle-challenge'
+      ];
+      allContainers.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+
+      // Calculate accuracy
+      const accuracy = roundAttempts > 0 ? Math.round((roundSuccesses / roundAttempts) * 100) : 100;
+
+      // Update completion screen
+      const modal = document.getElementById('round-completion-view');
+      document.getElementById('completion-title').textContent = `Round ${currentRound} Complete!`;
+      document.getElementById('completion-message').textContent = `Fantastic job completing ${gameTitle} Round ${currentRound}. Keep the momentum going!`;
+      document.getElementById('stat-round-score').textContent = `+${roundScore}`;
+      document.getElementById('stat-round-accuracy').textContent = `${accuracy}%`;
+      document.getElementById('stat-cumulative-score').textContent = cumulativeScore;
+
+      modal.style.display = 'block';
+
+      // Persist session to backend
+      try {
+        await fetch('/api/games/save-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            gameId: activeGame,
+            roundNumber: currentRound,
+            score: roundScore,
+            maxScore: roundAttempts * 25,
+            moves: roundAttempts,
+            accuracy: accuracy
+          })
+        });
+      } catch (e) {
+        console.warn('Could not save game session:', e);
+      }
+    }
+
+    // ========================================================
+    // SHARED UTILITY & FEEDBACK FUNCTIONS
+    // ========================================================
+
+    function showFeedback(isSuccess, title, msg) {
+      const banner = document.getElementById('game-feedback-banner');
+      banner.className = `feedback-banner ${isSuccess ? 'feedback-success' : 'feedback-error'}`;
+      document.getElementById('feedback-banner-title').textContent = title;
+      document.getElementById('feedback-banner-body').textContent = msg;
+      banner.style.display = 'block';
+    }
+
+    function hideFeedback() {
+      const banner = document.getElementById('game-feedback-banner');
+      banner.style.display = 'none';
+    }
+
+    // Client-side fallback generator if API is unavailable
+    function getFallbackRoundContent(gameKey, round) {
+      if (gameKey === 'memory') {
+        return {
+          round,
+          pairs: [
+            { pairId: 1, targetWord: 'नमस्ते', explanationWord: 'Hello' },
+            { pairId: 2, targetWord: 'धन्यवाद', explanationWord: 'Thank you' },
+            { pairId: 3, targetWord: 'मित्र', explanationWord: 'Friend' },
+            { pairId: 4, targetWord: 'जल', explanationWord: 'Water' }
+          ]
+        };
+      }
+      if (gameKey === 'word') {
+        return {
+          round,
+          puzzles: [
+            { targetWord: 'NAMASTE', scrambled: 'TSMANAE', clue: 'Traditional greeting' },
+            { targetWord: 'SHUKRIYA', scrambled: 'KYIASRHU', clue: 'Thank you' },
+            { targetWord: 'DOST', scrambled: 'TODS', clue: 'Friend' },
+            { targetWord: 'PANI', scrambled: 'NAIP', clue: 'Water' }
+          ]
+        };
+      }
+      if (gameKey === 'quiz') {
+        return {
+          round,
+          questions: [
+            {
+              category: 'Science',
+              question: 'Which planet is known as the Red Planet?',
+              options: ['Mars', 'Venus', 'Jupiter', 'Mercury'],
+              answer: 'Mars',
+              explanation: 'Iron oxide on Mars creates its distinctive reddish appearance.'
+            },
+            {
+              category: 'General Knowledge',
+              question: 'How many continents are there on Earth?',
+              options: ['5', '6', '7', '8'],
+              answer: '7',
+              explanation: 'The 7 continents are Asia, Africa, North America, South America, Antarctica, Europe, and Australia.'
+            }
+          ]
+        };
+      }
+      if (gameKey === 'logic') {
+        return {
+          round,
+          challenges: [
+            {
+              type: 'Number Sequence',
+              prompt: 'Find the next number in the sequence:',
+              sequence: ['2', '4', '8', '16', '?'],
+              options: ['24', '30', '32', '64'],
+              answer: '32',
+              explanation: 'Each number doubles the previous number (16 * 2 = 32).'
+            }
+          ]
+        };
+      }
+      if (gameKey === 'search') {
+        return {
+          round,
+          gridSize: 8,
+          grid: [
+            ['S', 'U', 'N', 'A', 'B', 'C', 'D', 'E'],
+            ['M', 'O', 'O', 'N', 'F', 'G', 'H', 'I'],
+            ['S', 'T', 'A', 'R', 'J', 'K', 'L', 'M'],
+            ['M', 'A', 'R', 'S', 'N', 'O', 'P', 'Q'],
+            ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+            ['I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'],
+            ['Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X'],
+            ['Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F']
+          ],
+          words: [
+            { word: 'SUN', clue: 'Bright center star', length: 3 },
+            { word: 'MOON', clue: 'Natural satellite', length: 4 },
+            { word: 'STAR', clue: 'Luminous point', length: 4 },
+            { word: 'MARS', clue: 'The red planet', length: 4 }
+          ]
+        };
+      }
+      if (gameKey === 'sentence') {
+        return {
+          round,
+          challenges: [
+            {
+              id: 'sent_fb_1',
+              meaning: 'The sun rises in the east.',
+              targetSentence: 'The sun rises in the east',
+              shuffled: ['rises', 'The', 'east', 'in', 'sun', 'the'],
+              explanation: 'Subject (The sun) + Verb (rises) + Prepositional phrase (in the east).'
+            },
+            {
+              id: 'sent_fb_2',
+              meaning: 'Knowledge is power for everyone.',
+              targetSentence: 'Knowledge is power for everyone',
+              shuffled: ['power', 'Knowledge', 'everyone', 'for', 'is'],
+              explanation: 'Subject "Knowledge" is linked by copula "is" to predicate noun "power".'
+            },
+            {
+              id: 'sent_fb_3',
+              meaning: 'Birds sing sweet songs at sunrise.',
+              targetSentence: 'Birds sing sweet songs at sunrise',
+              shuffled: ['sweet', 'sing', 'Birds', 'at', 'songs', 'sunrise'],
+              explanation: 'Plural subject (Birds) + Plural verb (sing) + Modified object (sweet songs).'
+            }
+          ]
+        };
+      }
+      if (gameKey === 'listen') {
+        return {
+          round,
+          challenges: [
+            {
+              id: 'listen_fb_1',
+              spokenText: 'Namaste',
+              langCode: 'hi-IN',
+              displayLang: 'Hindi',
+              prompt: 'Listen to the spoken greeting and select its English translation:',
+              options: ['Hello / Greetings', 'Thank you', 'Goodbye', 'Good night'],
+              correctAnswer: 'Hello / Greetings',
+              answer: 'Hello / Greetings',
+              explanation: '"Namaste" is the traditional respectful greeting meaning Hello.'
+            },
+            {
+              id: 'listen_fb_2',
+              spokenText: 'Merci beaucoup',
+              langCode: 'fr-FR',
+              displayLang: 'French',
+              prompt: 'Listen to the French phrase and choose the translation:',
+              options: ['Thank you very much', 'You are welcome', 'See you tomorrow', 'Excuse me'],
+              correctAnswer: 'Thank you very much',
+              answer: 'Thank you very much',
+              explanation: '"Merci beaucoup" translates to "Thank you very much".'
+            },
+            {
+              id: 'listen_fb_3',
+              spokenText: 'Dhanyavaad',
+              langCode: 'hi-IN',
+              displayLang: 'Hindi',
+              prompt: 'Listen to the spoken word and select its meaning:',
+              options: ['Thank you', 'Welcome', 'Please sit', 'Friend'],
+              correctAnswer: 'Thank you',
+              answer: 'Thank you',
+              explanation: '"Dhanyavaad" means "Thank you" in formal Hindi.'
+            }
+          ]
+        };
+      }
+      if (gameKey === 'odd') {
+        return {
+          round,
+          challenges: [
+            {
+              id: 'odd_fb_1',
+              category: 'Botany & Food',
+              prompt: 'Which item does NOT belong with the other three?',
+              options: ['Apple', 'Banana', 'Mango', 'Carrot'],
+              oddItem: 'Carrot',
+              correctAnswer: 'Carrot',
+              answer: 'Carrot',
+              commonFeature: 'Apple, Banana, and Mango are sweet fruits; Carrot is a root vegetable.',
+              explanation: 'Carrot is an underground root vegetable, whereas apple, banana, and mango are all culinary tree fruits.'
+            },
+            {
+              id: 'odd_fb_2',
+              category: 'Transportation',
+              prompt: 'Which vehicle does NOT belong in this aerial group?',
+              options: ['Airplane', 'Helicopter', 'Submarine', 'Hot Air Balloon'],
+              oddItem: 'Submarine',
+              correctAnswer: 'Submarine',
+              answer: 'Submarine',
+              commonFeature: 'Airplane, Helicopter, and Hot Air Balloon are aerial transport vehicles; Submarine travels underwater.',
+              explanation: 'Airplane, helicopter, and balloon operate in the air, while a submarine travels underwater.'
+            },
+            {
+              id: 'odd_fb_3',
+              category: 'Computer Science',
+              prompt: 'Which technology does NOT belong with the other programming languages?',
+              options: ['Python', 'JavaScript', 'HTML', 'Ruby'],
+              oddItem: 'HTML',
+              correctAnswer: 'HTML',
+              answer: 'HTML',
+              commonFeature: 'Python, JavaScript, and Ruby are programming languages; HTML is a markup language.',
+              explanation: 'HTML is a document markup structure, not a Turing-complete procedural programming language.'
+            }
+          ]
+        };
+      }
+      if (gameKey === 'recall') {
+        return {
+          round,
+          challenges: [
+            {
+              id: 'rec_fb_1',
+              sequence: ['🌟 Star', '🌊 Ocean', '🔥 Flame', '🍃 Leaf'],
+              prompt: 'Which item was at position 3 in the memorized sequence?',
+              options: ['🔥 Flame', '🌊 Ocean', '🌟 Star', '🍃 Leaf'],
+              correctAnswer: '🔥 Flame',
+              answer: '🔥 Flame',
+              memorizeDuration: 4,
+              explanation: 'The original sequence was: 1. Star, 2. Ocean, 3. Flame, 4. Leaf.'
+            },
+            {
+              id: 'rec_fb_2',
+              sequence: ['🍎 Apple', '🍇 Grapes', '🍋 Lemon', '🍒 Cherries'],
+              prompt: 'Which fruit was the FIRST item in the sequence?',
+              options: ['🍎 Apple', '🍋 Lemon', '🍇 Grapes', '🍒 Cherries'],
+              correctAnswer: '🍎 Apple',
+              answer: '🍎 Apple',
+              memorizeDuration: 4,
+              explanation: 'Apple was at position 1.'
+            },
+            {
+              id: 'rec_fb_3',
+              sequence: ['Blue', 'Gold', 'Emerald', 'Crimson'],
+              prompt: 'Which color was the LAST item in the sequence?',
+              options: ['Crimson', 'Emerald', 'Gold', 'Blue'],
+              correctAnswer: 'Crimson',
+              answer: 'Crimson',
+              memorizeDuration: 4,
+              explanation: 'Order: 1. Blue, 2. Gold, 3. Emerald, 4. Crimson.'
+            }
+          ]
+        };
+      }
+      if (gameKey === 'riddle') {
+        return {
+          round,
+          challenges: [
+            {
+              id: 'rid_fb_1',
+              riddle: 'I have keys but no locks. I have space but no room. You can enter, but you cannot go inside. What am I?',
+              hint: 'You use it to type on a computer!',
+              options: ['A Computer Keyboard', 'A Grand Piano', 'A Locked Chest', 'A Prison Cell'],
+              correctAnswer: 'A Computer Keyboard',
+              answer: 'A Computer Keyboard',
+              explanation: 'A computer keyboard has letter keys, a spacebar, and an Enter key, but no physical locks or rooms.'
+            },
+            {
+              id: 'rid_fb_2',
+              riddle: 'What gets wetter the more it dries?',
+              hint: 'You use it after taking a shower.',
+              options: ['A Towel', 'A Sponge', 'A Raincoat', 'A Hairdryer'],
+              correctAnswer: 'A Towel',
+              answer: 'A Towel',
+              explanation: 'A towel absorbs water to dry your body, so as it dries you, it gets wetter.'
+            },
+            {
+              id: 'rid_fb_3',
+              riddle: 'What has a head and a tail, but no body or legs?',
+              hint: 'You find it in your pocket or piggy bank.',
+              options: ['A Coin', 'A Snake', 'A Kite', 'A Comet'],
+              correctAnswer: 'A Coin',
+              answer: 'A Coin',
+              explanation: 'A coin has heads and tails sides, but no body or legs.'
+            }
+          ]
+        };
+      }
+      return {
+        round,
+        challenges: []
+      };
+    }
+  </script>
+</body>
+</html>

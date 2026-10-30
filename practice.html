@@ -1,0 +1,5057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Practice & Mistake Memory — Multilingual AI Learning Hub</title>
+
+  <!-- High-legibility Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;700&family=Noto+Sans+Telugu:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Universal Theme System -->
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
+
+  <style>
+    /* ===================================================
+       MODULE 7: PRACTICE & MISTAKE MEMORY STYLING
+       =================================================== */
+    :root {
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--color-bg-gradient);
+      color: var(--color-text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Application Header */
+    .app-header {
+      background: var(--color-surface-translucent);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 0.8rem 1.25rem;
+    }
+
+    .header-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 12px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
+      font-size: 0.84rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-nav-back:hover {
+      background: var(--color-surface-hover);
+      border-color: var(--color-brand-primary);
+      transform: translateX(-2px);
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .brand-logo-img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--color-brand-primary);
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      color: var(--color-text-subtle);
+      font-weight: 600;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1080px;
+      margin: 1.5rem auto 4rem auto;
+      padding: 0 1.25rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Module Hero Banner */
+    .hero-banner {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 24px;
+      padding: 1.8rem 2rem;
+      margin-bottom: 1.8rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--color-brand-light) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-text-col {
+      max-width: 650px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-heading {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin-bottom: 0.45rem;
+      color: var(--color-text-main);
+    }
+
+    .hero-desc {
+      font-size: 0.92rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    .hero-robot-img {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+      animation: floatRobot 3.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatRobot {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-8px); }
+    }
+
+    /* Module 7 Tab Navigation */
+    .module-tabs-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.6rem;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 0.4rem;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.1rem;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: var(--color-text-muted);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      background: var(--color-surface-hover);
+      color: var(--color-text-main);
+    }
+
+    .tab-btn.active {
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      font-weight: 800;
+    }
+
+    .tab-badge {
+      font-size: 0.72rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 10px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+    }
+
+    /* Tab Panes */
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===================================================
+       TAB 1: START PRACTICE
+       =================================================== */
+    .practice-modes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .practice-mode-card {
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: 20px;
+      padding: 1.4rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .practice-mode-card:hover {
+      border-color: var(--color-brand-primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .practice-mode-card.selected {
+      border-color: var(--color-brand-primary);
+      background: var(--color-surface-selected, var(--color-surface));
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+
+    .mode-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--color-brand-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .mode-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+      color: var(--color-text-main);
+    }
+
+    .mode-desc {
+      font-size: 0.84rem;
+      color: var(--color-text-muted);
+      line-height: 1.45;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+
+    .mode-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      background: var(--color-brand-light);
+      padding: 0.2rem 0.55rem;
+      border-radius: 8px;
+      align-self: flex-start;
+    }
+
+    /* Practice Config Drawer */
+    .practice-config-box {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+    }
+
+    .config-inputs-row {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .config-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .config-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--color-text-subtle);
+    }
+
+    .config-select {
+      padding: 0.55rem 0.85rem;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface-hover);
+      color: var(--color-text-main);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .btn-launch-practice {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      border-radius: 16px;
+      background: var(--color-brand-primary);
+      color: var(--color-text-inverse);
+      border: none;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .btn-launch-practice:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+    }
+
+    .btn-launch-practice:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Active Interactive Practice Stage */
+    .practice-stage-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--color-bg-gradient);
+      z-index: 100;
+      overflow-y: auto;
+      flex-direction: column;
+    }
+
+    .practice-stage-modal.active {
+      display: flex;
+    }
+
+    .stage-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background: var(--color-surface-translucent);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .stage-progress-track {
+      flex: 1;
+      max-width: 480px;
+      margin: 0 1.5rem;
+      height: 10px;
+      background: var(--color-border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .stage-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-brand-primary), #10b981);
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 10px;
+    }
+
+    .stage-viewport {
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1.25rem 6rem 1.25rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    .robot-encouragement-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 1.5rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      padding: 0.8rem 1.2rem;
+    }
+
+    .robot-thumb {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .robot-speech-text {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text-main);
+      line-height: 1.4;
+    }
+
+    .question-topic-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 12px;
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      margin-bottom: 0.8rem;
+    }
+
+    .question-instruction {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 1.4rem;
+      color: var(--color-text-main);
+    }
+
+    .question-source-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 18px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .question-source-text {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+    }
+
+    .btn-audio-speak {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: transform 0.2s;
+    }
+
+    .btn-audio-speak:hover {
+      transform: scale(1.1);
+    }
+
+    /* Option Tiles Grid */
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .option-tile-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      border-radius: 16px;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      color: var(--color-text-main);
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .option-tile-btn:hover {
+      border-color: var(--color-brand-primary);
+      background: var(--color-surface-hover);
+      transform: translateY(-1px);
+    }
+
+    .option-tile-btn.selected {
+      border-color: var(--color-brand-primary);
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      font-weight: 700;
+    }
+
+    .option-key-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: var(--color-border);
+      color: var(--color-text-muted);
+      font-size: 0.75rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Word Bank Ordering Tiles */
+    .word-answer-slots {
+      min-height: 58px;
+      border-bottom: 2px dashed var(--color-border);
+      margin-bottom: 1.5rem;
+      padding: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .word-bank-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .word-tile-btn {
+      padding: 0.55rem 1rem;
+      border-radius: 12px;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .word-tile-btn:hover {
+      border-color: var(--color-brand-primary);
+      transform: translateY(-2px);
+    }
+
+    /* 3D Interactive Flashcard */
+    .flashcard-stage {
+      perspective: 1000px;
+      margin: 1rem auto;
+      width: 100%;
+      max-width: 440px;
+      height: 250px;
+      cursor: pointer;
+    }
+
+    .flashcard-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 22px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .flashcard-inner.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .flashcard-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 22px;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .flashcard-back {
+      transform: rotateY(180deg);
+      background: var(--color-brand-light);
+      border-color: var(--color-brand-primary);
+    }
+
+    /* Speaker Audio Button */
+    .speaker-audio-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px var(--color-brand-shadow);
+      transition: all 0.2s ease;
+      margin-bottom: 0.8rem;
+    }
+
+    .speaker-audio-btn:hover {
+      transform: scale(1.08);
+    }
+
+    .speaker-audio-btn.playing {
+      animation: audioPulse 1.2s infinite ease-in-out;
+      box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.35);
+    }
+
+    @keyframes audioPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+    }
+
+    /* English Meaning Badges & Controls */
+    .exercise-english-meaning {
+      display: inline-block;
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--color-text-subtle);
+      margin-top: 0.45rem;
+      padding: 0.35rem 0.95rem;
+      background: var(--color-surface-subtle);
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      word-break: break-word;
+      max-width: 100%;
+      line-height: 1.4;
+    }
+
+    .exercise-english-meaning strong {
+      color: var(--color-text-main);
+      font-weight: 700;
+    }
+
+    .btn-reveal-meaning {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: transparent;
+      border: 1.5px dashed var(--color-brand-primary);
+      color: var(--color-brand-primary);
+      border-radius: 999px;
+      padding: 0.35rem 0.95rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 0.45rem;
+    }
+
+    .btn-reveal-meaning:hover {
+      background: rgba(99, 102, 241, 0.08);
+      transform: translateY(-1px);
+    }
+
+    /* Word Matching Board */
+    .matching-board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .match-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .match-tile-btn {
+      padding: 0.95rem;
+      border-radius: 14px;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      color: var(--color-text-main);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.18s ease;
+    }
+
+    .match-tile-btn.active-match {
+      border-color: var(--color-brand-primary);
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+    }
+
+    .match-tile-btn.matched {
+      border-color: var(--color-success);
+      background: var(--color-success-bg, rgba(16, 185, 129, 0.15));
+      color: var(--color-success);
+      cursor: default;
+      opacity: 0.75;
+    }
+
+    /* Sentence Building Tray & Token Buttons */
+    .assembled-sentence-tray {
+      min-height: 60px;
+      border-bottom: 2px dashed var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 0.5rem 0;
+      margin-bottom: 1.5rem;
+      justify-content: center;
+    }
+
+    .word-token-btn {
+      padding: 0.65rem 1.15rem;
+      border-radius: 12px;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      color: var(--color-text-main);
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.15s ease;
+    }
+
+    .word-token-btn:hover {
+      border-color: var(--color-brand-primary);
+      transform: translateY(-2px);
+    }
+
+    .word-token-btn.used {
+      opacity: 0.25;
+      cursor: default;
+      transform: none;
+      border-style: dashed;
+    }
+
+    /* Microphone & Speaking Practice Controls */
+    .mic-control-box {
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mic-record-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      border: none;
+      font-size: 1.7rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px var(--color-brand-shadow);
+      transition: all 0.2s ease;
+    }
+
+    .mic-record-btn.recording {
+      background: #ef4444;
+      animation: micPulse 1s infinite alternate;
+    }
+
+    .mic-record-btn.processing {
+      background: #f59e0b;
+      animation: micPulse 0.8s infinite alternate;
+      cursor: wait;
+    }
+
+    .mic-record-btn.error {
+      background: #dc2626;
+      box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.35);
+    }
+
+    @keyframes micPulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+      100% { transform: scale(1.12); box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
+    }
+
+    .mic-status-label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      transition: color 0.2s ease;
+      text-align: center;
+      min-height: 1.25rem;
+    }
+
+    .mic-status-label.listening {
+      color: #ef4444;
+    }
+
+    .mic-status-label.processing {
+      color: #f59e0b;
+    }
+
+    .mic-status-label.error {
+      color: #dc2626;
+    }
+
+    .mic-status-label.success {
+      color: #10b981;
+    }
+
+    .speech-transcript-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-surface-subtle);
+      color: var(--color-text-main);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .speech-transcript-input:focus {
+      border-color: var(--color-brand-primary);
+    }
+
+    .text-entry-fallback-label {
+      font-size: 0.78rem;
+      color: var(--color-text-subtle);
+    }
+
+    /* Bottom Feedback Tray */
+    .stage-bottom-tray {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      padding: 1rem 1.5rem;
+      z-index: 30;
+    }
+
+    .stage-bottom-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .feedback-banner {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 1;
+    }
+
+    .feedback-banner.active {
+      display: flex;
+    }
+
+    .feedback-banner.correct {
+      color: var(--color-success);
+    }
+
+    .feedback-banner.incorrect {
+      color: var(--color-error);
+    }
+
+    .feedback-icon-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .feedback-banner.correct .feedback-icon-circle {
+      background: var(--color-success-bg, rgba(16, 185, 129, 0.15));
+      color: var(--color-success);
+    }
+
+    .feedback-banner.incorrect .feedback-icon-circle {
+      background: var(--color-error-bg, rgba(239, 68, 68, 0.15));
+      color: var(--color-error);
+    }
+
+    .feedback-text-title {
+      font-weight: 800;
+      font-size: 0.98rem;
+    }
+
+    .feedback-text-desc {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    .btn-stage-action {
+      padding: 0.85rem 2rem;
+      border-radius: 14px;
+      border: none;
+      background: var(--color-brand-primary);
+      color: var(--color-text-inverse);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-stage-action:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* Celebration Screen */
+    .session-complete-card {
+      text-align: center;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      max-width: 520px;
+      margin: 3rem auto;
+      box-shadow: var(--shadow-md);
+    }
+
+    .complete-icon-box {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--color-brand-light);
+      margin: 0 auto 1.2rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .complete-icon-box img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+
+    /* ===================================================
+       TAB 2: REVIEW MY MISTAKES
+       =================================================== */
+    .mistakes-filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.4rem;
+    }
+
+    .filter-pills-group {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .filter-pill-btn {
+      padding: 0.45rem 0.9rem;
+      border-radius: 20px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-pill-btn.active {
+      background: var(--color-brand-primary);
+      color: var(--color-text-inverse);
+      border-color: var(--color-brand-primary);
+    }
+
+    .mistakes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .mistake-card {
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: 20px;
+      padding: 1.4rem 1.6rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .mistake-card:hover {
+      border-color: var(--color-border-hover, var(--color-brand-primary));
+    }
+
+    .mistake-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .mistake-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 10px;
+    }
+
+    .status-needs-practice {
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+    }
+
+    .status-mastered {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+    }
+
+    .mistake-q-text {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+      color: var(--color-text-main);
+    }
+
+    .answers-comparison-box {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+      background: var(--color-surface-hover);
+      border-radius: 14px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .answer-col-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.2rem;
+    }
+
+    .wrong-ans-text {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #ef4444;
+    }
+
+    .correct-ans-text {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #10b981;
+    }
+
+    .mistake-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+      color: var(--color-text-subtle);
+    }
+
+    .btn-retry-mistake {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 12px;
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      border: 1px solid var(--color-border);
+      font-size: 0.85rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-retry-mistake:hover {
+      background: var(--color-brand-primary);
+      color: var(--color-text-inverse);
+    }
+
+    /* ===================================================
+       TAB 3: TOPICS TO IMPROVE
+       =================================================== */
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .topic-stat-card {
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: 20px;
+      padding: 1.4rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .topic-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .topic-icon-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .topic-icon-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--color-brand-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .topic-name {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+    }
+
+    .accuracy-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .accuracy-bar-track {
+      height: 8px;
+      background: var(--color-border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 0.8rem;
+    }
+
+    .accuracy-bar-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.4s ease;
+    }
+
+    .topic-recommendation-text {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      line-height: 1.45;
+      margin-bottom: 1.2rem;
+      flex: 1;
+    }
+
+    .btn-topic-practice {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1rem;
+      border-radius: 12px;
+      background: var(--color-surface-hover);
+      border: 1px solid var(--color-border);
+      color: var(--color-brand-primary);
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-topic-practice:hover {
+      background: var(--color-brand-primary);
+      color: var(--color-text-inverse);
+    }
+
+    /* ===================================================
+       TAB 4: PRACTICE HISTORY
+       =================================================== */
+    .history-overview-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .history-stat-box {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      padding: 1.1rem;
+      text-align: center;
+    }
+
+    .stat-number-label {
+      font-size: 1.6rem;
+      font-weight: 900;
+      font-family: var(--font-display);
+      color: var(--color-brand-primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-title-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--color-text-subtle);
+      text-transform: uppercase;
+    }
+
+    .history-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .history-item-row {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      padding: 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    /* Empty States */
+    .empty-state-box {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: var(--color-surface);
+      border: 1px dashed var(--color-border);
+      border-radius: 20px;
+      margin: 1rem 0;
+    }
+
+    .empty-state-icon {
+      font-size: 2.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .empty-state-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+      color: var(--color-text-main);
+    }
+
+    .empty-state-desc {
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+      max-width: 440px;
+      margin: 0 auto 1.4rem auto;
+      line-height: 1.5;
+    }
+
+    /* Loading Overlay */
+    .loading-spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(2, 132, 199, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--color-brand-primary);
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* ===================================================
+       NEW PRACTICE ZONE ENHANCEMENTS (MODULE 7)
+       =================================================== */
+    /* Mode Context Banner */
+    .mode-context-banner {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      padding: 1rem 1.4rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .mode-context-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--color-brand-primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .mode-context-desc {
+      font-size: 0.84rem;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    /* AI Search & Select Topic Panel */
+    .select-topic-panel {
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 1.8rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .ai-search-card {
+      background: var(--color-surface-hover);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      padding: 1.3rem;
+    }
+
+    .ai-search-field {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border-radius: 14px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-main);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .ai-search-field:focus {
+      border-color: var(--color-brand-primary);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+
+    .btn-search-learn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 14px;
+      background: var(--color-brand-primary);
+      color: var(--color-text-inverse);
+      border: none;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(2, 132, 199, 0.3);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-search-learn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+    }
+
+    /* Learning Result Card */
+    .learning-result-card {
+      background: var(--color-surface);
+      border: 2px solid var(--color-brand-primary);
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: var(--shadow-md);
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .result-lang-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .btn-action-small {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 10px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-main);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action-small:hover {
+      background: var(--color-surface-hover);
+      border-color: var(--color-brand-primary);
+    }
+
+    .btn-action-small.primary {
+      background: var(--color-brand-primary);
+      color: var(--color-text-inverse);
+      border-color: var(--color-brand-primary);
+    }
+
+    .btn-action-small.primary:hover {
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
+    }
+
+    .result-body-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .result-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .result-item.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .result-item-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-subtle);
+    }
+
+    .result-original-text {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+    }
+
+    .result-translation-text {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--color-brand-primary);
+      line-height: 1.3;
+    }
+
+    .result-meaning-text {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+    }
+
+    .result-pronounce-text {
+      font-size: 0.92rem;
+      font-style: italic;
+      color: var(--color-text-muted);
+    }
+
+    .result-example-box {
+      background: var(--color-surface-hover);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      white-space: pre-line;
+      color: var(--color-text-main);
+    }
+
+    .result-explanation-text {
+      font-size: 0.86rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    .speaker-audio-btn-sm {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--color-border);
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .speaker-audio-btn-sm:hover {
+      transform: scale(1.1);
+      background: var(--color-surface-hover);
+    }
+
+    .vocab-save-notification {
+      margin-top: 0.8rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      background: #ecfdf5;
+      color: #065f46;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Saved Vocabulary Drawer */
+    .saved-vocab-drawer {
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: 16px;
+      padding: 1.2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .vocab-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 0.6rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .vocab-item-row:last-child {
+      border-bottom: none;
+    }
+
+    /* Test Mode Review Cards */
+    .test-review-box {
+      margin-top: 1.5rem;
+      text-align: left;
+      max-height: 340px;
+      overflow-y: auto;
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 0.8rem;
+      background: var(--color-surface-hover);
+    }
+
+    .test-review-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .test-review-card.correct {
+      border-left: 4px solid var(--color-success, #10b981);
+    }
+
+    .test-review-card.incorrect {
+      border-left: 4px solid var(--color-error, #ef4444);
+    }
+
+    /* Weak topic selection list */
+    .weak-topics-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .weak-topic-pick-card {
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: 14px;
+      padding: 0.9rem 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .weak-topic-pick-card:hover {
+      border-color: var(--color-brand-primary);
+      transform: translateY(-2px);
+    }
+
+    .weak-topic-pick-card.selected {
+      border-color: var(--color-brand-primary);
+      background: var(--color-brand-light);
+    }
+
+    /* ===================================================
+       CUSTOM AI CHAT STYLES (PRACTICE ZONE)
+       =================================================== */
+    .custom-ai-chat-panel {
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .ai-chat-card {
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1.2rem 1.4rem;
+      background: var(--color-surface-subtle);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .chat-header-info {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .chat-avatar-mascot {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--color-brand-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .chat-header-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+      margin-bottom: 0.2rem;
+    }
+
+    .chat-header-sub {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+    }
+
+    .chat-header-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .chat-lang-selector-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .chat-control-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--color-text-subtle);
+      white-space: nowrap;
+    }
+
+    .chat-lang-select {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.86rem;
+      font-weight: 700;
+      border-radius: 10px;
+    }
+
+    .btn-clear-chat {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 10px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-clear-chat:hover {
+      background: var(--color-surface-hover);
+      color: var(--color-error);
+      border-color: var(--color-error);
+    }
+
+    .chat-messages-area {
+      min-height: 380px;
+      max-height: 520px;
+      overflow-y: auto;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      background: var(--color-bg);
+      scroll-behavior: smooth;
+    }
+
+    .chat-message-row {
+      display: flex;
+      gap: 0.8rem;
+      max-width: 85%;
+      align-items: flex-start;
+    }
+
+    .chat-message-row.ai-row {
+      align-self: flex-start;
+    }
+
+    .chat-message-row.user-row {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .chat-bubble-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--color-brand-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .chat-message-row.user-row .chat-bubble-avatar {
+      background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+      color: #fff;
+    }
+
+    .chat-bubble {
+      padding: 0.95rem 1.25rem;
+      border-radius: 18px;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      position: relative;
+      word-break: break-word;
+    }
+
+    .chat-bubble.ai-bubble {
+      background: var(--color-surface);
+      color: var(--color-text-main);
+      border: 1.5px solid var(--color-border);
+      border-top-left-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .chat-bubble.user-bubble {
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      border-top-right-radius: 4px;
+      box-shadow: 0 4px 12px var(--color-brand-shadow);
+    }
+
+    .chat-bubble-text {
+      white-space: pre-wrap;
+      font-weight: 500;
+    }
+
+    .chat-bubble-meta {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--color-border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      font-size: 0.85rem;
+    }
+
+    .chat-bubble-english {
+      color: var(--color-text-subtle);
+      background: var(--color-surface-subtle);
+      padding: 0.4rem 0.7rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--color-brand-primary);
+    }
+
+    .chat-bubble-phonetics {
+      color: #059669;
+      background: rgba(16, 185, 129, 0.08);
+      padding: 0.35rem 0.7rem;
+      border-radius: 8px;
+      border-left: 3px solid #10b981;
+      font-style: italic;
+    }
+
+    .chat-bubble-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn-speak-bubble {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 6px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface-subtle);
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-speak-bubble:hover {
+      background: var(--color-brand-light);
+      color: var(--color-brand-primary);
+      border-color: var(--color-brand-primary);
+    }
+
+    .chat-loading-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      align-self: flex-start;
+    }
+
+    .chat-typing-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0.7rem 1.1rem;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: 18px;
+      border-top-left-radius: 4px;
+    }
+
+    .chat-typing-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--color-brand-primary);
+      animation: chatBlink 1.4s infinite ease-in-out both;
+    }
+    .chat-typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .chat-typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes chatBlink {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.3; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    .chat-error-banner {
+      margin: 0.5rem 1.4rem;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #ef4444;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-input-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.4rem;
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .chat-textarea {
+      flex: 1;
+      border: 2px solid var(--color-border);
+      border-radius: 14px;
+      padding: 0.75rem 1.1rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--color-text-main);
+      background: var(--color-bg);
+      resize: none;
+      outline: none;
+      transition: all 0.2s ease;
+      line-height: 1.4;
+      max-height: 120px;
+    }
+
+    .chat-textarea:focus {
+      border-color: var(--color-brand-primary);
+      background: var(--color-surface);
+      box-shadow: 0 0 0 3px var(--color-brand-light);
+    }
+
+    .btn-chat-send {
+      padding: 0.75rem 1.4rem;
+      border-radius: 14px;
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      border: none;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px var(--color-brand-shadow);
+    }
+
+    .btn-chat-send:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px var(--color-brand-shadow);
+    }
+
+    .btn-chat-send:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .chat-input-hint {
+      padding: 0 1.4rem 0.85rem 1.4rem;
+      font-size: 0.75rem;
+      color: var(--color-text-subtle);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top App Navigation Bar -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="dashboard" class="btn-nav-back">
+          <span>←</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="learn.html" class="btn-nav-back" style="color:var(--color-brand-primary);">
+          <span>🗣️</span>
+          <span>Lessons</span>
+        </a>
+        <div class="brand-box">
+          <img src="robot_clean.png" alt="Robot Mascot" class="brand-logo-img" onerror="this.src='robot.png'">
+          <div>
+            <div class="brand-title">Practice Zone</div>
+            <div class="brand-sub">Mistake Memory & Mastery</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="stat-badge" style="color:#d97706;">
+          <span>⭐</span>
+          <span id="topStatXp">0 XP</span>
+        </div>
+        <div class="stat-badge" style="color:#ea580c;">
+          <span>🔥</span>
+          <span id="topStatStreak">0</span>
+        </div>
+        <div class="stat-badge" style="color:var(--color-brand-primary);" id="topLangBadge">
+          <span>🌐</span>
+          <span id="topLangLabel">Tamil</span>
+        </div>
+        <button id="btnToggleTheme" class="stat-badge" style="cursor:pointer;" title="Toggle Theme">
+          🌓
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Viewport -->
+  <main class="main-container">
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <div class="hero-text-col">
+        <div class="hero-tag">🎯 Intelligent Practice</div>
+        <h1 class="hero-heading">Practice & Mistake Memory</h1>
+        <p class="hero-desc">
+          Supercharge your fluency through adaptive practice, intelligent mistake review, and targeted weakness elimination. Powered by your authentic learning history.
+        </p>
+      </div>
+      <img src="robot_clean.png" alt="Learning Mascot" class="hero-robot-img" onerror="this.src='robot.png'">
+    </section>
+
+    <!-- Tab Navigation -->
+    <nav class="module-tabs-nav" aria-label="Module Tabs">
+      <button class="tab-btn active" data-tab="tabPractice">
+        <span>🎯</span>
+        <span>Start Practice</span>
+      </button>
+      <button class="tab-btn" data-tab="tabMistakes">
+        <span>📝</span>
+        <span>Review My Mistakes</span>
+        <span class="tab-badge" id="badgeMistakesCount">0</span>
+      </button>
+      <button class="tab-btn" data-tab="tabWeakTopics">
+        <span>📊</span>
+        <span>Topics to Improve</span>
+        <span class="tab-badge" id="badgeWeakTopicsCount">0</span>
+      </button>
+      <button class="tab-btn" data-tab="tabHistory">
+        <span>📜</span>
+        <span>Practice History</span>
+      </button>
+    </nav>
+
+    <!-- ==========================================
+         TAB 1: START PRACTICE
+         ========================================== -->
+    <div id="tabPractice" class="tab-pane active">
+      <h2 style="font-family:var(--font-display); font-size:1.3rem; font-weight:800; margin-bottom:0.8rem;">
+        Choose Practice Mode
+      </h2>
+
+      <!-- Mode Cards Grid -->
+      <div class="practice-modes-grid">
+        <div class="practice-mode-card selected" data-mode="smart">
+          <div class="mode-icon-box">⚡</div>
+          <h3 class="mode-title">Smart Adaptive</h3>
+          <p class="mode-desc">
+            Automatically blends your previous mistakes with reinforcement questions tailored to your current proficiency.
+          </p>
+          <span class="mode-badge">Recommended</span>
+        </div>
+
+        <div class="practice-mode-card" data-mode="mistakes">
+          <div class="mode-icon-box">🔄</div>
+          <h3 class="mode-title">Mistake Memory</h3>
+          <p class="mode-desc">
+            Focus exclusively on questions you previously missed in lessons or practice until you master them.
+          </p>
+          <span class="mode-badge" id="cardMistakeCountBadge">0 Missed</span>
+        </div>
+
+        <div class="practice-mode-card" data-mode="weak_topics">
+          <div class="mode-icon-box">🎯</div>
+          <h3 class="mode-title">Weak Topics</h3>
+          <p class="mode-desc">
+            Intelligently targets the topics where your calculated accuracy has been lowest across attempts.
+          </p>
+          <span class="mode-badge" id="cardWeakTopicBadge">Targeted</span>
+        </div>
+
+        <div class="practice-mode-card" data-mode="topic">
+          <div class="mode-icon-box">📚</div>
+          <h3 class="mode-title">Select Topic</h3>
+          <p class="mode-desc">
+            Choose any specific curriculum unit to sharpen your vocabulary, grammar, and conversation skills.
+          </p>
+          <span class="mode-badge">Custom</span>
+        </div>
+
+        <div class="practice-mode-card" data-mode="chat">
+          <div class="mode-icon-box">💬</div>
+          <h3 class="mode-title">Custom AI Chat</h3>
+          <p class="mode-desc">
+            Practice conversational speaking and ask any everyday questions with an intelligent AI partner in your chosen language.
+          </p>
+          <span class="mode-badge">AI Chat</span>
+        </div>
+      </div>
+
+      <!-- Custom AI Chat Panel (Active when Custom AI Chat card selected) -->
+      <div id="customAiChatPanel" class="custom-ai-chat-panel" style="display:none; margin-bottom:2rem;">
+        <div class="ai-chat-card">
+          <!-- Chat Header Bar -->
+          <div class="chat-header-bar">
+            <div class="chat-header-info">
+              <div class="chat-avatar-mascot">🤖</div>
+              <div>
+                <h3 class="chat-header-title">Custom AI Chat</h3>
+                <p class="chat-header-sub">Practice natural conversation, ask questions on any topic, and get real-time translations.</p>
+              </div>
+            </div>
+
+            <div class="chat-header-controls">
+              <!-- Language Selector: EVERY language configured in the project -->
+              <div class="chat-lang-selector-group">
+                <label for="selectChatLanguage" class="chat-control-label">Conversation Language:</label>
+                <select id="selectChatLanguage" class="config-select chat-lang-select">
+                  <option value="en">🇬🇧 English</option>
+                  <option value="ta">🇮🇳 Tamil (தமிழ்)</option>
+                  <option value="hi" selected>🇮🇳 Hindi (हिन्दी)</option>
+                  <option value="ml">🇮🇳 Malayalam (മലയാളം)</option>
+                  <option value="te">🇮🇳 Telugu (తెలుగు)</option>
+                  <option value="fr">🇫🇷 French (Français)</option>
+                  <option value="ja">🇯🇵 Japanese (日本語)</option>
+                  <option value="ur">🇵🇰 Urdu (اردو)</option>
+                </select>
+              </div>
+
+              <button type="button" id="btnClearChatHistory" class="btn-clear-chat" title="Clear conversation history">
+                <span>🗑️</span>
+                <span>Clear Chat</span>
+              </button>
+
+              <button type="button" id="btnExitChatToPractice" class="btn-clear-chat" title="Return to practice cards" style="background:var(--color-surface); border:1px solid var(--color-border); color:var(--color-text-main);">
+                <span>←</span>
+                <span>Return to Practice</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Chat Messages Scroll Area -->
+          <div id="chatMessagesArea" class="chat-messages-area" role="log" aria-live="polite">
+            <div class="chat-message-row ai-row">
+              <div class="chat-bubble-avatar">🤖</div>
+              <div class="chat-bubble ai-bubble">
+                <div class="chat-bubble-text" id="chatInitialGreeting">
+                  नमस्ते! मैं आपका AI वार्तालाप साथी हूँ। आप किसी भी विषय पर मुझसे चर्चा कर सकते हैं - दैनिक जीवन, संस्कृति, भाषा या कोई भी प्रश्न। आज आप क्या पूछना चाहते हैं?
+                </div>
+                <div class="chat-bubble-meta">
+                  <div class="chat-bubble-english" id="chatInitialEnglish">
+                    <strong>English Meaning:</strong> Hello! I am your AI Conversation Partner. You can chat with me about any topic — daily life, culture, language, or any questions. What would you like to discuss today?
+                  </div>
+                  <div class="chat-bubble-phonetics" id="chatInitialPhonetics">
+                    <strong>Pronunciation:</strong> namaste! main aapka AI vartalap sathi hun. aap kisi bhi vishay par mujhse charcha kar sakte hain...
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Error Banner -->
+          <div id="chatErrorBanner" class="chat-error-banner" style="display:none;"></div>
+
+          <!-- Chat Input Bar -->
+          <div class="chat-input-bar">
+            <textarea id="inputChatMessage" class="chat-textarea" placeholder="Type a message or question in any language... (Press Enter to send, Shift+Enter for new line)" rows="1"></textarea>
+            <button type="button" id="btnSendChatMessage" class="btn-chat-send">
+              <span>Send</span>
+              <span>✈️</span>
+            </button>
+          </div>
+          <div class="chat-input-hint">
+            💡 Supports multi-turn dialogue. Ask follow-up questions like "Give me more examples" or "Can you explain that more simply?"
+          </div>
+        </div>
+      </div>
+
+      <!-- Mode Context / Info Banner -->
+      <div id="modeContextBanner" class="mode-context-banner">
+        <div>
+          <div class="mode-context-title" id="modeBannerTitle">⚡ Smart Adaptive Practice Active</div>
+          <div class="mode-context-desc" id="modeBannerDesc">
+            Automatically customizes questions using your previous attempts and mistakes to strengthen retention without repetitive drilling.
+          </div>
+        </div>
+        <div id="modeBannerAction"></div>
+      </div>
+
+      <!-- Weak Topics Interactive Selection Panel (Active when Weak Topics card selected) -->
+      <div id="weakTopicsPickPanel" style="display:none; margin-bottom:1.8rem;">
+        <div style="background:var(--color-surface); border:1.5px solid var(--color-border); border-radius:20px; padding:1.4rem;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.6rem;">
+            <div style="font-weight:800; font-size:1.05rem; color:var(--color-text-main);">
+              🎯 Choose a Weak Topic to Target
+            </div>
+            <span style="font-size:0.8rem; color:var(--color-text-subtle);">Based on real performance data</span>
+          </div>
+          <div id="weakTopicsSelectorGrid" class="weak-topics-selector">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Select Topic & AI Search & Learn Panel (Active when Select Topic card selected) -->
+      <div id="selectTopicPanel" class="select-topic-panel" style="display:none;">
+        <div class="ai-search-card">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.8rem; flex-wrap:wrap; gap:0.5rem;">
+            <label class="config-label" style="font-size:0.92rem; color:var(--color-brand-primary); font-weight:800;">
+              ✨ Search a topic or enter your own word or sentence
+            </label>
+            <button type="button" id="btnToggleSavedVocab" class="btn-action-small" style="color:var(--color-brand-primary);">
+              <span>📚 My Saved Vocabulary</span>
+              <span id="savedVocabBadge" style="background:var(--color-brand-light); padding:0.1rem 0.4rem; border-radius:10px;">0</span>
+            </button>
+          </div>
+
+          <div style="display:flex; gap:0.6rem; margin-bottom:0.8rem; flex-wrap:wrap;">
+            <input type="text" id="inputAiSearch" class="ai-search-field" placeholder="e.g. Naan nalla irukken. Nee saaptiya? or Greetings or any sentence..." autocomplete="off">
+            <button type="button" id="btnAiSearchSubmit" class="btn-search-learn">
+              <span>Search & Learn ✨</span>
+            </button>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; font-size:0.85rem; margin-top:0.6rem;">
+            <div style="display:flex; align-items:center; gap:0.4rem;">
+              <span style="color:var(--color-text-subtle); font-weight:700;">Input Language:</span>
+              <select id="selectAiInputLang" class="config-select" style="padding:0.35rem 0.65rem;">
+                <option value="ta">Tamil (தமிழ்)</option>
+                <option value="en">English</option>
+                <option value="hi">Hindi (हिन्दी)</option>
+                <option value="ml">Malayalam (മലയാളം)</option>
+                <option value="te">Telugu (తెలుగు)</option>
+                <option value="fr">French (Français)</option>
+                <option value="ja">Japanese (日本語)</option>
+                <option value="ur">Urdu (اردو)</option>
+              </select>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:0.4rem;">
+              <span style="color:var(--color-text-subtle); font-weight:700;">Target Language:</span>
+              <select id="selectAiTargetLang" class="config-select" style="padding:0.35rem 0.65rem;">
+                <option value="te" selected>Telugu (తెలుగు)</option>
+                <option value="ta">Tamil (தமிழ்)</option>
+                <option value="en">English</option>
+                <option value="hi">Hindi (हिन्दी)</option>
+                <option value="ml">Malayalam (മലയാളം)</option>
+                <option value="fr">French (Français)</option>
+                <option value="ja">Japanese (日本語)</option>
+                <option value="ur">Urdu (اردو)</option>
+              </select>
+            </div>
+            <div style="font-size:0.78rem; color:var(--color-text-subtle);">
+              Enter everyday phrases in native script or romanized letters.
+            </div>
+          </div>
+
+          <!-- Loading Indicator -->
+          <div id="aiSearchLoading" style="display:none; text-align:center; padding:1.8rem 0;">
+            <div class="loading-spinner"></div>
+            <div style="margin-top:0.6rem; font-size:0.86rem; color:var(--color-text-subtle);">
+              AI is analyzing linguistic components, script translation, and pronunciation...
+            </div>
+          </div>
+
+          <!-- Learning Result Card -->
+          <div id="aiSearchResultBox" style="display:none; margin-top:1.2rem;">
+            <div class="learning-result-card">
+              <div class="result-header">
+                <div class="result-lang-badge">
+                  <span id="resLangPairBadge">Tamil → Telugu</span>
+                </div>
+                <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+                  <button type="button" id="btnSaveToVocab" class="btn-action-small">
+                    <span>⭐ Save to My Vocabulary</span>
+                  </button>
+                  <button type="button" id="btnPractisePhrase" class="btn-action-small primary">
+                    <span>⚡ Practise This Phrase</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="result-body-grid">
+                <div class="result-item">
+                  <span class="result-item-label">Original Text:</span>
+                  <div class="result-original-text" id="resOriginalText">—</div>
+                </div>
+
+                <div class="result-item">
+                  <div style="display:flex; align-items:center; justify-content:space-between;">
+                    <span class="result-item-label">Target Language Translation (<span id="resTargetLangLabel">Telugu</span>):</span>
+                    <button type="button" id="btnSpeakRes" class="speaker-audio-btn-sm" title="Listen to pronunciation">🔊</button>
+                  </div>
+                  <div class="result-translation-text" id="resTargetTranslation">—</div>
+                </div>
+
+                <div class="result-item">
+                  <span class="result-item-label">English Meaning:</span>
+                  <div class="result-meaning-text" id="resEnglishMeaning">—</div>
+                </div>
+
+                <div class="result-item">
+                  <span class="result-item-label">Pronunciation Guide:</span>
+                  <div class="result-pronounce-text" id="resPronunciation">—</div>
+                </div>
+
+                <div class="result-item full-width">
+                  <span class="result-item-label">Usage Example:</span>
+                  <div class="result-example-box" id="resUsageExample">—</div>
+                </div>
+
+                <div class="result-item full-width">
+                  <span class="result-item-label">Explanation:</span>
+                  <div class="result-explanation-text" id="resExplanation">—</div>
+                </div>
+              </div>
+
+              <div id="vocabSaveNotification" class="vocab-save-notification" style="display:none;"></div>
+            </div>
+          </div>
+
+          <!-- Saved Vocabulary Drawer -->
+          <div id="savedVocabDrawer" class="saved-vocab-drawer" style="display:none; margin-top:1.2rem;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.8rem;">
+              <div style="font-weight:800; font-size:1rem; color:var(--color-text-main);">
+                📖 My Saved Vocabulary
+              </div>
+              <input type="text" id="inputSearchVocab" placeholder="Filter saved words..." class="config-select" style="padding:0.3rem 0.7rem; font-size:0.82rem; width:180px;">
+            </div>
+            <div id="savedVocabListContainer">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Curriculum Topic Picker Sub-Section -->
+        <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:16px; padding:1.2rem 1.4rem; margin-top:1.2rem;">
+          <label class="config-label" style="margin-bottom:0.4rem; display:block;">
+            Curriculum Topics
+          </label>
+          <select id="selectTopicPicker" class="config-select" style="width:100%;">
+            <!-- Dynamically populated -->
+          </select>
+        </div>
+      </div>
+
+      <!-- Config & Launch Drawer -->
+      <div id="practiceConfigBox" class="practice-config-box">
+        <div class="config-inputs-row">
+          <div class="config-item">
+            <label class="config-label">Target Language</label>
+            <select id="selectTgtLang" class="config-select">
+              <option value="ta">Tamil (தமிழ்)</option>
+              <option value="en">English</option>
+              <option value="hi">Hindi (हिन्दी)</option>
+              <option value="ml">Malayalam (മലയാളം)</option>
+              <option value="te">Telugu (తెలుగు)</option>
+              <option value="fr">French (Français)</option>
+              <option value="ja">Japanese (日本語)</option>
+              <option value="ur">Urdu (اردو)</option>
+            </select>
+          </div>
+
+          <div class="config-item">
+            <label class="config-label">Explanation Language</label>
+            <select id="selectExpLang" class="config-select">
+              <option value="en">English</option>
+              <option value="ta">Tamil (தமிழ்)</option>
+              <option value="hi">Hindi (हिन्दी)</option>
+              <option value="ml">Malayalam</option>
+              <option value="te">Telugu</option>
+              <option value="fr">French</option>
+              <option value="ja">Japanese</option>
+              <option value="ur">Urdu</option>
+            </select>
+          </div>
+
+          <div class="config-item">
+            <label class="config-label">Difficulty Level</label>
+            <select id="selectLevel" class="config-select">
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+
+          <!-- Practice Mode Setting (Requirement 3) -->
+          <div class="config-item">
+            <label class="config-label">Practice Mode</label>
+            <select id="selectPracticeMode" class="config-select">
+              <option value="learn" selected>Learn Mode</option>
+              <option value="test">Test Mode</option>
+            </select>
+          </div>
+
+          <!-- Question Type Setting (Requirement 3) -->
+          <div class="config-item">
+            <label class="config-label">Question Type</label>
+            <select id="selectQuestionType" class="config-select">
+              <option value="mixed" selected>Mixed Practice</option>
+              <option value="multiple_choice">Multiple Choice</option>
+              <option value="fill_in_the_blanks">Fill in the Blank</option>
+              <option value="match_the_meaning">Match the Meaning</option>
+              <option value="sentence_completion">Sentence Completion</option>
+            </select>
+          </div>
+
+          <!-- Question Count Selector (Requirement 2) -->
+          <div class="config-item">
+            <label class="config-label">Question Count</label>
+            <select id="selectQCount" class="config-select">
+              <option value="5" selected>Quick Practice — 5 Questions</option>
+              <option value="8">Normal Practice — 8 Questions</option>
+              <option value="10">Standard Practice — 10 Questions</option>
+              <option value="15">Extended Practice — 15 Questions</option>
+              <option value="20">Full Practice — 20 Questions</option>
+              <option value="custom">Custom Practice — user-defined question count</option>
+            </select>
+          </div>
+
+          <!-- User-Defined Custom Question Count Input -->
+          <div class="config-item" id="customCountContainer" style="display:none;">
+            <label class="config-label">Questions (1 - 30)</label>
+            <div style="display:flex; align-items:center; gap:0.4rem;">
+              <input type="number" id="inputCustomQCount" min="1" max="30" value="12" class="config-select" style="width:90px;">
+              <span style="font-size:0.8rem; color:var(--color-text-subtle);">count</span>
+            </div>
+            <div id="customCountValidationMsg" style="color:#ef4444; font-size:0.75rem; font-weight:700; margin-top:2px; display:none;"></div>
+          </div>
+        </div>
+
+        <button type="button" id="btnStartPracticeSession" class="btn-launch-practice">
+          <span>Start Practice →</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         TAB 2: REVIEW MY MISTAKES
+         ========================================== -->
+    <div id="tabMistakes" class="tab-pane">
+      <div class="mistakes-filter-bar">
+        <div class="filter-pills-group">
+          <button type="button" class="filter-pill-btn active" data-filter="all">All</button>
+          <button type="button" class="filter-pill-btn" data-filter="unresolved">Needs Practice</button>
+          <button type="button" class="filter-pill-btn" data-filter="mastered">Mastered ✓</button>
+        </div>
+
+        <div style="font-size:0.84rem; color:var(--color-text-subtle);">
+          Showing: <strong id="mistakesFilterCountLabel">0</strong> recorded question(s)
+        </div>
+      </div>
+
+      <!-- Mistakes Cards List -->
+      <div id="mistakesListContainer" class="mistakes-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- ==========================================
+         TAB 3: TOPICS TO IMPROVE
+         ========================================== -->
+    <div id="tabWeakTopics" class="tab-pane">
+      <div style="margin-bottom:1.4rem;">
+        <h2 style="font-family:var(--font-display); font-size:1.3rem; font-weight:800; margin-bottom:0.35rem;">
+          Topic Proficiency & Recommendations
+        </h2>
+        <p style="font-size:0.86rem; color:var(--color-text-muted);">
+          Calculated dynamically from your actual lesson and practice attempts across every topic.
+        </p>
+      </div>
+
+      <!-- Topics Grid -->
+      <div id="topicsToImproveGrid" class="topics-grid">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- ==========================================
+         TAB 4: PRACTICE HISTORY
+         ========================================== -->
+    <div id="tabHistory" class="tab-pane">
+      <div class="history-overview-row">
+        <div class="history-stat-box">
+          <div class="stat-number-label" id="histStatSessions">0</div>
+          <div class="stat-title-label">Sessions Completed</div>
+        </div>
+        <div class="history-stat-box">
+          <div class="stat-number-label" id="histStatQuestions">0</div>
+          <div class="stat-title-label">Questions Practiced</div>
+        </div>
+        <div class="history-stat-box">
+          <div class="stat-number-label" id="histStatAccuracy">0%</div>
+          <div class="stat-title-label">Overall Accuracy</div>
+        </div>
+        <div class="history-stat-box">
+          <div class="stat-number-label" id="histStatMastered">0</div>
+          <div class="stat-title-label">Mistakes Mastered</div>
+        </div>
+      </div>
+
+      <h3 style="font-family:var(--font-display); font-size:1.15rem; font-weight:800; margin-bottom:1rem;">
+        Completed Sessions Log
+      </h3>
+      <div id="historyListContainer" class="history-items-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==========================================
+       INTERACTIVE PRACTICE STAGE MODAL
+       ========================================== -->
+  <div id="practiceStageModal" class="practice-stage-modal" role="dialog" aria-modal="true">
+    <div class="stage-top-bar">
+      <button type="button" id="btnExitPractice" class="btn-nav-back">
+        <span>✕</span>
+        <span>Exit Practice</span>
+      </button>
+
+      <div class="stage-progress-track">
+        <div id="stageProgressFill" class="stage-progress-fill"></div>
+      </div>
+
+      <div style="font-size:0.88rem; font-weight:800; color:var(--color-text-main);" id="stageQuestionCounter">
+        Question 1 of 5
+      </div>
+    </div>
+
+    <div class="stage-viewport">
+      <div class="robot-encouragement-bar">
+        <img src="robot_clean.png" alt="Robot" class="robot-thumb" onerror="this.src='robot.png'">
+        <div class="robot-speech-text" id="robotEncouragementText">
+          Let’s practice! Take your time and select the most accurate expression.
+        </div>
+      </div>
+
+      <div class="question-topic-pill" id="stageTopicPill">
+        <span>🎯</span>
+        <span id="stageTopicName">Greetings & Basics</span>
+      </div>
+
+      <h2 class="question-instruction" id="stageInstruction">
+        Select the correct translation:
+      </h2>
+
+      <!-- Source Text / Prompt Card -->
+      <div class="question-source-card" id="stageSourceCard">
+        <span class="question-source-text" id="stageSourceText">Hello</span>
+        <button type="button" id="btnStageAudio" class="btn-audio-speak" title="Listen to pronunciation">
+          🔊
+        </button>
+      </div>
+
+      <!-- Exercise Dynamic Container (Options, Word Bank, etc.) -->
+      <div id="stageExerciseContent"></div>
+    </div>
+
+    <!-- Bottom Feedback & Check Tray -->
+    <div class="stage-bottom-tray">
+      <div class="stage-bottom-inner">
+        <div id="stageFeedbackBanner" class="feedback-banner">
+          <div class="feedback-icon-circle" id="stageFeedbackIcon">✓</div>
+          <div>
+            <div class="feedback-text-title" id="stageFeedbackTitle">Correct!</div>
+            <div class="feedback-text-desc" id="stageFeedbackDesc">Excellent accuracy and retention.</div>
+          </div>
+        </div>
+
+        <button type="button" id="btnStageAction" class="btn-stage-action" disabled>
+          Check Answer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       SESSION CELEBRATION MODAL
+       ========================================== -->
+  <div id="celebrationModal" class="practice-stage-modal" style="display:none; justify-content:center; align-items:center;">
+    <div class="session-complete-card" style="max-width:580px; width:92%; max-height:85vh; overflow-y:auto;">
+      <div class="complete-icon-box">
+        <img src="robot_clean.png" alt="Happy Robot" onerror="this.src='robot.png'">
+      </div>
+      <h2 style="font-family:var(--font-display); font-size:1.8rem; font-weight:900; margin-bottom:0.35rem;" id="celebrationTitle">
+        Practice Complete!
+      </h2>
+      <p style="font-size:0.92rem; color:var(--color-text-muted); margin-bottom:1.4rem;" id="celebrationSubtext">
+        Great effort reinforcing your skills and building long-term memory.
+      </p>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.4rem;">
+        <div style="background:var(--color-surface-hover); border-radius:16px; padding:1rem; border:1px solid var(--color-border);">
+          <div style="font-size:0.75rem; font-weight:700; color:var(--color-text-subtle); text-transform:uppercase;">Accuracy</div>
+          <div id="celebrationAccuracy" style="font-size:1.8rem; font-weight:900; color:var(--color-success);">100%</div>
+          <div id="celebrationDetailBadge" style="font-size:0.78rem; color:var(--color-text-subtle); margin-top:2px;">5 of 5 Correct</div>
+        </div>
+        <div style="background:var(--color-surface-hover); border-radius:16px; padding:1rem; border:1px solid var(--color-border);">
+          <div style="font-size:0.75rem; font-weight:700; color:var(--color-text-subtle); text-transform:uppercase;">XP Earned</div>
+          <div id="celebrationXp" style="font-size:1.8rem; font-weight:900; color:#d97706;">+5 XP</div>
+          <div style="font-size:0.78rem; color:var(--color-text-subtle); margin-top:2px;">Added to profile</div>
+        </div>
+      </div>
+
+      <!-- Test Mode / Comprehensive Question Review List -->
+      <div id="testReviewSection" style="display:none; margin-bottom:1.4rem;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.6rem;">
+          <div style="font-weight:800; font-size:0.95rem; color:var(--color-text-main);">
+            📋 Test Review & Corrections
+          </div>
+          <span style="font-size:0.78rem; color:var(--color-text-subtle);">All answers & explanations</span>
+        </div>
+        <div class="test-review-box" id="testAnswersReviewList">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:0.6rem;">
+        <button type="button" id="btnReviewIncorrectAnswers" class="btn-nav-back" style="display:none; justify-content:center; color:#ef4444; border-color:#fecaca; background:#fef2f2;">
+          <span>📝 Review Incorrect Answers in Mistake Memory</span>
+        </button>
+        <button type="button" id="btnCelebrationContinue" class="btn-launch-practice" style="justify-content:center;">
+          Continue Practicing
+        </button>
+        <button type="button" id="btnCelebrationDashboard" class="btn-nav-back" style="justify-content:center; padding:0.8rem;">
+          Return to Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client-side Logic Script -->
+  <script>
+    /**
+     * MULTILINGUAL AI LEARNING HUB — MODULE 7 (PRACTICE & MISTAKE MEMORY)
+     * Full interactive implementation supporting:
+     * 1. 4 Practice Mode Cards: Smart Adaptive, Mistake Memory, Weak Topics, Select Topic
+     * 2. Question Counts: 5, 8, 10, 15, 20, Custom (1-30 validated)
+     * 3. Practice Modes: Learn Mode (instant feedback) & Test Mode (hidden feedback + post-test review)
+     * 4. Question Types: Mixed, Multiple Choice, Fill in Blank, Match Meaning, Sentence Completion
+     * 5. AI Search & Learn: Multi-lingual colloquial transliteration, translation, pronunciation, vocabulary saving, dedicated phrase practice
+     * 6. Real database synchronization, mistake memory, weak topic calculations, and XP tracking
+     */
+    let currentMode = 'smart';
+    let currentTgtLang = 'ta';
+    let currentExpLang = 'en';
+    let currentLevel = 'beginner';
+    let practiceSummary = null;
+    let allMistakes = [];
+    let currentMistakeFilter = 'all';
+
+    // Active session state
+    let activeQuestions = [];
+    let currentQIndex = 0;
+    let sessionCorrectCount = 0;
+    let selectedUserAnswer = null;
+    let hasCheckedCurrentQ = false;
+    let currentActiveTopic = 'General Practice';
+    let currentPhraseData = null;
+    let currentPracticeModeSetting = 'learn'; // 'learn' or 'test'
+    let currentQuestionTypeSetting = 'mixed';
+    let testSessionAnswers = []; // Records questions, user answers, correct answers for Test Mode review
+
+    // AI Search & Saved Vocabulary state
+    let currentAiSearchResult = null;
+    let userSavedVocabList = [];
+    let selectedWeakTopicUnitId = null;
+
+    // DOM Elements - Navigation & Modes
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    const modeCards = document.querySelectorAll('.practice-mode-card');
+    const selectTgtLang = document.getElementById('selectTgtLang');
+    const selectExpLang = document.getElementById('selectExpLang');
+    const selectLevel = document.getElementById('selectLevel');
+    const selectPracticeMode = document.getElementById('selectPracticeMode');
+    const selectQuestionType = document.getElementById('selectQuestionType');
+    const selectQCount = document.getElementById('selectQCount');
+    const customCountContainer = document.getElementById('customCountContainer');
+    const inputCustomQCount = document.getElementById('inputCustomQCount');
+    const customCountValidationMsg = document.getElementById('customCountValidationMsg');
+    const selectTopicPicker = document.getElementById('selectTopicPicker');
+    const btnStartPracticeSession = document.getElementById('btnStartPracticeSession');
+
+    // Mode Context Banner & Dynamic Panels
+    const modeContextBanner = document.getElementById('modeContextBanner');
+    const modeBannerTitle = document.getElementById('modeBannerTitle');
+    const modeBannerDesc = document.getElementById('modeBannerDesc');
+    const modeBannerAction = document.getElementById('modeBannerAction');
+    const weakTopicsPickPanel = document.getElementById('weakTopicsPickPanel');
+    const weakTopicsSelectorGrid = document.getElementById('weakTopicsSelectorGrid');
+    const selectTopicPanel = document.getElementById('selectTopicPanel');
+    const customAiChatPanel = document.getElementById('customAiChatPanel');
+    const practiceConfigBox = document.getElementById('practiceConfigBox');
+    const selectChatLanguage = document.getElementById('selectChatLanguage');
+    const btnClearChatHistory = document.getElementById('btnClearChatHistory');
+    const chatMessagesArea = document.getElementById('chatMessagesArea');
+    const chatErrorBanner = document.getElementById('chatErrorBanner');
+    const inputChatMessage = document.getElementById('inputChatMessage');
+    const btnSendChatMessage = document.getElementById('btnSendChatMessage');
+    const chatInitialGreeting = document.getElementById('chatInitialGreeting');
+    const chatInitialEnglish = document.getElementById('chatInitialEnglish');
+    const chatInitialPhonetics = document.getElementById('chatInitialPhonetics');
+
+    // AI Search & Learn Elements
+    const inputAiSearch = document.getElementById('inputAiSearch');
+    const btnAiSearchSubmit = document.getElementById('btnAiSearchSubmit');
+    const selectAiInputLang = document.getElementById('selectAiInputLang');
+    const selectAiTargetLang = document.getElementById('selectAiTargetLang');
+    const aiSearchLoading = document.getElementById('aiSearchLoading');
+    const aiSearchResultBox = document.getElementById('aiSearchResultBox');
+    const resLangPairBadge = document.getElementById('resLangPairBadge');
+    const btnSaveToVocab = document.getElementById('btnSaveToVocab');
+    const btnPractisePhrase = document.getElementById('btnPractisePhrase');
+    const resOriginalText = document.getElementById('resOriginalText');
+    const resTargetLangLabel = document.getElementById('resTargetLangLabel');
+    const btnSpeakRes = document.getElementById('btnSpeakRes');
+    const resTargetTranslation = document.getElementById('resTargetTranslation');
+    const resEnglishMeaning = document.getElementById('resEnglishMeaning');
+    const resPronunciation = document.getElementById('resPronunciation');
+    const resUsageExample = document.getElementById('resUsageExample');
+    const resExplanation = document.getElementById('resExplanation');
+    const vocabSaveNotification = document.getElementById('vocabSaveNotification');
+
+    // Saved Vocabulary Drawer Elements
+    const btnToggleSavedVocab = document.getElementById('btnToggleSavedVocab');
+    const savedVocabBadge = document.getElementById('savedVocabBadge');
+    const savedVocabDrawer = document.getElementById('savedVocabDrawer');
+    const savedVocabListContainer = document.getElementById('savedVocabListContainer');
+    const inputSearchVocab = document.getElementById('inputSearchVocab');
+
+    // Header stats
+    const topStatXp = document.getElementById('topStatXp');
+    const topStatStreak = document.getElementById('topStatStreak');
+    const topLangLabel = document.getElementById('topLangLabel');
+    const badgeMistakesCount = document.getElementById('badgeMistakesCount');
+    const badgeWeakTopicsCount = document.getElementById('badgeWeakTopicsCount');
+    const cardMistakeCountBadge = document.getElementById('cardMistakeCountBadge');
+    const cardWeakTopicBadge = document.getElementById('cardWeakTopicBadge');
+    const btnToggleTheme = document.getElementById('btnToggleTheme');
+
+    // Practice Stage Elements
+    const practiceStageModal = document.getElementById('practiceStageModal');
+    const btnExitPractice = document.getElementById('btnExitPractice');
+    const stageProgressFill = document.getElementById('stageProgressFill');
+    const stageQuestionCounter = document.getElementById('stageQuestionCounter');
+    const robotEncouragementText = document.getElementById('robotEncouragementText');
+    const stageTopicName = document.getElementById('stageTopicName');
+    const stageInstruction = document.getElementById('stageInstruction');
+    const stageSourceCard = document.getElementById('stageSourceCard');
+    const stageSourceText = document.getElementById('stageSourceText');
+    const btnStageAudio = document.getElementById('btnStageAudio');
+    const stageExerciseContent = document.getElementById('stageExerciseContent');
+    const stageFeedbackBanner = document.getElementById('stageFeedbackBanner');
+    const stageFeedbackIcon = document.getElementById('stageFeedbackIcon');
+    const stageFeedbackTitle = document.getElementById('stageFeedbackTitle');
+    const stageFeedbackDesc = document.getElementById('stageFeedbackDesc');
+    const btnStageAction = document.getElementById('btnStageAction');
+
+    // Celebration & Test Review Elements
+    const celebrationModal = document.getElementById('celebrationModal');
+    const celebrationAccuracy = document.getElementById('celebrationAccuracy');
+    const celebrationXp = document.getElementById('celebrationXp');
+    const celebrationTitle = document.getElementById('celebrationTitle');
+    const celebrationSubtext = document.getElementById('celebrationSubtext');
+    const celebrationDetailBadge = document.getElementById('celebrationDetailBadge');
+    const testReviewSection = document.getElementById('testReviewSection');
+    const testAnswersReviewList = document.getElementById('testAnswersReviewList');
+    const btnReviewIncorrectAnswers = document.getElementById('btnReviewIncorrectAnswers');
+    const btnCelebrationContinue = document.getElementById('btnCelebrationContinue');
+    const btnCelebrationDashboard = document.getElementById('btnCelebrationDashboard');
+
+    // Mistakes View Elements
+    const mistakesListContainer = document.getElementById('mistakesListContainer');
+    const filterPillBtns = document.querySelectorAll('.filter-pill-btn');
+    const mistakesFilterCountLabel = document.getElementById('mistakesFilterCountLabel');
+
+    // Topics & History Elements
+    const topicsToImproveGrid = document.getElementById('topicsToImproveGrid');
+    const histStatSessions = document.getElementById('histStatSessions');
+    const histStatQuestions = document.getElementById('histStatQuestions');
+    const histStatAccuracy = document.getElementById('histStatAccuracy');
+    const histStatMastered = document.getElementById('histStatMastered');
+    const historyListContainer = document.getElementById('historyListContainer');
+
+    // Language display helper map
+    const LANG_NAMES = {
+      ta: 'Tamil', en: 'English', hi: 'Hindi', ml: 'Malayalam',
+      te: 'Telugu', fr: 'French', ja: 'Japanese', ur: 'Urdu'
+    };
+
+    // ==========================================
+    // INITIALIZATION & TAB SWITCHING
+    // ==========================================
+    async function initPage() {
+      // Theme Toggle
+      btnToggleTheme.addEventListener('click', () => {
+        const cur = HubTheme.getTheme();
+        const next = cur === 'light' ? 'dark' : (cur === 'dark' ? 'system' : 'light');
+        HubTheme.setTheme(next, true);
+      });
+
+      // Tab Switching
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabBtns.forEach(b => b.classList.remove('active'));
+          tabPanes.forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          const target = btn.dataset.tab;
+          const targetPane = document.getElementById(target);
+          if (targetPane) targetPane.classList.add('active');
+
+          if (target === 'tabMistakes') loadMistakes();
+          if (target === 'tabWeakTopics') loadWeakTopics();
+          if (target === 'tabHistory') loadHistory();
+        });
+      });
+
+      // Mode Selection Cards (Requirement 1: All four cards functional)
+      modeCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const selectedMode = card.dataset.mode;
+          updateActiveMode(selectedMode);
+        });
+      });
+
+      // Question Count Selector Change (Requirement 2: Custom toggle & validation)
+      selectQCount.addEventListener('change', () => {
+        if (selectQCount.value === 'custom') {
+          customCountContainer.style.display = 'block';
+          inputCustomQCount.focus();
+        } else {
+          customCountContainer.style.display = 'none';
+          customCountValidationMsg.style.display = 'none';
+        }
+      });
+
+      inputCustomQCount.addEventListener('input', () => {
+        getResolvedQuestionCount(); // Live validation feedback
+      });
+
+      // Practice Mode Setting Change (Requirement 3: Learn vs Test)
+      selectPracticeMode.addEventListener('change', () => {
+        currentPracticeModeSetting = selectPracticeMode.value;
+      });
+
+      // Question Type Setting Change (Requirement 3)
+      selectQuestionType.addEventListener('change', () => {
+        currentQuestionTypeSetting = selectQuestionType.value;
+      });
+
+      // Target / Explanation Language Selectors
+      selectTgtLang.addEventListener('change', async () => {
+        currentTgtLang = selectTgtLang.value;
+        if (selectAiTargetLang) selectAiTargetLang.value = currentTgtLang;
+        await loadCurriculumTopics();
+        await loadSummaryData();
+        await loadSavedVocab();
+        if (currentMode === 'weak_topics') loadWeakTopicsSelector();
+      });
+
+      selectExpLang.addEventListener('change', async () => {
+        currentExpLang = selectExpLang.value;
+        if (selectAiInputLang) selectAiInputLang.value = currentExpLang;
+        await loadCurriculumTopics();
+      });
+
+      selectLevel.addEventListener('change', () => {
+        currentLevel = selectLevel.value;
+        loadCurriculumTopics();
+      });
+
+      // AI Search & Learn Setup (Requirement 4, 5, 6)
+      btnAiSearchSubmit.addEventListener('click', handleAiSearch);
+      inputAiSearch.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleAiSearch();
+        }
+      });
+
+      btnSaveToVocab.addEventListener('click', handleSaveToVocab);
+      btnPractisePhrase.addEventListener('click', handlePractiseSearchedPhrase);
+      btnSpeakRes.addEventListener('click', () => {
+        if (currentAiSearchResult && currentAiSearchResult.targetTranslation) {
+          speakText(currentAiSearchResult.targetTranslation, currentAiSearchResult.targetLang || selectTgtLang.value);
+        }
+      });
+
+      // Saved Vocabulary Drawer
+      btnToggleSavedVocab.addEventListener('click', () => {
+        const isHidden = (savedVocabDrawer.style.display === 'none' || !savedVocabDrawer.style.display);
+        savedVocabDrawer.style.display = isHidden ? 'block' : 'none';
+        if (isHidden) {
+          loadSavedVocab();
+          savedVocabDrawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+
+      inputSearchVocab.addEventListener('input', () => {
+        renderSavedVocabList(inputSearchVocab.value);
+      });
+
+      // Filter Pills in Review My Mistakes Tab
+      filterPillBtns.forEach(pill => {
+        pill.addEventListener('click', () => {
+          filterPillBtns.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          currentMistakeFilter = pill.dataset.filter;
+          renderMistakesList();
+        });
+      });
+
+      // Load User Profile, Settings, Topics & Summary Data
+      await loadUserData();
+      await loadCurriculumTopics();
+      await loadSummaryData();
+      await loadSavedVocab();
+
+      // Launch Practice Button
+      btnStartPracticeSession.addEventListener('click', () => {
+        startPracticeSession();
+      });
+
+      // Exit Practice Stage Modal
+      btnExitPractice.addEventListener('click', () => {
+        const msg = currentPracticeModeSetting === 'test'
+          ? 'Exit active test session? Unfinished questions will not be scored.'
+          : 'Exit current practice session? Your progress on answered questions is saved.';
+        if (confirm(msg)) {
+          practiceStageModal.classList.remove('active');
+        }
+      });
+
+      // Celebration Modal Actions
+      btnCelebrationContinue.addEventListener('click', () => {
+        celebrationModal.style.display = 'none';
+        practiceStageModal.classList.remove('active');
+        loadSummaryData();
+      });
+
+      btnCelebrationDashboard.addEventListener('click', () => {
+        window.location.href = 'dashboard';
+      });
+
+      btnReviewIncorrectAnswers.addEventListener('click', () => {
+        celebrationModal.style.display = 'none';
+        practiceStageModal.classList.remove('active');
+        const mistakeTabBtn = document.querySelector('[data-tab="tabMistakes"]');
+        if (mistakeTabBtn) {
+          mistakeTabBtn.click();
+          // Filter to unresolved
+          const unresolvedPill = document.querySelector('.filter-pill-btn[data-filter="unresolved"]');
+          if (unresolvedPill) unresolvedPill.click();
+        }
+      });
+
+      // Stage Audio Pronunciation
+      btnStageAudio.addEventListener('click', () => {
+        speakText(stageSourceText.textContent, currentTgtLang);
+      });
+
+      // Stage Check/Continue Button
+      btnStageAction.addEventListener('click', handleStageAction);
+
+      // Custom AI Chat Listeners
+      if (btnSendChatMessage) {
+        btnSendChatMessage.addEventListener('click', handleSendChatMessage);
+      }
+      if (inputChatMessage) {
+        inputChatMessage.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSendChatMessage();
+          }
+        });
+      }
+      if (btnClearChatHistory) {
+        btnClearChatHistory.addEventListener('click', handleClearChatHistory);
+      }
+      const btnExitChatToPractice = document.getElementById('btnExitChatToPractice');
+      if (btnExitChatToPractice) {
+        btnExitChatToPractice.addEventListener('click', () => {
+          updateActiveMode('smart');
+        });
+      }
+      if (selectChatLanguage) {
+        selectChatLanguage.addEventListener('change', handleChatLanguageChange);
+      }
+
+      // Check URL query parameters (e.g. ?mode=mistakes or ?topic=u1 or ?mode=chat)
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryMode = urlParams.get('mode');
+      const queryTopic = urlParams.get('topic');
+      if (queryMode) {
+        if (['smart', 'mistakes', 'weak_topics', 'topic', 'chat'].includes(queryMode)) {
+          updateActiveMode(queryMode);
+        } else {
+          const targetTab = queryMode === 'mistakes' ? 'tabMistakes' : (queryMode === 'topics' ? 'tabWeakTopics' : 'tabPractice');
+          const matchingBtn = document.querySelector(`[data-tab="${targetTab}"]`);
+          if (matchingBtn) matchingBtn.click();
+        }
+      }
+      if (queryTopic) {
+        updateActiveMode('topic');
+        selectTopicPicker.value = queryTopic;
+      }
+    }
+
+    // ==========================================
+    // REQUIREMENT 1: UPDATE ACTIVE PRACTICE MODE
+    // ==========================================
+    function updateActiveMode(mode) {
+      currentMode = mode;
+      modeCards.forEach(c => {
+        if (c.dataset.mode === mode) {
+          c.classList.add('selected');
+        } else {
+          c.classList.remove('selected');
+        }
+      });
+
+      // Reset dynamic sub-panels
+      if (weakTopicsPickPanel) weakTopicsPickPanel.style.display = 'none';
+      if (selectTopicPanel) selectTopicPanel.style.display = 'none';
+      selectedWeakTopicUnitId = null;
+
+      // When Custom AI Chat is active, hide the Smart Adaptive status message and settings
+      if (mode === 'chat') {
+        if (modeContextBanner) modeContextBanner.style.display = 'none';
+        if (practiceConfigBox) practiceConfigBox.style.display = 'none';
+        if (customAiChatPanel) customAiChatPanel.style.display = 'block';
+
+        setTimeout(() => {
+          if (customAiChatPanel) customAiChatPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          if (inputChatMessage) inputChatMessage.focus();
+        }, 80);
+        return;
+      }
+
+      // Restore modeContextBanner and practiceConfigBox for standard practice modes
+      if (customAiChatPanel) customAiChatPanel.style.display = 'none';
+      if (modeContextBanner) modeContextBanner.style.display = 'block';
+      if (practiceConfigBox) practiceConfigBox.style.display = 'block';
+
+      if (mode === 'smart') {
+        modeBannerTitle.innerHTML = '⚡ Smart Adaptive Practice Active';
+        modeBannerDesc.textContent = 'Intelligently analyzes your past attempts and mistakes across all units to generate a personalized practice session. Avoids repeating questions you already mastered.';
+        btnStartPracticeSession.querySelector('span').textContent = 'Start Smart Practice →';
+      } else if (mode === 'mistakes') {
+        const count = practiceSummary ? (practiceSummary.unresolvedMistakesCount || 0) : 0;
+        modeBannerTitle.innerHTML = '📝 Mistake Memory Mode Active';
+        if (count === 0) {
+          modeBannerDesc.textContent = 'You currently have 0 active recorded mistakes for this language! Outstanding mastery. You can review all past items in the Review tab or switch to Smart Adaptive to practice new concepts.';
+          btnStartPracticeSession.querySelector('span').textContent = 'Practice Mistake Review →';
+        } else {
+          modeBannerDesc.textContent = `Focuses directly on your ${count} recorded mistake(s). Provides targeted reinforcement so you master previously missed concepts.`;
+          btnStartPracticeSession.querySelector('span').textContent = `Practice ${count} Missed Questions →`;
+        }
+      } else if (mode === 'weak_topics') {
+        const weakCount = practiceSummary ? (practiceSummary.topicsToImprove || []).length : 0;
+        modeBannerTitle.innerHTML = '🎯 Weak Topics Targeted Practice';
+        modeBannerDesc.textContent = `Identifies curriculum topics where your accuracy is below 75% or mistakes exist. Choose a specific topic below or practice recommended weak areas.`;
+        btnStartPracticeSession.querySelector('span').textContent = 'Start Weak Topics Practice →';
+        weakTopicsPickPanel.style.display = 'block';
+        loadWeakTopicsSelector();
+      } else if (mode === 'topic') {
+        modeBannerTitle.innerHTML = '📖 Select Topic & AI Search & Learn Active';
+        modeBannerDesc.textContent = 'Choose any curriculum unit to practice, or search any phrase or everyday colloquial sentence below to translate, explain, and generate custom practice exercises.';
+        btnStartPracticeSession.querySelector('span').textContent = 'Start Topic Practice →';
+        selectTopicPanel.style.display = 'block';
+      }
+    }
+
+    // ==========================================
+    // REQUIREMENT 2: QUESTION COUNT RESOLUTION & VALIDATION
+    // ==========================================
+    function getResolvedQuestionCount() {
+      const selectedVal = selectQCount.value;
+      if (selectedVal !== 'custom') {
+        customCountValidationMsg.style.display = 'none';
+        return parseInt(selectedVal, 10) || 5;
+      }
+
+      // User-defined custom count
+      const rawVal = inputCustomQCount.value.trim();
+      const num = parseInt(rawVal, 10);
+
+      if (rawVal === '' || isNaN(num)) {
+        customCountValidationMsg.textContent = 'Please enter a numeric question count.';
+        customCountValidationMsg.style.display = 'block';
+        return null;
+      }
+
+      if (num < 1) {
+        customCountValidationMsg.textContent = 'Question count must be at least 1.';
+        customCountValidationMsg.style.display = 'block';
+        return null;
+      }
+
+      if (num > 30) {
+        customCountValidationMsg.textContent = 'Maximum allowed count is 30 questions for optimal focus.';
+        customCountValidationMsg.style.display = 'block';
+        return null;
+      }
+
+      customCountValidationMsg.style.display = 'none';
+      return num;
+    }
+
+    // ==========================================
+    // LOAD USER PROFILE & SETTINGS
+    // ==========================================
+    async function loadUserData() {
+      try {
+        const [settingsRes, summaryRes] = await Promise.all([
+          fetch('/api/user/settings'),
+          fetch('/api/learning/summary')
+        ]);
+
+        if (settingsRes.ok) {
+          const settings = await settingsRes.json();
+          if (settings.target_lang) {
+            currentTgtLang = settings.target_lang;
+            selectTgtLang.value = settings.target_lang;
+            if (selectAiTargetLang) selectAiTargetLang.value = settings.target_lang;
+          }
+          if (settings.explanation_lang) {
+            currentExpLang = settings.explanation_lang;
+            selectExpLang.value = settings.explanation_lang;
+            if (selectAiInputLang) selectAiInputLang.value = settings.explanation_lang;
+          }
+          if (settings.learning_level) {
+            currentLevel = settings.learning_level;
+            selectLevel.value = settings.learning_level;
+          }
+        }
+
+        if (summaryRes.ok) {
+          const data = await summaryRes.json();
+          topStatXp.textContent = `${data.stats?.total_xp || 0} XP`;
+          topStatStreak.textContent = `${data.stats?.streak_days || 0}`;
+          if (data.targetLanguage) {
+            topLangLabel.textContent = data.targetLanguage.name;
+          }
+        }
+      } catch (err) {
+        console.error('Load user data error:', err);
+      }
+    }
+
+    // Load Curriculum Units for Topic Picker
+    async function loadCurriculumTopics() {
+      try {
+        const res = await fetch(`/api/learning/units?exp=${currentExpLang}&tgt=${currentTgtLang}&level=${currentLevel}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.units && data.units.length > 0) {
+            selectTopicPicker.innerHTML = data.units.map(u => `
+              <option value="${u.id}">${u.icon || '📖'} ${u.title?.en || u.title}</option>
+            `).join('');
+          }
+        }
+      } catch (err) {
+        console.error('Load curriculum units error:', err);
+      }
+    }
+
+    // ==========================================
+    // LOAD PRACTICE SUMMARY & METRICS
+    // ==========================================
+    async function loadSummaryData() {
+      try {
+        const res = await fetch(`/api/practice/summary?tgt=${currentTgtLang}`);
+        if (res.ok) {
+          practiceSummary = await res.json();
+          const unres = practiceSummary.unresolvedMistakesCount || 0;
+          const weakList = practiceSummary.topicsToImprove || [];
+
+          badgeMistakesCount.textContent = unres;
+          cardMistakeCountBadge.textContent = `${unres} Missed`;
+          badgeWeakTopicsCount.textContent = weakList.length;
+          cardWeakTopicBadge.textContent = `${weakList.length} Weak`;
+
+          // History tab overview
+          histStatSessions.textContent = practiceSummary.totalSessionsCompleted || 0;
+          histStatQuestions.textContent = practiceSummary.totalQuestionsAnswered || 0;
+          histStatAccuracy.textContent = `${practiceSummary.overallAccuracy || 0}%`;
+          histStatMastered.textContent = practiceSummary.masteredMistakesCount || 0;
+        }
+      } catch (err) {
+        console.error('Load summary data error:', err);
+      }
+    }
+
+    // ==========================================
+    // WEAK TOPICS SELECTOR FOR TAB 1
+    // ==========================================
+    async function loadWeakTopicsSelector() {
+      weakTopicsSelectorGrid.innerHTML = `
+        <div style="grid-column:1/-1; text-align:center; padding:1.2rem;">
+          <div class="loading-spinner"></div>
+          <div style="margin-top:0.5rem; font-size:0.84rem; color:var(--color-text-subtle);">Analyzing topic accuracy...</div>
+        </div>
+      `;
+
+      try {
+        const res = await fetch(`/api/practice/topics-to-improve?tgt=${currentTgtLang}`);
+        if (res.ok) {
+          const data = await res.json();
+          const weakTopics = data.weakTopics || [];
+          const allTopics = data.allTopics || [];
+
+          if (weakTopics.length === 0) {
+            weakTopicsSelectorGrid.innerHTML = `
+              <div style="grid-column:1/-1; background:var(--color-surface-hover); border-radius:14px; padding:1.2rem; text-align:center;">
+                <div style="font-size:1.4rem; margin-bottom:0.2rem;">🌟</div>
+                <div style="font-weight:800; font-size:0.95rem; color:var(--color-text-main);">No Struggling Topics Found!</div>
+                <div style="font-size:0.82rem; color:var(--color-text-muted); margin-top:0.3rem;">
+                  Your accuracy is high across all attempted topics. Select any topic below to keep sharpening your fluency.
+                </div>
+              </div>
+            `;
+            if (allTopics.length > 0) {
+              renderTopicSelectionCards(allTopics.slice(0, 4));
+            }
+            return;
+          }
+
+          renderTopicSelectionCards(weakTopics);
+        }
+      } catch (err) {
+        console.error('Load weak topics selector error:', err);
+        weakTopicsSelectorGrid.innerHTML = `<div style="grid-column:1/-1; color:#ef4444; font-size:0.85rem;">Failed to load weak topics: ${err.message}</div>`;
+      }
+    }
+
+    function renderTopicSelectionCards(topics) {
+      weakTopicsSelectorGrid.innerHTML = topics.map(t => {
+        const acc = t.accuracyPercentage || 0;
+        let barColor = acc < 60 ? '#ef4444' : (acc < 75 ? '#f59e0b' : '#3b82f6');
+        const isSelected = selectedWeakTopicUnitId === (t.unitId || t.topic);
+        return `
+          <div class="weak-topic-pick-card ${isSelected ? 'selected' : ''}" data-topic="${t.unitId || t.topic}">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
+              <div style="font-weight:800; font-size:0.92rem; color:var(--color-text-main); display:flex; align-items:center; gap:0.4rem;">
+                <span>${t.icon || '🎯'}</span>
+                <span>${t.title || t.topic}</span>
+              </div>
+              <span style="font-size:0.75rem; font-weight:800; color:${barColor};">${acc}%</span>
+            </div>
+            <div class="accuracy-bar-track" style="margin-bottom:0.5rem; height:5px;">
+              <div class="accuracy-bar-fill" style="width:${acc}%; background:${barColor};"></div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; font-size:0.75rem; color:var(--color-text-subtle);">
+              <span>Mistakes: <strong>${t.unresolvedMistakes || 0}</strong></span>
+              <button type="button" class="btn-action-small" style="padding:0.25rem 0.6rem; font-size:0.75rem;" onclick="event.stopPropagation(); startPracticeSession('${t.unitId || t.topic}')">
+                Practise Now →
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      weakTopicsSelectorGrid.querySelectorAll('.weak-topic-pick-card').forEach(card => {
+        card.addEventListener('click', () => {
+          weakTopicsSelectorGrid.querySelectorAll('.weak-topic-pick-card').forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          selectedWeakTopicUnitId = card.dataset.topic;
+          btnStartPracticeSession.querySelector('span').textContent = `Practise Selected Topic →`;
+        });
+      });
+    }
+
+    // ==========================================
+    // REQUIREMENT 4, 5, 6: AI SEARCH & LEARN
+    // ==========================================
+    async function handleAiSearch() {
+      const text = inputAiSearch.value.trim();
+      if (!text) {
+        inputAiSearch.focus();
+        inputAiSearch.style.borderColor = 'var(--color-error)';
+        setTimeout(() => { inputAiSearch.style.borderColor = ''; }, 1200);
+        return;
+      }
+
+      const inputLang = selectAiInputLang.value;
+      const targetLang = selectAiTargetLang.value;
+
+      aiSearchLoading.style.display = 'block';
+      aiSearchResultBox.style.display = 'none';
+      btnAiSearchSubmit.disabled = true;
+
+      try {
+        const res = await fetch('/api/practice/search-learn', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text, inputLang, targetLang })
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || 'Failed to analyze search query');
+        }
+
+        const data = await res.json();
+        currentAiSearchResult = data.result;
+
+        // Populate learning result card
+        const inName = data.result.inputLangName || LANG_NAMES[inputLang] || inputLang;
+        const tgtName = data.result.targetLangName || LANG_NAMES[targetLang] || targetLang;
+
+        resLangPairBadge.textContent = `${inName} → ${tgtName}`;
+        resOriginalText.textContent = data.result.originalText;
+        resTargetLangLabel.textContent = tgtName;
+        resTargetTranslation.textContent = data.result.targetTranslation;
+        resEnglishMeaning.textContent = data.result.englishMeaning;
+        resPronunciation.textContent = data.result.pronunciation || '—';
+        if (typeof data.result.usageExample === 'object' && data.result.usageExample !== null) {
+          const exTgt = (data.result.usageExample.target || '').replace(/\n/g, '<br>');
+          const exEng = (data.result.usageExample.english || '').replace(/\n/g, '<br>');
+          resUsageExample.innerHTML = `<div style="font-weight:700; color:var(--color-text-main); margin-bottom:4px;">${exTgt}</div><div style="font-size:0.84rem; color:var(--color-text-subtle);">${exEng}</div>`;
+        } else {
+          resUsageExample.innerHTML = data.result.usageExample ? data.result.usageExample.replace(/\n/g, '<br>') : '—';
+        }
+        resExplanation.innerHTML = data.result.explanation ? data.result.explanation.replace(/\n/g, '<br>') : '—';
+
+        // Check if already in saved vocabulary
+        updateSaveVocabBtnState();
+
+        aiSearchResultBox.style.display = 'block';
+        aiSearchResultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (err) {
+        console.error('AI Search error:', err);
+        alert('AI Search Error: ' + err.message);
+      } finally {
+        aiSearchLoading.style.display = 'none';
+        btnAiSearchSubmit.disabled = false;
+      }
+    }
+
+    function updateSaveVocabBtnState() {
+      if (!currentAiSearchResult) return;
+      const isSaved = userSavedVocabList.some(item =>
+        item.original_text.toLowerCase().trim() === currentAiSearchResult.originalText.toLowerCase().trim() &&
+        item.target_lang === currentAiSearchResult.targetLang
+      );
+      if (isSaved) {
+        btnSaveToVocab.innerHTML = `<span>✓ Saved to Vocabulary</span>`;
+        btnSaveToVocab.disabled = true;
+      } else {
+        btnSaveToVocab.innerHTML = `<span>⭐ Save to My Vocabulary</span>`;
+        btnSaveToVocab.disabled = false;
+      }
+    }
+
+    // Action 1: Save to My Vocabulary
+    async function handleSaveToVocab() {
+      if (!currentAiSearchResult) return;
+      btnSaveToVocab.disabled = true;
+
+      try {
+        const res = await fetch('/api/vocabulary', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            original_text: currentAiSearchResult.originalText,
+            target_translation: currentAiSearchResult.targetTranslation,
+            target_lang: currentAiSearchResult.targetLang || selectAiTargetLang.value,
+            input_lang: currentAiSearchResult.inputLang || selectAiInputLang.value,
+            english_meaning: currentAiSearchResult.englishMeaning,
+            pronunciation: currentAiSearchResult.pronunciation,
+            usage_example: currentAiSearchResult.usageExample,
+            explanation: currentAiSearchResult.explanation
+          })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          vocabSaveNotification.textContent = '✓ Saved to your personal vocabulary!';
+          vocabSaveNotification.style.display = 'block';
+          setTimeout(() => { vocabSaveNotification.style.display = 'none'; }, 3500);
+          btnSaveToVocab.innerHTML = `<span>✓ Saved to Vocabulary</span>`;
+          await loadSavedVocab();
+        } else {
+          alert(data.error || 'Could not save phrase to vocabulary');
+          btnSaveToVocab.disabled = false;
+        }
+      } catch (err) {
+        console.error('Save to vocabulary error:', err);
+        alert('Save vocabulary error: ' + err.message);
+        btnSaveToVocab.disabled = false;
+      }
+    }
+
+    // Action 2: Practise This Searched Phrase
+    function handlePractiseSearchedPhrase() {
+      if (!currentAiSearchResult) return;
+      startPracticeSession('phrase_practice', currentAiSearchResult);
+    }
+
+    // Load & Render Saved Vocabulary
+    async function loadSavedVocab() {
+      try {
+        const res = await fetch(`/api/vocabulary?target_lang=${selectTgtLang.value}`);
+        if (res.ok) {
+          const data = await res.json();
+          userSavedVocabList = data.vocabulary || [];
+          savedVocabBadge.textContent = userSavedVocabList.length;
+          renderSavedVocabList(inputSearchVocab ? inputSearchVocab.value : '');
+          updateSaveVocabBtnState();
+        }
+      } catch (err) {
+        console.error('Load vocabulary error:', err);
+      }
+    }
+
+    function renderSavedVocabList(filterText = '') {
+      if (!savedVocabListContainer) return;
+      const search = (filterText || '').toLowerCase().trim();
+      const filtered = userSavedVocabList.filter(item => {
+        if (!search) return true;
+        const trans = (item.translation || item.target_translation || '').toLowerCase();
+        return (item.original_text || '').toLowerCase().includes(search) ||
+               trans.includes(search) ||
+               (item.english_meaning || '').toLowerCase().includes(search);
+      });
+
+      if (filtered.length === 0) {
+        savedVocabListContainer.innerHTML = `
+          <div style="text-align:center; padding:1.5rem; color:var(--color-text-subtle); font-size:0.86rem;">
+            ${search ? 'No matching saved vocabulary words.' : 'No saved vocabulary items yet. Search and click "Save to My Vocabulary" to build your custom word bank.'}
+          </div>
+        `;
+        return;
+      }
+
+      savedVocabListContainer.innerHTML = filtered.map(item => {
+        const transText = item.translation || item.target_translation || '';
+        const safeTrans = transText.replace(/'/g, "\\'");
+        return `
+          <div class="saved-vocab-item-card">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:0.6rem;">
+              <div>
+                <div style="font-weight:800; font-size:1.15rem; color:var(--color-text-main);">${transText}</div>
+                <div style="font-size:0.84rem; color:var(--color-brand-primary); font-weight:600;">Original: "${item.original_text}"</div>
+                <div style="font-size:0.82rem; color:var(--color-text-muted); margin-top:2px;">English: <strong>${item.english_meaning || '—'}</strong></div>
+                ${item.pronunciation ? `<div style="font-size:0.75rem; color:var(--color-text-subtle);">Pronunciation: ${item.pronunciation}</div>` : ''}
+              </div>
+              <div style="display:flex; align-items:center; gap:0.4rem;">
+                <button type="button" class="speaker-audio-btn-sm" onclick="speakText('${safeTrans}', '${item.target_lang}')" title="Pronounce">🔊</button>
+                <button type="button" class="btn-action-small primary" style="padding:0.25rem 0.55rem; font-size:0.75rem;" onclick="practiseSavedVocabItem(${item.id})">Practise</button>
+                <button type="button" class="btn-action-small" style="padding:0.25rem 0.45rem; font-size:0.75rem; color:#ef4444;" onclick="deleteSavedVocabItem(${item.id})" title="Delete">✕</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function deleteSavedVocabItem(id) {
+      if (!confirm('Remove this phrase from your saved vocabulary?')) return;
+      try {
+        const res = await fetch(`/api/vocabulary/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          await loadSavedVocab();
+        }
+      } catch (err) {
+        alert('Failed to delete item: ' + err.message);
+      }
+    }
+
+    function practiseSavedVocabItem(id) {
+      const item = userSavedVocabList.find(v => v.id === id);
+      if (!item) return;
+      const phraseData = {
+        originalText: item.original_text,
+        targetTranslation: item.translation || item.target_translation,
+        englishMeaning: item.english_meaning,
+        pronunciation: item.pronunciation,
+        explanation: item.explanation,
+        targetLang: item.target_lang,
+        inputLang: item.input_lang
+      };
+      startPracticeSession('phrase_practice', phraseData);
+    }
+
+    // ==========================================
+    // START INTERACTIVE PRACTICE SESSION
+    // ==========================================
+    async function startPracticeSession(overrideTopic = null, phraseData = null) {
+      // Validate Question Count
+      const resolvedCount = getResolvedQuestionCount();
+      if (!resolvedCount) {
+        // Validation error already shown
+        return;
+      }
+
+      btnStartPracticeSession.disabled = true;
+      btnStartPracticeSession.innerHTML = `<span class="loading-spinner"></span> Generating...`;
+
+      // Determine topic and mode
+      let targetMode = currentMode;
+      let targetTopic = null;
+
+      if (overrideTopic === 'phrase_practice' || phraseData) {
+        targetMode = 'phrase_practice';
+        currentPhraseData = phraseData || currentAiSearchResult;
+        targetTopic = `Phrase: "${currentPhraseData?.targetTranslation || 'Custom'}"`;
+      } else if (typeof overrideTopic === 'string') {
+        targetMode = 'topic';
+        targetTopic = overrideTopic;
+      } else if (currentMode === 'weak_topics') {
+        targetTopic = selectedWeakTopicUnitId || null;
+      } else if (currentMode === 'topic') {
+        targetTopic = selectTopicPicker.value;
+      }
+
+      currentActiveTopic = targetTopic || (currentMode === 'mistakes' ? 'Review My Mistakes' : 'Personalized Practice');
+      currentPracticeModeSetting = selectPracticeMode.value;
+      currentQuestionTypeSetting = selectQuestionType.value;
+      testSessionAnswers = [];
+
+      try {
+        const res = await fetch('/api/practice/generate-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            mode: targetMode,
+            topic: targetTopic,
+            unitId: targetTopic,
+            targetLang: selectTgtLang.value,
+            explanationLang: selectExpLang.value,
+            level: selectLevel.value,
+            count: resolvedCount,
+            questionType: currentQuestionTypeSetting,
+            practiceMode: currentPracticeModeSetting,
+            phraseData: currentPhraseData
+          })
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || 'Failed to generate practice session');
+        }
+
+        const data = await res.json();
+
+        if (data.noMistakes) {
+          alert('You have 0 active recorded mistakes for this language! Outstanding mastery. Switching to Review tab or choose Smart Adaptive to practice new concepts.');
+          const mistakesBtn = document.querySelector('[data-tab="tabMistakes"]');
+          if (mistakesBtn) mistakesBtn.click();
+          return;
+        }
+
+        if (data.noWeakTopics) {
+          alert('Not enough attempt data yet to calculate weak topics. Complete more practice sessions to analyze proficiency!');
+          const weakBtn = document.querySelector('[data-tab="tabWeakTopics"]');
+          if (weakBtn) weakBtn.click();
+          return;
+        }
+
+        if (!data.questions || data.questions.length === 0) {
+          alert('No practice questions available for this selection. Try choosing Smart Adaptive mode!');
+          return;
+        }
+
+        activeQuestions = data.questions;
+        currentQIndex = 0;
+        sessionCorrectCount = 0;
+        currentActiveTopic = data.topic || currentActiveTopic;
+
+        // Open practice stage modal
+        practiceStageModal.classList.add('active');
+        renderCurrentQuestion();
+      } catch (err) {
+        console.error('Start practice error:', err);
+        alert('Could not start practice session: ' + err.message);
+      } finally {
+        btnStartPracticeSession.disabled = false;
+        btnStartPracticeSession.innerHTML = `<span>Start Practice →</span>`;
+      }
+    }
+
+    // ==========================================
+    // RENDER ACTIVE QUESTION
+    // ==========================================
+    function renderCurrentQuestion() {
+      const q = activeQuestions[currentQIndex];
+      hasCheckedCurrentQ = false;
+      selectedUserAnswer = null;
+
+      const total = activeQuestions.length;
+      const isTestMode = (currentPracticeModeSetting === 'test');
+
+      // Top Status Progress
+      const progressPercent = Math.round(((currentQIndex) / total) * 100);
+      stageProgressFill.style.width = `${progressPercent}%`;
+
+      if (isTestMode) {
+        stageQuestionCounter.textContent = `Test Mode • Question ${currentQIndex + 1} of ${total}`;
+      } else {
+        stageQuestionCounter.textContent = `Question ${currentQIndex + 1} of ${total}`;
+      }
+
+      stageTopicName.textContent = q.topic || currentActiveTopic;
+      stageInstruction.textContent = q.instruction || 'Practice this language exercise:';
+
+      // Reset Feedback Banner
+      stageFeedbackBanner.className = 'feedback-banner';
+      btnStageAction.disabled = true;
+
+      // Action Button Label
+      if (isTestMode) {
+        btnStageAction.textContent = (currentQIndex + 1 < total) ? 'Next Question →' : 'Submit Test 🎉';
+      } else {
+        btnStageAction.textContent = 'Check Answer';
+      }
+
+      // Robot Mascot Guidance
+      if (isTestMode) {
+        robotEncouragementText.textContent = `Test Mode active: Answers and feedback will be evaluated and displayed upon completion.`;
+      } else if (q.isMistakeReview) {
+        robotEncouragementText.textContent = `Mistake Memory Review: You previously missed this! Give it your best effort.`;
+      } else {
+        robotEncouragementText.textContent = `Keep going! Consistent practice builds native retention and confidence.`;
+      }
+
+      stageSourceCard.style.display = 'none';
+      stageExerciseContent.innerHTML = '';
+
+      const type = q.type || 'multiple_choice';
+
+      if (type === 'vocabulary_flashcard' && !isTestMode) {
+        renderFlashcard(q);
+      } else if (type === 'word_matching' || type === 'match_the_meaning') {
+        renderWordMatching(q);
+      } else if (type === 'fill_in_the_blanks') {
+        renderFillInTheBlanks(q);
+      } else if (type === 'sentence_building' || type === 'sentence_completion') {
+        renderSentenceBuilding(q);
+      } else if (type === 'translation_practice') {
+        renderTranslationPractice(q);
+      } else if (type === 'listen_and_repeat') {
+        renderListenAndRepeat(q);
+      } else if (type === 'pronunciation_practice') {
+        renderPronunciationPractice(q);
+      } else if (type === 'robot_conversation') {
+        renderRobotConversation(q);
+      } else {
+        renderMultipleChoice(q);
+      }
+    }
+
+    // 1. VOCABULARY FLASHCARD RENDERER
+    function renderFlashcard(q) {
+      robotEncouragementText.textContent = 'Tap the flashcard to flip and reveal the English meaning and usage details.';
+      const englishMeaningText = q.englishMeaning || q.meaning || 'Core Vocabulary';
+      const tgtWord = q.targetWord || q.promptText || '';
+      const phonetic = q.phonetic || '';
+      const meaning = q.meaning || englishMeaningText;
+      const notes = q.notes || 'Core vocabulary entry';
+
+      stageExerciseContent.innerHTML = `
+        <div class="flashcard-stage" id="flashcardBox">
+          <div class="flashcard-inner" id="flashcardInner">
+            <div class="flashcard-face">
+              <button type="button" class="speaker-audio-btn" id="btnFlashcardAudio" title="Pronounce target phrase">🔊</button>
+              <h2 style="font-size:2.2rem; font-weight:800; margin-bottom:0.4rem; color:var(--color-text-main);">${tgtWord}</h2>
+              <div style="font-size:1.1rem; color:var(--color-brand-primary); font-weight:600; margin-bottom:0.35rem;">${phonetic}</div>
+              <div class="exercise-english-meaning">
+                English meaning: <strong>(Tap card to reveal)</strong>
+              </div>
+              <div style="font-size:0.78rem; color:var(--color-text-subtle); margin-top:1.1rem;">Tap card to flip for English meaning</div>
+            </div>
+            <div class="flashcard-face flashcard-back">
+              <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; color:var(--color-brand-primary); margin-bottom:0.4rem;">Meaning (${selectExpLang.value.toUpperCase()})</div>
+              <h2 style="font-size:1.8rem; font-weight:800; color:var(--color-text-main); margin-bottom:0.4rem;">${meaning}</h2>
+              <div class="exercise-english-meaning" style="background:var(--color-surface); margin-bottom:0.5rem;">
+                English meaning: <strong>${englishMeaningText}</strong>
+              </div>
+              <div style="font-size:0.86rem; color:var(--color-text-muted); line-height:1.4;">${notes}</div>
+              <div style="font-size:0.75rem; color:var(--color-text-subtle); margin-top:0.8rem;">Tap card to return to front</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const btnFc = document.getElementById('btnFlashcardAudio');
+      btnFc.addEventListener('click', (e) => {
+        e.stopPropagation();
+        speakText(tgtWord, selectTgtLang.value);
+      });
+
+      const fcBox = document.getElementById('flashcardBox');
+      const fcInner = document.getElementById('flashcardInner');
+      fcBox.addEventListener('click', () => {
+        fcInner.classList.toggle('flipped');
+        selectedUserAnswer = 'viewed';
+        btnStageAction.disabled = false;
+      });
+    }
+
+    // 2. MULTIPLE CHOICE RENDERER
+    function renderMultipleChoice(q) {
+      const isTestMode = (currentPracticeModeSetting === 'test');
+      const promptText = q.promptText || q.targetWord || q.sourceText || '';
+      const phonetic = q.phonetic || '';
+      const englishMeaningText = q.englishMeaning || q.correctAnswer || '';
+      const options = q.options || q.targetOptions || [];
+
+      stageExerciseContent.innerHTML = `
+        <div style="text-align:center; margin-bottom:1.4rem;">
+          <button type="button" class="speaker-audio-btn" id="btnMcAudio" title="Pronounce target phrase">🔊</button>
+          <h2 style="font-size:2.2rem; font-weight:800; margin-bottom:0.3rem; color:var(--color-text-main);">${promptText}</h2>
+          ${phonetic ? `<div style="font-size:1.05rem; color:var(--color-brand-primary); font-weight:600; margin-bottom:0.4rem;">${phonetic}</div>` : ''}
+          ${!isTestMode ? `
+            <div style="margin-top:0.3rem;">
+              <button type="button" class="btn-reveal-meaning" id="btnRevealMcMeaning">
+                💡 View English meaning
+              </button>
+              <div id="mcEnglishMeaning" class="exercise-english-meaning" style="display:none; margin-top:0.4rem;">
+                English meaning: <strong>${englishMeaningText}</strong>
+              </div>
+            </div>
+          ` : ''}
+        </div>
+        <div class="options-grid" id="mcOptionsGrid"></div>
+      `;
+
+      document.getElementById('btnMcAudio').addEventListener('click', () => {
+        speakText(promptText, selectTgtLang.value);
+      });
+
+      if (!isTestMode) {
+        const btnRev = document.getElementById('btnRevealMcMeaning');
+        const mcEl = document.getElementById('mcEnglishMeaning');
+        if (btnRev && mcEl) {
+          btnRev.addEventListener('click', () => {
+            btnRev.style.display = 'none';
+            mcEl.style.display = 'inline-block';
+          });
+        }
+      }
+
+      const grid = document.getElementById('mcOptionsGrid');
+      options.forEach((opt, idx) => {
+        const text = typeof opt === 'string' ? opt : (opt.text || opt.target || '');
+        const keyLetter = String.fromCharCode(65 + idx);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option-tile-btn';
+        btn.innerHTML = `
+          <span>${text}</span>
+          <span class="option-key-badge">${keyLetter}</span>
+        `;
+        btn.addEventListener('click', () => {
+          if (hasCheckedCurrentQ && !isTestMode) return;
+          grid.querySelectorAll('.option-tile-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          selectedUserAnswer = text;
+          btnStageAction.disabled = false;
+        });
+        grid.appendChild(btn);
+      });
+    }
+
+    // 3. WORD MATCHING / MATCH THE MEANING RENDERER
+    function renderWordMatching(q) {
+      const isTestMode = (currentPracticeModeSetting === 'test');
+      robotEncouragementText.textContent = 'Pair each target phrase on the left with its translation on the right.';
+      stageExerciseContent.innerHTML = `
+        <div class="matching-board">
+          <div class="match-col" id="matchColLeft"></div>
+          <div class="match-col" id="matchColRight"></div>
+        </div>
+      `;
+
+      let selectedMatchLeft = null;
+      let matchedPairIds = new Set();
+      const leftColEl = document.getElementById('matchColLeft');
+      const rightColEl = document.getElementById('matchColRight');
+      const pairs = q.pairs || [];
+      const leftCol = q.leftCol || pairs.map(p => ({ id: p.id, text: p.target, phonetic: p.phonetic || '', englishMeaning: p.englishMeaning }));
+      const rightCol = q.rightCol || pairs.map(p => ({ id: p.id, text: p.explanation }));
+
+      leftCol.forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'match-tile-btn';
+        btn.innerHTML = `<div>${item.text}</div>${item.phonetic ? `<div style="font-size:0.75rem; color:var(--color-text-subtle);">${item.phonetic}</div>` : ''}`;
+        btn.dataset.id = item.id;
+
+        btn.addEventListener('click', () => {
+          if (matchedPairIds.has(item.id)) return;
+          leftColEl.querySelectorAll('.match-tile-btn').forEach(b => b.classList.remove('active-match'));
+          btn.classList.add('active-match');
+          selectedMatchLeft = item.id;
+          speakText(item.text, selectTgtLang.value);
+        });
+        leftColEl.appendChild(btn);
+      });
+
+      rightCol.forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'match-tile-btn';
+        btn.textContent = item.text;
+        btn.dataset.id = item.id;
+
+        btn.addEventListener('click', () => {
+          if (matchedPairIds.has(item.id) || !selectedMatchLeft) return;
+
+          if (selectedMatchLeft === item.id) {
+            matchedPairIds.add(item.id);
+            const leftBtn = leftColEl.querySelector(`[data-id="${item.id}"]`);
+            const matchedItem = leftCol.find(m => m.id === item.id);
+            const enText = (!isTestMode && matchedItem && matchedItem.englishMeaning)
+              ? `<div style="font-size:0.72rem; color:var(--color-brand-primary); font-weight:700; margin-top:2px;">English: ${matchedItem.englishMeaning}</div>`
+              : '';
+            if (leftBtn) {
+              leftBtn.className = 'match-tile-btn matched';
+              leftBtn.innerHTML = `<div>${matchedItem ? matchedItem.text : ''}</div>${enText}`;
+            }
+            btn.className = 'match-tile-btn matched';
+            selectedMatchLeft = null;
+
+            if (matchedPairIds.size === pairs.length) {
+              selectedUserAnswer = 'all_matched';
+              btnStageAction.disabled = false;
+            }
+          } else {
+            btn.style.borderColor = 'var(--color-error)';
+            setTimeout(() => { btn.style.borderColor = ''; }, 600);
+          }
+        });
+        rightColEl.appendChild(btn);
+      });
+    }
+
+    // 4. FILL IN THE BLANKS RENDERER (Supports word click AND text typing)
+    function renderFillInTheBlanks(q) {
+      const isTestMode = (currentPracticeModeSetting === 'test');
+      const englishMeaningText = q.englishMeaning || '';
+
+      stageExerciseContent.innerHTML = `
+        <div style="text-align:center; margin-bottom:1.6rem;">
+          <div style="font-size:1.15rem; font-weight:700; color:var(--color-text-main); margin-bottom:0.4rem;">${q.sentenceBefore || 'Complete the phrase:'}</div>
+          ${(!isTestMode && englishMeaningText) ? `<div class="exercise-english-meaning" style="margin-bottom:0.6rem;">English meaning: <strong>${englishMeaningText}</strong></div>` : ''}
+          <div style="font-size:1.6rem; font-weight:800; color:var(--color-brand-primary);">[ <span id="blankSlot">___</span> ]</div>
+        </div>
+
+        <div style="display:flex; justify-content:center; margin-bottom:1.2rem;">
+          <input type="text" id="inputFillDirect" class="config-select" placeholder="Type answer or select below..." style="width:260px; text-align:center; font-size:1rem; font-weight:700;" autocomplete="off">
+        </div>
+
+        <div class="word-bank-pool" id="fillOptionsPool" style="justify-content:center;"></div>
+      `;
+
+      const inputDirect = document.getElementById('inputFillDirect');
+      const blankSlot = document.getElementById('blankSlot');
+      const pool = document.getElementById('fillOptionsPool');
+
+      inputDirect.addEventListener('input', () => {
+        const text = inputDirect.value.trim();
+        blankSlot.textContent = text || '___';
+        selectedUserAnswer = text;
+        btnStageAction.disabled = (text.length === 0);
+      });
+
+      const options = q.options || [];
+      options.forEach(opt => {
+        const text = typeof opt === 'string' ? opt : opt.text;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'word-token-btn';
+        btn.textContent = text;
+        btn.addEventListener('click', () => {
+          pool.querySelectorAll('.word-token-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          blankSlot.textContent = text;
+          inputDirect.value = text;
+          selectedUserAnswer = text;
+          btnStageAction.disabled = false;
+        });
+        pool.appendChild(btn);
+      });
+    }
+
+    // 5. SENTENCE BUILDING / SENTENCE COMPLETION RENDERER
+    function renderSentenceBuilding(q) {
+      const isTestMode = (currentPracticeModeSetting === 'test');
+      robotEncouragementText.textContent = 'Arrange the words in correct syntactic order to construct the target sentence.';
+      const englishMeaningText = q.englishMeaning || '';
+
+      stageExerciseContent.innerHTML = `
+        ${(!isTestMode && englishMeaningText) ? `<div style="text-align:center; margin-bottom:1rem;"><div class="exercise-english-meaning">English meaning: <strong>${englishMeaningText}</strong></div></div>` : ''}
+        <div class="assembled-sentence-tray" id="assembledTray">
+          <span style="font-size:0.86rem; color:var(--color-text-subtle);">Tap words below to arrange your sentence</span>
+        </div>
+        <div class="word-bank-pool" id="wordBankPool" style="justify-content:center;"></div>
+      `;
+
+      const tray = document.getElementById('assembledTray');
+      const pool = document.getElementById('wordBankPool');
+      const words = q.wordBank || (q.targetSentence ? q.targetSentence.split(' ') : []);
+      const assembledWords = [];
+
+      words.forEach((w, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'word-token-btn';
+        btn.textContent = w;
+        btn.dataset.index = idx;
+
+        btn.addEventListener('click', () => {
+          if (btn.classList.contains('used')) return;
+          btn.classList.add('used');
+          assembledWords.push({ word: w, index: idx });
+          renderTray();
+        });
+        pool.appendChild(btn);
+      });
+
+      function renderTray() {
+        tray.innerHTML = '';
+        if (assembledWords.length === 0) {
+          tray.innerHTML = '<span style="font-size:0.86rem; color:var(--color-text-subtle);">Tap words below to arrange your sentence</span>';
+          btnStageAction.disabled = true;
+          return;
+        }
+
+        assembledWords.forEach((item, aIdx) => {
+          const tBtn = document.createElement('button');
+          tBtn.type = 'button';
+          tBtn.className = 'word-token-btn';
+          tBtn.textContent = item.word;
+          tBtn.addEventListener('click', () => {
+            assembledWords.splice(aIdx, 1);
+            const poolBtn = pool.querySelector(`[data-index="${item.index}"]`);
+            if (poolBtn) poolBtn.classList.remove('used');
+            renderTray();
+          });
+          tray.appendChild(tBtn);
+        });
+
+        selectedUserAnswer = assembledWords.map(a => a.word).join(' ');
+        btnStageAction.disabled = (assembledWords.length === 0);
+      }
+    }
+
+    // 6. TRANSLATION PRACTICE RENDERER
+    function renderTranslationPractice(q) {
+      const isTestMode = (currentPracticeModeSetting === 'test');
+      const englishMeaningText = q.englishMeaning || '';
+
+      stageExerciseContent.innerHTML = `
+        <div style="text-align:center; margin-bottom:1.4rem;">
+          <div style="font-size:0.84rem; text-transform:uppercase; font-weight:700; color:var(--color-text-subtle);">Translate Phrase:</div>
+          <h2 style="font-size:2rem; font-weight:800; color:var(--color-text-main); margin-top:0.3rem; margin-bottom:0.3rem;">${q.sourceText}</h2>
+          ${(!isTestMode && englishMeaningText) ? `<div class="exercise-english-meaning">English meaning: <strong>${englishMeaningText}</strong></div>` : ''}
+        </div>
+        <div class="options-grid" id="transOptionsGrid"></div>
+      `;
+
+      const grid = document.getElementById('transOptionsGrid');
+      const options = q.targetOptions || q.options || [];
+      options.forEach(opt => {
+        const text = typeof opt === 'string' ? opt : opt.text;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option-tile-btn';
+        btn.textContent = text;
+        btn.addEventListener('click', () => {
+          grid.querySelectorAll('.option-tile-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          selectedUserAnswer = text;
+          btnStageAction.disabled = false;
+        });
+        grid.appendChild(btn);
+      });
+    }
+
+    // 7. LISTEN AND REPEAT RENDERER
+    function renderListenAndRepeat(q) {
+      robotEncouragementText.textContent = 'Listen carefully to the native phrase, then speak or type what you heard.';
+      const englishMeaningText = q.englishMeaning || q.meaning || '';
+      const phrase = q.targetPhrase || q.targetWord || '';
+      const phonetic = q.phonetic || '';
+      const isTestMode = (currentPracticeModeSetting === 'test');
+
+      stageExerciseContent.innerHTML = `
+        <div style="text-align:center; margin-bottom:1.2rem;">
+          <button type="button" class="speaker-audio-btn" id="btnListenAudio" style="width:64px; height:64px; font-size:1.8rem;" title="Play Pronunciation">🔊</button>
+          <h2 style="font-size:2.1rem; font-weight:900; margin-bottom:0.25rem;">${phrase}</h2>
+          ${phonetic ? `<div style="font-size:1.05rem; color:var(--color-brand-primary); font-weight:700; margin-bottom:0.35rem;">${phonetic}</div>` : ''}
+          ${(!isTestMode && englishMeaningText) ? `<div class="exercise-english-meaning">English meaning: <strong>${englishMeaningText}</strong></div>` : ''}
+        </div>
+
+        <div class="mic-control-box">
+          <button type="button" class="mic-record-btn" id="btnMicRepeat" title="Start Speaking">🎙️</button>
+          <div class="mic-status-label" id="micStatusRepeat">Click microphone to practice speaking aloud</div>
+          <input type="text" class="speech-transcript-input" id="inputTranscriptRepeat" placeholder="Your speech will appear here (or type manually)..." autocomplete="off">
+          <div class="text-entry-fallback-label">Speak aloud for acoustic evaluation, or type manually if microphone is unavailable.</div>
+        </div>
+      `;
+
+      document.getElementById('btnListenAudio').addEventListener('click', () => {
+        speakText(phrase, selectTgtLang.value);
+      });
+
+      setupMicRecording('btnMicRepeat', 'micStatusRepeat', 'inputTranscriptRepeat', selectTgtLang.value);
+    }
+
+    // 8. PRONUNCIATION PRACTICE RENDERER
+    function renderPronunciationPractice(q) {
+      robotEncouragementText.textContent = 'Practice pronouncing with native inflection and rhythm.';
+      const englishMeaningText = q.englishMeaning || q.meaning || '';
+      const word = q.targetWord || q.promptText || '';
+      const phonetic = q.phonetic || '';
+      const isTestMode = (currentPracticeModeSetting === 'test');
+
+      stageExerciseContent.innerHTML = `
+        <div style="text-align:center; padding:0.5rem 0 1rem 0;">
+          <button type="button" class="speaker-audio-btn" id="btnPronounceAudio" style="width:68px; height:68px; font-size:1.9rem;" title="Play Pronunciation">🔊</button>
+          <h2 style="font-size:2.2rem; font-weight:900; margin-bottom:0.3rem;">${word}</h2>
+          ${phonetic ? `<div style="font-size:1.15rem; color:var(--color-brand-primary); font-weight:700; margin-bottom:0.35rem;">${phonetic}</div>` : ''}
+          ${(!isTestMode && englishMeaningText) ? `<div class="exercise-english-meaning">English meaning: <strong>${englishMeaningText}</strong></div>` : ''}
+        </div>
+
+        <div class="mic-control-box">
+          <button type="button" class="mic-record-btn" id="btnMicPronounce" title="Speak Word">🎙️</button>
+          <div class="mic-status-label" id="micStatusPronounce">Click microphone to practice native pronunciation</div>
+          <input type="text" class="speech-transcript-input" id="inputTranscriptPronounce" placeholder="Pronunciation transcript (or type)..." autocomplete="off">
+          <div class="text-entry-fallback-label">Practice aloud for intonation assessment, or type to confirm.</div>
+        </div>
+      `;
+
+      document.getElementById('btnPronounceAudio').addEventListener('click', () => {
+        speakText(word, selectTgtLang.value);
+      });
+
+      setupMicRecording('btnMicPronounce', 'micStatusPronounce', 'inputTranscriptPronounce', selectTgtLang.value);
+    }
+
+    // 9. ROBOT CONVERSATION RENDERER
+    function renderRobotConversation(q) {
+      robotEncouragementText.textContent = 'Engage in conversational dialogue with your AI Tutor.';
+      const englishMeaningText = q.englishMeaning || q.robotQuestion || '';
+      const isTestMode = (currentPracticeModeSetting === 'test');
+
+      stageExerciseContent.innerHTML = `
+        <div style="background:var(--color-surface); border:1.5px solid var(--color-border); border-radius:18px; padding:1.4rem; margin-bottom:1.2rem; box-shadow:var(--shadow-sm);">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem;">
+            <span style="font-size:0.8rem; font-weight:800; text-transform:uppercase; color:var(--color-brand-primary);">Robot Tutor Asks:</span>
+            <button type="button" class="speaker-audio-btn" id="btnConvoAudio" style="width:40px; height:40px; font-size:1.1rem; margin-bottom:0;" title="Hear Question">🔊</button>
+          </div>
+          <h3 style="font-size:1.25rem; font-weight:800; color:var(--color-text-main); margin-bottom:0.35rem;">${q.robotQuestion}</h3>
+          ${(!isTestMode && englishMeaningText) ? `<div class="exercise-english-meaning" style="margin-bottom:0.6rem; font-size:0.92rem;">English meaning: <strong>${englishMeaningText}</strong></div>` : ''}
+          ${q.hintText && !isTestMode ? `<div style="font-size:0.84rem; color:var(--color-text-muted);">💡 Hint: ${q.hintText}</div>` : ''}
+        </div>
+
+        <div class="mic-control-box">
+          <button type="button" class="mic-record-btn" id="btnMicConvo" title="Speak Response">🎙️</button>
+          <div class="mic-status-label" id="micStatusConvo">Click microphone to speak your response</div>
+          <input type="text" class="speech-transcript-input" id="inputTranscriptConvo" placeholder="Your conversational reply (or type)..." autocomplete="off">
+          <div class="text-entry-fallback-label">Speak your answer or type manually to converse with the AI tutor.</div>
+        </div>
+      `;
+
+      document.getElementById('btnConvoAudio').addEventListener('click', () => {
+        speakText(q.robotQuestion, selectTgtLang.value);
+      });
+
+      setupMicRecording('btnMicConvo', 'micStatusConvo', 'inputTranscriptConvo', selectTgtLang.value);
+    }
+
+    // Speech Recognition Helper Function
+    let currentSpeechRecognition = null;
+    let isRecordingSpeech = false;
+
+    function setupMicRecording(btnId, statusId, inputId, langCode) {
+      const btn = document.getElementById(btnId);
+      const status = document.getElementById(statusId);
+      const input = document.getElementById(inputId);
+      if (!btn || !status || !input) return;
+
+      input.addEventListener('input', () => {
+        selectedUserAnswer = input.value.trim();
+        btnStageAction.disabled = (selectedUserAnswer.length === 0);
+      });
+
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (!SpeechRecognition) {
+        status.textContent = 'Speech recognition not supported in this browser. Please type your answer above.';
+        status.classList.add('error');
+        return;
+      }
+
+      btn.addEventListener('click', async () => {
+        if (isRecordingSpeech) {
+          if (currentSpeechRecognition) {
+            currentSpeechRecognition.stop();
+          }
+          return;
+        }
+
+        try {
+          const rec = new SpeechRecognition();
+          currentSpeechRecognition = rec;
+          const bcpMap = { ta: 'ta-IN', hi: 'hi-IN', ml: 'ml-IN', te: 'te-IN', fr: 'fr-FR', ja: 'ja-JP', en: 'en-US', ur: 'ur-PK' };
+          rec.lang = bcpMap[langCode] || 'en-US';
+          rec.continuous = false;
+          rec.interimResults = true;
+
+          rec.onstart = () => {
+            isRecordingSpeech = true;
+            btn.classList.add('recording');
+            status.className = 'mic-status-label listening';
+            status.textContent = 'Listening... Speak clearly into your microphone';
+          };
+
+          rec.onresult = (e) => {
+            let transcript = '';
+            for (let i = 0; i < e.results.length; i++) {
+              transcript += e.results[i][0].transcript;
+            }
+            input.value = transcript;
+            selectedUserAnswer = transcript.trim();
+            btnStageAction.disabled = (selectedUserAnswer.length === 0);
+          };
+
+          rec.onerror = (e) => {
+            console.warn('Speech recognition error:', e.error);
+            btn.classList.remove('recording');
+            btn.classList.add('error');
+            status.className = 'mic-status-label error';
+            status.textContent = `Microphone notice: ${e.error}. You can also type your answer manually.`;
+            isRecordingSpeech = false;
+          };
+
+          rec.onend = () => {
+            btn.classList.remove('recording');
+            isRecordingSpeech = false;
+            if (input.value.trim()) {
+              status.className = 'mic-status-label success';
+              status.textContent = '✓ Speech captured! Review or edit, then click Next or Check Answer.';
+            } else {
+              status.className = 'mic-status-label';
+              status.textContent = 'Click microphone to try speaking again, or type above.';
+            }
+          };
+
+          rec.start();
+        } catch (err) {
+          console.warn('Could not start recognition:', err);
+          status.textContent = 'You can type your response manually above.';
+        }
+      });
+    }
+
+    // ==========================================
+    // REQUIREMENT 3: HANDLE CHECK & NEXT ACTION (LEARN VS TEST MODE)
+    // ==========================================
+    async function handleStageAction() {
+      const q = activeQuestions[currentQIndex];
+      const isTestMode = (currentPracticeModeSetting === 'test');
+
+      // Test Mode Flow: Submit quietly without revealing answer, advance to next question
+      if (isTestMode) {
+        if (q.type !== 'vocabulary_flashcard' && (!selectedUserAnswer || selectedUserAnswer.toString().trim().length === 0)) {
+          alert('Please select or provide an answer before continuing to the next question.');
+          return;
+        }
+
+        btnStageAction.disabled = true;
+        btnStageAction.textContent = 'Recording...';
+
+        try {
+          const res = await fetch('/api/practice/submit-answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              mistakeId: q.mistakeId || null,
+              topic: q.topic || currentActiveTopic,
+              unitId: q.unitId || 'u1',
+              questionText: q.instruction || q.promptText || q.targetWord || 'Practice Question',
+              userAnswer: selectedUserAnswer,
+              correctAnswer: q.correctAnswer || q.targetSentence || q.targetPhrase || q.targetWord || '',
+              explanation: q.explanation || '',
+              exerciseType: q.type || 'multiple_choice',
+              options: q.options || null,
+              targetLang: selectTgtLang.value,
+              explanationLang: selectExpLang.value,
+              level: selectLevel.value
+            })
+          });
+
+          const result = await res.json();
+          if (result.isCorrect) sessionCorrectCount++;
+
+          // Record question details for celebration test review section
+          testSessionAnswers.push({
+            questionText: q.instruction || q.promptText || q.targetWord || 'Practice Question',
+            promptText: q.promptText || q.targetWord || q.sourceText || '',
+            userAnswer: selectedUserAnswer,
+            correctAnswer: result.correctAnswer || q.correctAnswer || '',
+            isCorrect: result.isCorrect,
+            explanation: result.explanation || q.explanation || ''
+          });
+
+          currentQIndex++;
+          if (currentQIndex < activeQuestions.length) {
+            renderCurrentQuestion();
+          } else {
+            finishPracticeSession();
+          }
+        } catch (err) {
+          console.error('Test submit error:', err);
+          alert('Error recording answer: ' + err.message);
+          btnStageAction.disabled = false;
+        }
+        return;
+      }
+
+      // Learn Mode Flow: Interactive instant evaluation & feedback
+      if (!hasCheckedCurrentQ) {
+        if (q.type !== 'vocabulary_flashcard' && (!selectedUserAnswer || selectedUserAnswer.toString().trim().length === 0)) {
+          alert('Please provide or select an answer before checking!');
+          return;
+        }
+
+        btnStageAction.disabled = true;
+        btnStageAction.textContent = 'Evaluating...';
+
+        try {
+          const res = await fetch('/api/practice/submit-answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              mistakeId: q.mistakeId || null,
+              topic: q.topic || currentActiveTopic,
+              unitId: q.unitId || 'u1',
+              questionText: q.instruction || q.promptText || q.targetWord || 'Practice Question',
+              userAnswer: selectedUserAnswer,
+              correctAnswer: q.correctAnswer || q.targetSentence || q.targetPhrase || q.targetWord || '',
+              explanation: q.explanation || '',
+              exerciseType: q.type || 'multiple_choice',
+              options: q.options || null,
+              targetLang: selectTgtLang.value,
+              explanationLang: selectExpLang.value,
+              level: selectLevel.value
+            })
+          });
+
+          const result = await res.json();
+          hasCheckedCurrentQ = true;
+
+          // Reveal hidden English meaning if present
+          const mcEl = document.getElementById('mcEnglishMeaning');
+          if (mcEl) mcEl.style.display = 'inline-block';
+          const btnRev = document.getElementById('btnRevealMcMeaning');
+          if (btnRev) btnRev.style.display = 'none';
+
+          if (result.isCorrect) {
+            sessionCorrectCount++;
+            stageFeedbackBanner.className = 'feedback-banner active correct';
+            stageFeedbackIcon.textContent = '✓';
+            stageFeedbackTitle.textContent = q.type === 'vocabulary_flashcard' ? 'Flashcard Completed!' : 'Correct!';
+            stageFeedbackDesc.textContent = result.explanation || 'Brilliant! Your answer is completely accurate.';
+            robotEncouragementText.textContent = `Excellent accuracy! You have solid command of this phrase.`;
+          } else {
+            stageFeedbackBanner.className = 'feedback-banner active incorrect';
+            stageFeedbackIcon.textContent = '✕';
+            stageFeedbackTitle.textContent = 'Incorrect';
+            stageFeedbackDesc.textContent = result.explanation || `The expected answer was: "${result.correctAnswer}".`;
+            robotEncouragementText.textContent = `Don’t worry! We have recorded this in your Mistake Memory for review.`;
+          }
+
+          // Advance progress fill to reflect evaluated answer
+          const total = activeQuestions.length;
+          const evaluatedProgress = Math.round(((currentQIndex + 1) / total) * 100);
+          stageProgressFill.style.width = `${evaluatedProgress}%`;
+
+          btnStageAction.disabled = false;
+          btnStageAction.textContent = (currentQIndex + 1 < activeQuestions.length) ? 'Next Question →' : 'View Results 🎉';
+        } catch (err) {
+          console.error('Submit answer error:', err);
+          alert('Error evaluating answer: ' + err.message);
+          btnStageAction.disabled = false;
+          btnStageAction.textContent = 'Check Answer';
+        }
+      } else {
+        // Advance to next question or complete session
+        currentQIndex++;
+        if (currentQIndex < activeQuestions.length) {
+          renderCurrentQuestion();
+        } else {
+          finishPracticeSession();
+        }
+      }
+    }
+
+    // ==========================================
+    // COMPLETE PRACTICE SESSION & TEST REVIEW SECTION
+    // ==========================================
+    async function finishPracticeSession() {
+      practiceStageModal.classList.remove('active');
+      celebrationModal.style.display = 'flex';
+
+      const total = activeQuestions.length;
+      const accuracyPercent = Math.round((sessionCorrectCount / total) * 100);
+      celebrationAccuracy.textContent = `${accuracyPercent}%`;
+      celebrationDetailBadge.textContent = `${sessionCorrectCount} of ${total} Correct`;
+
+      const isTestMode = (currentPracticeModeSetting === 'test');
+      if (isTestMode) {
+        celebrationTitle.textContent = 'Test Completed!';
+        celebrationSubtext.textContent = 'Here is your comprehensive test performance report, score, and corrections.';
+      } else {
+        celebrationTitle.textContent = 'Practice Complete!';
+        celebrationSubtext.textContent = 'Great effort reinforcing your skills and building long-term memory.';
+      }
+
+      // Populate Test Review Section if in Test Mode or if review items exist
+      if (isTestMode && testSessionAnswers.length > 0) {
+        testReviewSection.style.display = 'block';
+        testAnswersReviewList.innerHTML = testSessionAnswers.map((item, idx) => {
+          return `
+            <div class="test-review-item ${item.isCorrect ? 'correct' : 'incorrect'}">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
+                <span style="font-weight:800; font-size:0.88rem; color:var(--color-text-main);">
+                  Question ${idx + 1}: ${item.promptText || item.questionText}
+                </span>
+                <span class="test-review-badge ${item.isCorrect ? 'badge-correct' : 'badge-incorrect'}">
+                  ${item.isCorrect ? '✓ Correct' : '✕ Missed'}
+                </span>
+              </div>
+              <div style="font-size:0.82rem; margin-bottom:0.25rem;">
+                Your Answer: <strong style="color:${item.isCorrect ? 'var(--color-success)' : 'var(--color-error)'};">${item.userAnswer || '(No answer)'}</strong>
+              </div>
+              ${!item.isCorrect ? `
+                <div style="font-size:0.82rem; color:var(--color-success); margin-bottom:0.35rem;">
+                  Expected Answer: <strong>${item.correctAnswer}</strong>
+                </div>
+              ` : ''}
+              ${item.explanation ? `
+                <div style="font-size:0.78rem; color:var(--color-text-muted); line-height:1.4;">
+                  💡 <em>${item.explanation}</em>
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }).join('');
+
+        // Show "Review in Mistake Memory" button if any answers were incorrect
+        const hasErrors = testSessionAnswers.some(a => !a.isCorrect);
+        btnReviewIncorrectAnswers.style.display = hasErrors ? 'inline-flex' : 'none';
+      } else {
+        testReviewSection.style.display = 'none';
+        btnReviewIncorrectAnswers.style.display = 'none';
+      }
+
+      try {
+        const res = await fetch('/api/practice/complete-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            practiceType: currentMode,
+            topic: currentActiveTopic,
+            targetLang: selectTgtLang.value,
+            explanationLang: selectExpLang.value,
+            level: selectLevel.value,
+            totalQuestions: total,
+            correctCount: sessionCorrectCount
+          })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          celebrationXp.textContent = data.earnedXp > 0 ? `+${data.earnedXp} XP` : '0 XP';
+          topStatXp.textContent = `${data.totalXp} XP`;
+        }
+      } catch (err) {
+        console.error('Complete session error:', err);
+      }
+    }
+
+    // ==========================================
+    // TAB 2: LOAD & RENDER MISTAKES
+    // ==========================================
+    async function loadMistakes() {
+      mistakesListContainer.innerHTML = `
+        <div style="text-align:center; padding:2rem;">
+          <div class="loading-spinner"></div>
+          <div style="margin-top:0.6rem; font-size:0.86rem; color:var(--color-text-subtle);">Fetching mistakes memory...</div>
+        </div>
+      `;
+
+      try {
+        const res = await fetch(`/api/practice/mistakes?status=all&tgt=${currentTgtLang}`);
+        if (res.ok) {
+          const data = await res.json();
+          allMistakes = data.mistakes || [];
+          badgeMistakesCount.textContent = allMistakes.filter(m => !m.is_resolved).length;
+          renderMistakesList();
+        }
+      } catch (err) {
+        console.error('Fetch mistakes error:', err);
+        mistakesListContainer.innerHTML = `
+          <div class="empty-state-box">
+            <div class="empty-state-title">Error Loading Mistakes</div>
+            <div class="empty-state-desc">${err.message}</div>
+          </div>
+        `;
+      }
+    }
+
+    function renderMistakesList() {
+      let filtered = allMistakes;
+      if (currentMistakeFilter === 'unresolved') {
+        filtered = allMistakes.filter(m => !m.is_resolved || m.is_resolved === 0);
+      } else if (currentMistakeFilter === 'mastered') {
+        filtered = allMistakes.filter(m => m.is_resolved === 1);
+      }
+
+      mistakesFilterCountLabel.textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        mistakesListContainer.innerHTML = `
+          <div class="empty-state-box">
+            <div class="empty-state-icon">🎉</div>
+            <div class="empty-state-title">No Mistakes Found</div>
+            <div class="empty-state-desc">
+              ${currentMistakeFilter === 'unresolved'
+                ? 'Outstanding! You have no active mistakes needing practice. Every missed question has been mastered!'
+                : 'As you practice and answer questions, any mistakes will automatically be preserved here for targeted retry.'}
+            </div>
+            <button type="button" class="btn-launch-practice" onclick="document.querySelector('[data-tab=\\'tabPractice\\']').click()">
+              Start Practice Session
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      mistakesListContainer.innerHTML = filtered.map(m => {
+        const isMastered = (m.is_resolved === 1);
+        const lastDate = m.last_attempt_at ? new Date(m.last_attempt_at).toLocaleDateString() : 'Recent';
+        return `
+          <div class="mistake-card" id="mistakeCard_${m.id}">
+            <div class="mistake-card-header">
+              <span class="question-topic-pill">
+                <span>📖</span>
+                <span>${m.topic || 'General Practice'}</span>
+              </span>
+              <span class="mistake-status-badge ${isMastered ? 'status-mastered' : 'status-needs-practice'}">
+                ${isMastered ? '✓ Mastered' : 'Needs Practice'}
+              </span>
+            </div>
+
+            <div class="mistake-q-text">${m.question_text || 'Vocabulary translation question'}</div>
+
+            <div class="answers-comparison-box">
+              <div>
+                <div class="answer-col-title" style="color:#ef4444;">Previous Answer:</div>
+                <div class="wrong-ans-text">${m.user_answer || '(Empty attempt)'}</div>
+              </div>
+              <div>
+                <div class="answer-col-title" style="color:#10b981;">Expected Answer:</div>
+                <div class="correct-ans-text">${m.correct_answer || 'N/A'}</div>
+              </div>
+            </div>
+
+            ${m.explanation ? `
+              <div style="font-size:0.83rem; color:var(--color-text-muted); line-height:1.45; margin-bottom:0.9rem;">
+                💡 <strong>Explanation:</strong> ${m.explanation}
+              </div>
+            ` : ''}
+
+            <div class="mistake-meta-row">
+              <div>
+                Attempts: <strong>${m.attempts || 1}</strong> • Last tried: <strong>${lastDate}</strong>
+              </div>
+              <button type="button" class="btn-retry-mistake" onclick="retrySingleMistake(${m.id})">
+                <span>⚡</span>
+                <span>Try Again</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Retry Single Mistake
+    async function retrySingleMistake(mistakeId) {
+      const item = allMistakes.find(m => m.id === mistakeId);
+      if (!item) return;
+
+      const userAns = prompt(`Review Question:\n"${item.question_text}"\n\nEnter the correct translation in ${item.target_lang.toUpperCase()}:`, '');
+      if (userAns === null) return;
+
+      if (!userAns.trim()) {
+        alert('Please enter an answer to evaluate.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/practice/submit-answer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            mistakeId: item.id,
+            questionText: item.question_text,
+            userAnswer: userAns,
+            correctAnswer: item.correct_answer,
+            targetLang: item.target_lang
+          })
+        });
+
+        const result = await res.json();
+        if (result.isCorrect) {
+          alert(`🎉 Correct! You mastered this question.\n\n"${result.explanation}"`);
+        } else {
+          alert(`✕ Not quite right yet.\nExpected: "${result.correctAnswer}"\n\n"${result.explanation}"`);
+        }
+        await loadMistakes();
+        await loadSummaryData();
+      } catch (err) {
+        alert('Error submitting retry: ' + err.message);
+      }
+    }
+
+    // ==========================================
+    // TAB 3: LOAD & RENDER WEAK TOPICS
+    // ==========================================
+    async function loadWeakTopics() {
+      topicsToImproveGrid.innerHTML = `
+        <div style="text-align:center; padding:2rem; grid-column:1/-1;">
+          <div class="loading-spinner"></div>
+          <div style="margin-top:0.6rem; font-size:0.86rem; color:var(--color-text-subtle);">Calculating topic weakness...</div>
+        </div>
+      `;
+
+      try {
+        const res = await fetch(`/api/practice/topics-to-improve?tgt=${currentTgtLang}`);
+        if (res.ok) {
+          const data = await res.json();
+          const topics = data.allTopics || [];
+
+          if (topics.length === 0) {
+            topicsToImproveGrid.innerHTML = `
+              <div class="empty-state-box" style="grid-column:1/-1;">
+                <div class="empty-state-icon">📊</div>
+                <div class="empty-state-title">No Topic History Yet</div>
+                <div class="empty-state-desc">
+                  Complete lessons or start practice sessions. The system will track your accuracy per topic and suggest targeted improvements.
+                </div>
+                <button type="button" class="btn-launch-practice" onclick="document.querySelector('[data-tab=\\'tabPractice\\']').click()">
+                  Begin First Practice
+                </button>
+              </div>
+            `;
+            return;
+          }
+
+          topicsToImproveGrid.innerHTML = topics.map(t => {
+            const acc = t.accuracyPercentage || 0;
+            let barColor = '#ef4444';
+            if (acc >= 85) barColor = '#10b981';
+            else if (acc >= 70) barColor = '#3b82f6';
+            else if (acc >= 50) barColor = '#f59e0b';
+
+            let statusBadgeClass = 'status-needs-practice';
+            if (t.status === 'mastered') statusBadgeClass = 'status-mastered';
+            if (t.status === 'insufficient_data') statusBadgeClass = '';
+
+            return `
+              <div class="topic-stat-card">
+                <div class="topic-card-top">
+                  <div class="topic-icon-title">
+                    <div class="topic-icon-circle">${t.icon || '🎯'}</div>
+                    <div class="topic-name">${t.title || t.topic}</div>
+                  </div>
+                  <span class="mistake-status-badge ${statusBadgeClass}">
+                    ${t.statusLabel || 'Active'}
+                  </span>
+                </div>
+
+                <div class="accuracy-row">
+                  <span>Accuracy:</span>
+                  <span style="color:${barColor};">${acc}%</span>
+                </div>
+
+                <div class="accuracy-bar-track">
+                  <div class="accuracy-bar-fill" style="width:${acc}%; background:${barColor};"></div>
+                </div>
+
+                <div style="font-size:0.8rem; color:var(--color-text-subtle); margin-bottom:0.8rem;">
+                  Attempts: <strong>${t.totalAttempts}</strong> • Correct: <strong>${t.correctAnswers}</strong> • Mistakes: <strong>${t.unresolvedMistakes}</strong>
+                </div>
+
+                <div class="topic-recommendation-text">
+                  ${t.recommendation || 'Regular practice recommended for long-term retention.'}
+                </div>
+
+                <button type="button" class="btn-topic-practice" onclick="startPracticeSession('${t.unitId || t.topic}')">
+                  <span>🎯</span>
+                  <span>Practise This Topic →</span>
+                </button>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (err) {
+        console.error('Fetch weak topics error:', err);
+      }
+    }
+
+    // ==========================================
+    // TAB 4: LOAD & RENDER PRACTICE HISTORY
+    // ==========================================
+    async function loadHistory() {
+      historyListContainer.innerHTML = `
+        <div style="text-align:center; padding:2rem;">
+          <div class="loading-spinner"></div>
+          <div style="margin-top:0.6rem; font-size:0.86rem; color:var(--color-text-subtle);">Loading history...</div>
+        </div>
+      `;
+
+      try {
+        const res = await fetch('/api/practice/history');
+        if (res.ok) {
+          const data = await res.json();
+          const items = data.history || [];
+
+          if (items.length === 0) {
+            historyListContainer.innerHTML = `
+              <div class="empty-state-box">
+                <div class="empty-state-icon">📜</div>
+                <div class="empty-state-title">No Practice Sessions Recorded</div>
+                <div class="empty-state-desc">
+                  Your completed practice sessions and earned XP will be recorded here for review.
+                </div>
+              </div>
+            `;
+            return;
+          }
+
+          historyListContainer.innerHTML = items.map(h => {
+            const dateStr = h.created_at ? new Date(h.created_at).toLocaleString() : 'Recent';
+            const acc = h.score_percentage || 0;
+            return `
+              <div class="history-item-row">
+                <div style="display:flex; align-items:center; gap:0.75rem;">
+                  <div style="width:36px; height:36px; border-radius:10px; background:var(--color-brand-light); display:flex; align-items:center; justify-content:center; font-size:1.1rem;">
+                    🎯
+                  </div>
+                  <div>
+                    <div style="font-weight:800; font-size:0.95rem; color:var(--color-text-main);">${h.topic || 'General Practice'}</div>
+                    <div style="font-size:0.75rem; color:var(--color-text-subtle);">${dateStr} • Mode: ${h.practice_type}</div>
+                  </div>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:1.2rem;">
+                  <div style="text-align:right;">
+                    <div style="font-weight:800; font-size:0.92rem; color:${acc >= 80 ? 'var(--color-success)' : 'var(--color-brand-primary)'};">${acc}% Accuracy</div>
+                    <div style="font-size:0.75rem; color:var(--color-text-subtle);">${h.correct_count} of ${h.total_questions} correct</div>
+                  </div>
+                  <div class="stat-badge" style="color:#d97706;">
+                    +${h.xp_earned || 0} XP
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (err) {
+        console.error('Fetch history error:', err);
+      }
+    }
+
+    // ==========================================
+    // CUSTOM AI CHAT CONTROLLER
+    // ==========================================
+    const CHAT_GREETINGS = {
+      hi: {
+        native: 'नमस्ते! मैं आपका AI वार्तालाप साथी हूँ। आप किसी भी विषय पर मुझसे चर्चा कर सकते हैं - दैनिक जीवन, संस्कृति, भाषा या कोई भी प्रश्न। आज आप क्या पूछना चाहते हैं?',
+        english: 'Hello! I am your AI Conversation Partner. You can chat with me about any topic — daily life, culture, language, or any questions. What would you like to discuss today?',
+        phonetics: 'namaste! main aapka AI vartalap sathi hun. aap kisi bhi vishay par mujhse charcha kar sakte hain...'
+      },
+      en: {
+        native: 'Hello! I am your AI Conversation Partner. You can talk to me about anything — daily life, school, work, culture, or ask any question. What would you like to talk about today?',
+        english: 'Hello! I am your AI Conversation Partner. You can talk to me about anything — daily life, school, work, culture, or ask any question. What would you like to talk about today?',
+        phonetics: ''
+      },
+      ta: {
+        native: 'வணக்கம்! நான் உங்கள் AI உரையாடல் துணைவன். தினசரி வாழ்க்கை, அறிவியல், பண்பாடு அல்லது எந்தவொரு தலைப்பிலும் நாம் உரையாடலாம். இன்று நீங்கள் என்ன பேச விரும்புகிறீர்கள்?',
+        english: 'Hello! I am your AI Conversation Partner. We can chat about daily life, science, culture, or any topic. What would you like to talk about today?',
+        phonetics: 'vanakkam! naan ungal AI uraiyaadal thunaivan. dinasari vaazhkkai, ariviyal, panbaadu...'
+      },
+      ml: {
+        native: 'നമസ്കാരം! ഞാൻ നിങ്ങളുടെ AI സംഭാഷണ സഹായിയാണ്. ദൈനംദിന ജീവിതം, പഠനം, സംസ്കാരം അല്ലെങ്കിൽ ഏത് വിഷയത്തെക്കുറിച്ചും നമുക്ക് സംസാരിക്കാം. ഇന്ന് നിങ്ങൾ എന്താണ് ചോദിക്കാൻ ആഗ്രഹിക്കുന്നത്?',
+        english: 'Hello! I am your AI conversation partner. We can speak about daily life, studies, culture, or any topic. What would you like to ask today?',
+        phonetics: 'namaskaram! njan ningalude AI sambhashana sahayiyanu...'
+      },
+      te: {
+        native: 'నమస్కారం! నేను మీ AI సంభాషణ భాగస్వామిని. దైనందిన జీవితం, అధ్యయనం, సంస్కృతి లేదా ఏదైనా అంశంపై నాతో మాట్లాడవచ్చు. ఈ రోజు మీరు ఏమి అడగాలనుకుంటున్నారు?',
+        english: 'Hello! I am your AI conversation partner. You can speak with me on daily life, studies, culture, or any topic. What would you like to ask today?',
+        phonetics: 'namaskaram! nenu mee AI sambhashana bhagaswamini...'
+      },
+      fr: {
+        native: 'Bonjour ! Je suis votre partenaire de conversation IA. Vous pouvez me poser des questions sur la vie quotidienne, la culture, la langue ou tout autre sujet. De quoi souhaitez-vous discuter aujourd\'hui ?',
+        english: 'Hello! I am your AI conversation partner. You can ask me questions about daily life, culture, language, or any other topic. What would you like to discuss today?',
+        phonetics: 'bon-ZHOOR! zhuh swee vo-truh par-tuh-nair...'
+      },
+      ja: {
+        native: 'こんにちは！私はあなたのAI会話パートナーです。日常生活、文化、勉強、あるいはどんな質問でも気軽に話しかけてください。今日は何について話しましょうか？',
+        english: 'Hello! I am your AI conversation partner. Feel free to talk about daily life, culture, study, or any question. What shall we talk about today?',
+        phonetics: 'konnichiwa! watashi wa anata no AI kaiwa paatonaa desu...'
+      },
+      ur: {
+        native: 'السلام علیکم! میں آپ کا AI گفتگو کا ساتھی ہوں۔ آپ مجھ سے روزمرہ زندگی، ثقافت، زبان یا کسی بھی سوال پر بات کر سکتے ہیں۔ آج آپ کیا پوچھنا چاہتے ہیں؟',
+        english: 'Hello! I am your AI conversation partner. You can speak with me about daily life, culture, language, or any question. What would you like to ask today?',
+        phonetics: 'assalam-o-alaikum! main aap ka AI guftagu ka sathi hun...'
+      }
+    };
+
+    let chatConversationHistory = [];
+    let isChatSending = false;
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function renderInitialChatGreeting(lang) {
+      const g = CHAT_GREETINGS[lang] || CHAT_GREETINGS.en;
+      chatMessagesArea.innerHTML = `
+        <div class="chat-message-row ai-row">
+          <div class="chat-bubble-avatar">🤖</div>
+          <div class="chat-bubble ai-bubble">
+            <div class="chat-bubble-text">${escapeHtml(g.native)}</div>
+            <div class="chat-bubble-meta">
+              ${g.english ? `<div class="chat-bubble-english"><strong>English Meaning:</strong> ${escapeHtml(g.english)}</div>` : ''}
+              ${g.phonetics ? `<div class="chat-bubble-phonetics"><strong>Pronunciation:</strong> ${escapeHtml(g.phonetics)}</div>` : ''}
+            </div>
+            <button type="button" class="btn-chat-speak" onclick="speakText(this.parentElement.querySelector('.chat-bubble-text').textContent, '${lang}')" title="Listen to pronunciation">
+              🔊 Listen
+            </button>
+          </div>
+        </div>
+      `;
+      chatMessagesArea.scrollTop = 0;
+    }
+
+    function handleChatLanguageChange() {
+      const newLang = selectChatLanguage.value;
+      if (chatConversationHistory.length === 0) {
+        renderInitialChatGreeting(newLang);
+      } else {
+        const langName = LANG_NAMES[newLang] || newLang;
+        const noticeDiv = document.createElement('div');
+        noticeDiv.style.cssText = 'text-align:center; margin:0.8rem 0; font-size:0.78rem; font-weight:700; color:var(--color-brand-primary);';
+        noticeDiv.innerHTML = `<span>🌐 Switched conversation language to ${escapeHtml(langName)}</span>`;
+        chatMessagesArea.appendChild(noticeDiv);
+        chatMessagesArea.scrollTop = chatMessagesArea.scrollHeight;
+      }
+    }
+
+    function handleClearChatHistory() {
+      chatConversationHistory = [];
+      chatErrorBanner.style.display = 'none';
+      chatErrorBanner.textContent = '';
+      const currentLang = selectChatLanguage ? selectChatLanguage.value : 'hi';
+      renderInitialChatGreeting(currentLang);
+      if (inputChatMessage) {
+        inputChatMessage.value = '';
+        inputChatMessage.focus();
+      }
+    }
+
+    async function handleSendChatMessage() {
+      if (isChatSending) return;
+      const text = inputChatMessage.value.trim();
+      if (!text) {
+        inputChatMessage.focus();
+        inputChatMessage.style.borderColor = 'var(--color-error)';
+        setTimeout(() => { inputChatMessage.style.borderColor = ''; }, 1000);
+        return;
+      }
+
+      const lang = selectChatLanguage ? selectChatLanguage.value : 'hi';
+
+      isChatSending = true;
+      btnSendChatMessage.disabled = true;
+      chatErrorBanner.style.display = 'none';
+      chatErrorBanner.textContent = '';
+      inputChatMessage.value = '';
+
+      // Append User message
+      const userRow = document.createElement('div');
+      userRow.className = 'chat-message-row user-row';
+      userRow.innerHTML = `
+        <div class="chat-bubble user-bubble">
+          <div class="chat-bubble-text">${escapeHtml(text)}</div>
+        </div>
+        <div class="chat-bubble-avatar">👤</div>
+      `;
+      chatMessagesArea.appendChild(userRow);
+
+      // Append Typing Indicator
+      const typingRow = document.createElement('div');
+      typingRow.id = 'chatTypingRow';
+      typingRow.className = 'chat-message-row ai-row';
+      typingRow.innerHTML = `
+        <div class="chat-bubble-avatar">🤖</div>
+        <div class="chat-bubble ai-bubble chat-typing-bubble" style="display:flex; align-items:center; gap:0.5rem; padding:0.8rem 1.1rem;">
+          <div class="chat-typing-dots"><span></span><span></span><span></span></div>
+          <span style="font-size:0.82rem; color:var(--color-text-subtle);">Thinking & formulating response...</span>
+        </div>
+      `;
+      chatMessagesArea.appendChild(typingRow);
+      chatMessagesArea.scrollTop = chatMessagesArea.scrollHeight;
+
+      try {
+        const res = await fetch('/api/practice/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: text,
+            language: lang,
+            conversationHistory: chatConversationHistory
+          })
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || 'Failed to communicate with AI chat service.');
+        }
+
+        const data = await res.json();
+        const fullReply = data.reply || data.nativeReply || '';
+        const nativeToSpeak = data.nativeReply || fullReply;
+        const targetLang = data.language || lang;
+
+        // Auto-sync dropdown if a language was requested in message
+        if (selectChatLanguage && data.language && selectChatLanguage.value !== data.language) {
+          selectChatLanguage.value = data.language;
+        }
+
+        chatConversationHistory.push({ role: 'user', content: text });
+        chatConversationHistory.push({ role: 'assistant', content: fullReply });
+
+        const activeTyping = document.getElementById('chatTypingRow');
+        if (activeTyping) activeTyping.remove();
+
+        const aiRow = document.createElement('div');
+        aiRow.className = 'chat-message-row ai-row';
+
+        aiRow.innerHTML = `
+          <div class="chat-bubble-avatar">🤖</div>
+          <div class="chat-bubble ai-bubble">
+            <div class="chat-bubble-text">${escapeHtml(fullReply)}</div>
+            <button type="button" class="btn-chat-speak" title="Listen to pronunciation">
+              🔊 Listen
+            </button>
+          </div>
+        `;
+
+        const speakBtn = aiRow.querySelector('.btn-chat-speak');
+        if (speakBtn) {
+          speakBtn.addEventListener('click', () => {
+            speakText(nativeToSpeak, targetLang);
+          });
+        }
+
+        chatMessagesArea.appendChild(aiRow);
+        chatMessagesArea.scrollTop = chatMessagesArea.scrollHeight;
+      } catch (err) {
+        console.error('Custom AI chat error:', err);
+        const activeTyping = document.getElementById('chatTypingRow');
+        if (activeTyping) activeTyping.remove();
+
+        chatErrorBanner.textContent = `Chat Error: ${err.message || 'Unable to connect to AI. Please try again.'}`;
+        chatErrorBanner.style.display = 'block';
+        chatMessagesArea.scrollTop = chatMessagesArea.scrollHeight;
+      } finally {
+        isChatSending = false;
+        btnSendChatMessage.disabled = false;
+        inputChatMessage.focus();
+      }
+    }
+
+    // Audio Speech Synthesis Helper
+    function speakText(text, lang) {
+      if (!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      const bcpMap = { ta: 'ta-IN', hi: 'hi-IN', ml: 'ml-IN', te: 'te-IN', fr: 'fr-FR', ja: 'ja-JP', en: 'en-US', ur: 'ur-PK' };
+      utterance.lang = bcpMap[lang] || 'en-US';
+      utterance.rate = 0.9;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // Start Page Execution
+    initPage();
+  </script>
+</body>
+</html>

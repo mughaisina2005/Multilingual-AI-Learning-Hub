@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="en" style="--landed-robot-bottom: 79px;"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>DIAG: {"w":500,"bodyScroll":500,"fr":{"x":0,"y":0,"width":500,"height":473,"top":0,"right":500,"bottom":473,"left":0},"rc":{"x":217.5,"y":14,"width":65,"height":65,"top":14,"right":282.5,"bottom":79,"left":217.5},"tt":{"x":15,"y":102.15625,"width":470,"height":56.625,"top":102.15625,"right":485,"bottom":158.78125,"left":15},"bt":{"x":125,"y":214.71875,"width":250,"height":88,"top":214.71875,"right":375,"bottom":302.71875,"left":125},"ov":["DIV.sunbeam-layer r=550","DIV.planet-curvature r=650"]}</title>
+  
+  <!-- High-legibility Google Fonts for Multilingual Scripts & Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Noto+Sans+Tamil:wght@400;700&amp;family=Noto+Sans+Devanagari:wght@400;700&amp;family=Noto+Sans+Malayalam:wght@400;700&amp;family=Noto+Sans+Telugu:wght@400;700&amp;family=Noto+Sans+JP:wght@400;700&amp;display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --sunrise-deep: #120324;
+      --sunrise-plum: #280a3c;
+      --sunrise-magenta: #5a124c;
+      --sunrise-crimson: #a6204c;
+      --sunrise-coral: #e84c4c;
+      --sunrise-orange: #ff763b;
+      --sunrise-gold: #ffb13b;
+      --sunrise-light: #fff3d1;
+      --cyan-energy: #38bdf8;
+      --blue-robot: #2563eb;
+      --glass-bg: rgba(28, 10, 38, 0.62);
+      --glass-border: rgba(255, 180, 120, 0.28);
+      --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-display: 'Outfit', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      background: var(--sunrise-deep);
+      color: #ffffff;
+      font-family: var(--font-main);
+      position: relative;
+    }
+
+    /* ===================================================
+       1. SUNRISE-THEMED BACKGROUND & PLANET EFFECT
+       =================================================== */
+    .viewport-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .sunrise-sky {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 86%, 
+        rgba(255, 177, 59, 0.95) 0%, 
+        rgba(255, 118, 59, 0.85) 15%, 
+        rgba(232, 76, 76, 0.8) 30%, 
+        rgba(166, 32, 76, 0.85) 50%, 
+        rgba(90, 18, 76, 0.9) 70%, 
+        rgba(40, 10, 60, 0.98) 88%, 
+        rgba(18, 3, 36, 1) 100%);
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* Glowing horizon solar core */
+    .horizon-sun-core {
+      position: absolute;
+      bottom: 12vh;
+      left: 50%;
+      transform: translateX(-50%);
+      width: clamp(280px, 52vw, 750px);
+      height: clamp(160px, 36vh, 420px);
+      background: radial-gradient(ellipse at 50% 80%, 
+        rgba(255, 255, 255, 0.96) 0%, 
+        rgba(255, 243, 209, 0.88) 20%, 
+        rgba(255, 177, 59, 0.6) 45%, 
+        rgba(255, 118, 59, 0.25) 70%, 
+        transparent 85%);
+      filter: blur(28px);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: pulseSun 6s ease-in-out infinite alternate;
+      z-index: 2;
+    }
+
+    /* Ambient atmospheric sunbeams */
+    .sunbeam-layer {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120vw;
+      height: 85vh;
+      background: conic-gradient(from 180deg at 50% 100%, 
+        transparent 0deg, 
+        rgba(255, 200, 100, 0.08) 25deg, 
+        transparent 45deg, 
+        rgba(255, 220, 150, 0.12) 65deg, 
+        transparent 85deg, 
+        rgba(255, 180, 80, 0.09) 115deg, 
+        transparent 140deg, 
+        rgba(255, 210, 120, 0.11) 160deg, 
+        transparent 180deg);
+      pointer-events: none;
+      opacity: 0.75;
+      filter: blur(14px);
+      z-index: 2;
+    }
+
+    /* Curved planet curvature effect */
+    .planet-curvature {
+      position: absolute;
+      bottom: -68vh;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 160vw;
+      height: 92vh;
+      border-radius: 50% 50% 0 0;
+      background: radial-gradient(ellipse at 50% 0%, 
+        #2a0c24 0%, 
+        #1b071a 35%, 
+        #0e0310 75%, 
+        #070108 100%);
+      border-top: 2px solid rgba(255, 225, 185, 0.85);
+      box-shadow: 
+        0 -18px 50px rgba(255, 118, 59, 0.45),
+        0 -4px 20px rgba(255, 235, 190, 0.9),
+        inset 0 16px 50px rgba(255, 120, 60, 0.22);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Landing touchdown zone aura on horizon */
+    .landing-zone-glow {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0.4);
+      width: 320px;
+      height: 40px;
+      background: radial-gradient(ellipse, rgba(56, 189, 248, 0.65) 0%, rgba(255, 118, 59, 0.4) 40%, transparent 75%);
+      border-radius: 50%;
+      filter: blur(12px);
+      opacity: 0;
+      transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1), transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 4;
+      pointer-events: none;
+    }
+    .landing-zone-glow.active {
+      opacity: 0.9;
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    @keyframes pulseSun {
+      0% { opacity: 0.8; transform: translateX(-50%) scale(0.96); }
+      100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+    }
+
+    /* ===================================================
+       2. TOP BAR & NAVIGATION
+       =================================================== */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: clamp(0.75rem, 2.5vh, 1.4rem) clamp(1rem, 3.5vw, 2.4rem);
+      padding-top: max(clamp(0.75rem, 2.5vh, 1.4rem), env(safe-area-inset-top));
+      padding-left: max(clamp(1rem, 3.5vw, 2.4rem), env(safe-area-inset-left));
+      padding-right: max(clamp(1rem, 3.5vw, 2.4rem), env(safe-area-inset-right));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+      pointer-events: auto;
+    }
+
+    .brand-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(28, 10, 36, 0.55);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #ffe5cc;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--cyan-energy);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--cyan-energy);
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    .action-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      padding: 0.5rem 1.15rem;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+      min-height: 40px;
+    }
+    .action-btn:hover {
+      background: rgba(255, 118, 59, 0.3);
+      border-color: rgba(255, 177, 59, 0.7);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 118, 59, 0.35);
+    }
+    .action-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===================================================
+       3. ROBOT ACTOR, FLIGHT DYNAMICS & SVG FALLBACK
+       =================================================== */
+    .robot-stage {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .robot-carrier {
+      position: absolute;
+      width: 270px;
+      height: 270px;
+      /* Initial off-screen state on the RIGHT */
+      top: 24vh;
+      left: 115vw;
+      transform: translate3d(0, 0, 0);
+      will-change: transform, left, top, width, height;
+      transition: none;
+      z-index: 25;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .robot-bobbing-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 24px rgba(255, 118, 59, 0.3));
+    }
+
+    .robot-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* SVG Fallback Robot */
+    .robot-svg-fallback {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Thruster plasma flame */
+    .thruster-glow {
+      position: absolute;
+      right: 18px;
+      bottom: 46px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffeed1 0%, #ff8c3b 35%, #ff3b3b 65%, transparent 80%);
+      filter: blur(7px);
+      opacity: 0.9;
+      animation: thrusterPulse 0.18s infinite alternate ease-in-out;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .thruster-core {
+      position: absolute;
+      right: 26px;
+      bottom: 54px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffffff 15%, var(--cyan-energy) 70%, transparent 100%);
+      filter: blur(3px);
+      opacity: 0.85;
+      animation: thrusterPulse 0.12s infinite alternate ease-in-out;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @keyframes thrusterPulse {
+      0% { transform: scale(0.85) translate(1px, -1px); opacity: 0.75; }
+      100% { transform: scale(1.22) translate(-2px, 2px); opacity: 1; }
+    }
+
+    /* Idle floating oscillation */
+    .hovering-idle {
+      animation: robotHoverCycle 4.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes robotHoverCycle {
+      0% { transform: translateY(-12px) rotate(-2deg); }
+      50% { transform: translateY(10px) rotate(2deg); }
+      100% { transform: translateY(-8px) rotate(-1deg); }
+    }
+
+    /* Smooth landing physics */
+    .robot-landing-effect {
+      transition: all 2.2s cubic-bezier(0.2, 0.8, 0.25, 1) !important;
+    }
+
+    .ground-shadow {
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.3);
+      width: 130px;
+      height: 22px;
+      background: radial-gradient(ellipse, rgba(0, 0, 0, 0.6) 0%, transparent 75%);
+      border-radius: 50%;
+      opacity: 0;
+      transition: all 1.8s ease;
+      pointer-events: none;
+    }
+
+    /* ===================================================
+       4. SEVEN-LANGUAGE GREETINGS HUD CARD
+       =================================================== */
+    .hud-stage {
+      position: absolute;
+      inset: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    /* Desktop grid: Robot hovers on left, greeting card is on right */
+    .content-grid {
+      width: 100%;
+      max-width: 1260px;
+      padding: 0 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      align-items: center;
+      gap: 3rem;
+      pointer-events: none;
+    }
+
+    .grid-spacer {
+      min-height: 360px;
+    }
+
+    .greeting-card-wrapper {
+      position: relative;
+      perspective: 1000px;
+      pointer-events: auto;
+    }
+
+    .greeting-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-radius: 28px;
+      padding: 2.6rem 3rem;
+      box-shadow: 
+        0 24px 60px rgba(10, 2, 20, 0.55),
+        0 0 45px rgba(255, 118, 59, 0.16),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .greeting-card.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .card-sun-shimmer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        var(--sunrise-orange), 
+        var(--sunrise-gold), 
+        var(--cyan-energy), 
+        transparent);
+      background-size: 200% 100%;
+      animation: shimmerFlow 3.5s linear infinite;
+    }
+
+    @keyframes shimmerFlow {
+      0% { background-position: -100% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .step-indicator-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.4rem;
+    }
+
+    .lang-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 118, 59, 0.2);
+      border: 1px solid rgba(255, 177, 59, 0.45);
+      color: #ffe0b3;
+      padding: 0.35rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .step-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .step-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+      transition: all 0.4s ease;
+    }
+    .step-dot.active {
+      background: var(--sunrise-gold);
+      transform: scale(1.4);
+      box-shadow: 0 0 8px var(--sunrise-gold);
+    }
+    .step-dot.completed {
+      background: var(--cyan-energy);
+    }
+
+    .greeting-text-box {
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .greeting-text {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5.2vw, 4.6rem);
+      font-weight: 800;
+      line-height: 1.18;
+      background: linear-gradient(135deg, #ffffff 0%, #fff2d6 50%, var(--sunrise-gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 18px rgba(255, 118, 59, 0.3));
+      letter-spacing: -0.02em;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .greeting-subtext {
+      font-size: 1.05rem;
+      color: #ffd8bf;
+      margin-top: 0.6rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .progress-bar-track {
+      margin-top: 1.5rem;
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--sunrise-orange), var(--sunrise-gold), var(--cyan-energy));
+      transition: width 0.3s ease;
+    }
+
+    .greeting-counter-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: rgba(255, 230, 210, 0.7);
+    }
+
+    /* ===================================================
+       5. FINAL REVEAL: PROJECT TITLE & GET STARTED
+       =================================================== */
+    /* ===================================================
+       5. FINAL REVEAL: PROJECT TITLE & GET STARTED
+       =================================================== */
+    .final-reveal-container {
+      position: absolute;
+      inset: 0;
+      z-index: 35;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      padding-top: calc(var(--landed-robot-bottom, 135px) + clamp(8px, 1.8vh, 18px));
+      padding-left: clamp(0.75rem, 3vw, 2rem);
+      padding-right: clamp(0.75rem, 3vw, 2rem);
+      padding-bottom: clamp(0.75rem, 2vh, 1.5rem);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
+    }
+    .final-reveal-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .final-reveal-container.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .welcome-eyebrow,
+    .main-project-title,
+    .project-tagline,
+    .cta-button-group {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    /* Staggered reveal: "Welcome to" first, then the title, then the tagline, then buttons */
+    .final-reveal-container.active .welcome-eyebrow {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.05s;
+    }
+
+    .final-reveal-container.active .main-project-title {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.4s;
+    }
+
+    .final-reveal-container.active .project-tagline {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.75s;
+    }
+
+    .final-reveal-container.active .cta-button-group {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 1.05s;
+    }
+
+    .welcome-eyebrow {
+      font-family: var(--font-display);
+      font-size: clamp(0.72rem, 1.1vw, 0.92rem);
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sunrise-gold);
+      margin-bottom: clamp(0.2rem, 0.8vh, 0.45rem);
+      text-shadow: 0 0 14px rgba(255, 177, 59, 0.55);
+      line-height: 1.2;
+    }
+
+    .main-project-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.35rem, 3.8vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -0.015em;
+      background: linear-gradient(135deg, #ffffff 10%, #ffe9c7 40%, var(--sunrise-orange) 80%, #ff5277 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 20px rgba(255, 94, 60, 0.38));
+      max-width: min(920px, 94vw);
+      width: 100%;
+      margin: 0 auto clamp(0.3rem, 0.8vh, 0.6rem) auto;
+      text-wrap: balance;
+      word-break: normal;
+      overflow-wrap: normal;
+    }
+
+    .title-part {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .tagline-part {
+      display: inline-block;
+    }
+
+    .project-tagline {
+      font-family: var(--font-main);
+      font-size: clamp(0.82rem, 1.25vw, 1.06rem);
+      font-weight: 400;
+      color: #ffe6d4;
+      max-width: min(600px, 92vw);
+      line-height: 1.45;
+      margin: 0 auto clamp(0.65rem, 1.8vh, 1.25rem) auto;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+      text-wrap: balance;
+    }
+
+    .cta-button-group {
+      display: flex;
+      align-items: center;
+      gap: clamp(0.6rem, 1.8vw, 1.1rem);
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 0 auto clamp(0.5rem, 1.5vh, 1rem) auto;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .get-started-btn {
+      position: relative;
+      background: linear-gradient(135deg, var(--sunrise-orange) 0%, #ff4d6d 100%);
+      color: #ffffff;
+      border: none;
+      padding: clamp(0.65rem, 1.3vh, 0.9rem) clamp(1.4rem, 2vw, 2.2rem);
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-size: clamp(0.88rem, 1vw, 1.02rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      box-shadow: 
+        0 10px 28px rgba(255, 77, 109, 0.4),
+        0 0 20px rgba(255, 118, 59, 0.35),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      text-decoration: none;
+      min-height: 42px;
+      white-space: nowrap;
+    }
+    .get-started-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 
+        0 16px 36px rgba(255, 77, 109, 0.55),
+        0 0 30px rgba(255, 118, 59, 0.55);
+    }
+    .get-started-btn:active {
+      transform: translateY(0) scale(0.99);
+    }
+
+    .replay-btn {
+      background: rgba(28, 10, 36, 0.65);
+      border: 1px solid var(--glass-border);
+      color: #ffe5cc;
+      padding: clamp(0.65rem, 1.3vh, 0.9rem) clamp(1.2rem, 1.8vw, 1.9rem);
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-size: clamp(0.85rem, 0.95vw, 0.96rem);
+      font-weight: 600;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      min-height: 42px;
+      white-space: nowrap;
+    }
+    .replay-btn:hover {
+      background: rgba(255, 118, 59, 0.22);
+      border-color: rgba(255, 177, 59, 0.6);
+      transform: translateY(-2px);
+    }
+
+    /* Next Module placeholder modal */
+    .module-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      background: rgba(10, 2, 16, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.35s ease;
+    }
+    .module-modal-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .module-modal {
+      background: rgba(32, 11, 44, 0.96);
+      border: 1px solid rgba(255, 177, 59, 0.5);
+      border-radius: 28px;
+      max-width: 540px;
+      width: 100%;
+      padding: 2.4rem;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(255, 118, 59, 0.3);
+    }
+
+    /* ===================================================
+       6. COMPREHENSIVE RESPONSIVENESS (320px to 1440px+)
+       =================================================== */
+    @media (max-width: 1024px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        padding: 0 1.5rem;
+      }
+      .grid-spacer {
+        display: none;
+      }
+      .greeting-card {
+        padding: 2rem 2.2rem;
+      }
+      .robot-carrier {
+        width: 190px;
+        height: 190px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .content-grid {
+        padding: 0 1.2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-bar {
+        padding: 0.6rem 0.85rem;
+        gap: 0.4rem;
+        width: 100%;
+      }
+      .brand-pill {
+        font-size: 0.72rem;
+        padding: 0.32rem 0.65rem;
+        max-width: 170px;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .action-btn {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.78rem;
+        min-height: 36px;
+      }
+      .greeting-card {
+        padding: 1.6rem 1.4rem;
+        border-radius: 20px;
+      }
+      .greeting-text {
+        font-size: 2.1rem;
+      }
+      .greeting-subtext {
+        font-size: 0.88rem;
+      }
+      .robot-carrier {
+        width: 145px;
+        height: 145px;
+      }
+      .thruster-glow {
+        width: 30px;
+        height: 30px;
+        right: 10px;
+        bottom: 24px;
+      }
+      .thruster-core {
+        width: 15px;
+        height: 15px;
+        right: 16px;
+        bottom: 30px;
+      }
+      .title-part {
+        display: block; /* Clean, balanced two-line title on mobile screens */
+      }
+      .tagline-part {
+        display: block;
+      }
+      .welcome-eyebrow {
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+      }
+      .main-project-title {
+        font-size: clamp(1.2rem, 5.4vw, 1.55rem);
+      }
+      .project-tagline {
+        font-size: 0.84rem;
+        line-height: 1.4;
+      }
+      .cta-button-group {
+        flex-direction: column;
+        width: 100%;
+        max-width: 250px;
+        gap: 0.5rem;
+      }
+      .get-started-btn, .replay-btn {
+        width: 100%;
+        padding: 0.68rem 1.2rem;
+        font-size: 0.86rem;
+        min-height: 40px;
+      }
+    }
+
+    /* Small screen phones (320px - 375px) */
+    @media (max-width: 375px) {
+      .top-bar {
+        padding: 0.4rem 0.55rem;
+        gap: 0.3rem;
+      }
+      .brand-pill {
+        font-size: 0.65rem;
+        padding: 0.25rem 0.5rem;
+        max-width: 135px;
+      }
+      .action-btn {
+        padding: 0.28rem 0.55rem;
+        font-size: 0.74rem;
+        min-height: 32px;
+      }
+      .action-btn .btn-text {
+        display: none; /* Icon only on extra small viewports */
+      }
+      .robot-carrier {
+        width: 120px;
+        height: 120px;
+      }
+      .greeting-card {
+        padding: 1.2rem 1rem;
+        border-radius: 16px;
+      }
+      .greeting-text {
+        font-size: 1.8rem;
+      }
+      .greeting-subtext {
+        font-size: 0.8rem;
+      }
+      .welcome-eyebrow {
+        font-size: 0.66rem;
+        letter-spacing: 0.16em;
+      }
+      .main-project-title {
+        font-size: clamp(1.08rem, 5vw, 1.28rem);
+        line-height: 1.2;
+      }
+      .project-tagline {
+        font-size: 0.75rem;
+        line-height: 1.35;
+      }
+      .cta-button-group {
+        max-width: 220px;
+        gap: 0.45rem;
+      }
+      .get-started-btn, .replay-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.82rem;
+        min-height: 36px;
+      }
+    }
+
+    /* Landscape mode for mobile devices */
+    @media (max-height: 520px) and (orientation: landscape) {
+      .top-bar {
+        padding: 0.4rem 1rem;
+      }
+      .content-grid {
+        grid-template-columns: 1fr 1.5fr;
+        gap: 1.2rem;
+        padding: 0 1.5rem;
+      }
+      .grid-spacer {
+        display: block;
+        min-height: 180px;
+      }
+      .robot-carrier:not(.robot-landing-effect) {
+        width: 120px;
+        height: 120px;
+        top: 20vh;
+        left: 8vw;
+      }
+      .greeting-card {
+        padding: 1rem 1.5rem;
+      }
+      .greeting-text {
+        font-size: 1.8rem;
+      }
+      .final-reveal-container {
+        padding-top: 15vh;
+      }
+      .main-project-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.4rem;
+      }
+      .project-tagline {
+        font-size: 0.82rem;
+        margin-bottom: 0.8rem;
+      }
+      .cta-button-group {
+        flex-direction: row;
+      }
+    }
+
+    /* Accessibility: Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .robot-carrier {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Rising Sun Particles (Silent Canvas) -->
+  <canvas id="skyCanvas" class="viewport-canvas" width="500" height="473"></canvas>
+
+  <!-- Sunrise Themed Visual Horizon Layers -->
+  <div class="sunrise-sky">
+    <div class="sunbeam-layer"></div>
+    <div class="horizon-sun-core"></div>
+    <div class="planet-curvature"></div>
+    <div id="landingGlow" class="landing-zone-glow active" style="top: 67px; bottom: auto; left: 50%; transform: translateX(-50%) scaleX(1);"></div>
+  </div>
+
+  <!-- Top Bar / Controls -->
+  <header class="top-bar">
+    <div class="brand-pill">
+      <span class="brand-dot"></span>
+      <span>Multilingual AI Hub</span>
+    </div>
+    <div class="header-actions">
+      <button id="skipIntroBtn" class="action-btn" aria-label="Skip Introduction">
+        <span>⏩</span>
+        <span class="btn-text">Skip Intro</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Robot Stage -->
+  <div class="robot-stage">
+    <div id="robotCarrier" class="robot-carrier" style="width: 65px; height: 65px; left: 50%; transform: translateX(-50%); top: 14px;">
+      <div id="robotBobbing" class="robot-bobbing-wrapper" style="transform: translateY(3px) scale(0.98);">
+        <!-- Jetpack Plasma Thrust Glow -->
+        <div id="thrusterGlow" class="thruster-glow" style="opacity: 0.35; transform: scale(0.55);"></div>
+        <div id="thrusterCore" class="thruster-core" style="opacity: 0.35; transform: scale(0.45);"></div>
+        
+        <!-- Supplied Blue-and-White Flying Robot Image with Built-in Fallbacks -->
+        <img id="robotImg" class="robot-img" src="robot.png" alt="Multilingual AI Flying Robot Mascot" onerror="handleRobotImageError(this)">
+        
+        <!-- Built-in Fallback Vector Robot (Activates only if image fails to load) -->
+        <svg id="robotSvgFallback" class="robot-svg-fallback" style="display:none;" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="95" r="50" fill="#2563EB"></circle>
+          <ellipse cx="100" cy="95" rx="38" ry="30" fill="#0F172A"></ellipse>
+          <rect x="80" y="86" width="10" height="15" rx="3" fill="#38BDF8"></rect>
+          <rect x="110" y="86" width="10" height="15" rx="3" fill="#38BDF8"></rect>
+          <path d="M92 108 Q100 114 108 108" stroke="#38BDF8" stroke-width="3" stroke-linecap="round" fill="none"></path>
+          <circle cx="50" cy="95" r="14" fill="#3B82F6"></circle>
+          <circle cx="150" cy="95" r="14" fill="#3B82F6"></circle>
+          <path d="M75 145 C75 125 125 125 125 145 Z" fill="#F8FAFC"></path>
+          <ellipse cx="100" cy="142" rx="18" ry="12" fill="#38BDF8"></ellipse>
+          <path d="M125 135 L155 148 L145 158 Z" fill="#EF4444"></path>
+          <path d="M130 138 L150 148 L143 154 Z" fill="#FBBF24"></path>
+        </svg>
+      </div>
+      <!-- Projected Ground Shadow (activates on landing) -->
+      <div id="groundShadow" class="ground-shadow" style="opacity: 0.9; transform: translateX(-50%) scale(1);"></div>
+    </div>
+  </div>
+
+  <!-- Multilingual Greeting HUD Card -->
+  <main class="hud-stage">
+    <div class="content-grid">
+      <!-- Left spacer where robot glides & hovers on desktop -->
+      <div class="grid-spacer" aria-hidden="true"></div>
+
+      <!-- Right Column: Glassmorphic Greeting Card -->
+      <div class="greeting-card-wrapper">
+        <section id="greetingCard" class="greeting-card" aria-live="polite">
+          <div class="card-sun-shimmer"></div>
+          
+          <div class="step-indicator-row">
+            <div id="langBadge" class="lang-badge">
+              <span id="langFlag">🇬🇧</span>
+              <span id="langName">English</span>
+            </div>
+            <div id="stepDots" class="step-dots">
+              <div class="step-dot active"></div>
+              <div class="step-dot"></div>
+              <div class="step-dot"></div>
+              <div class="step-dot"></div>
+              <div class="step-dot"></div>
+              <div class="step-dot"></div>
+              <div class="step-dot"></div>
+            </div>
+          </div>
+
+          <div class="greeting-text-box">
+            <div id="greetingText" class="greeting-text">Hello</div>
+            <div class="greeting-subtext">
+              <span id="greetingPhonetic">Welcome • Greeting in English</span>
+            </div>
+          </div>
+
+          <div class="progress-bar-track">
+            <div id="progressBarFill" class="progress-bar-fill"></div>
+          </div>
+
+          <div class="greeting-counter-row">
+            <span>Adaptive AI Multi-Language Welcome</span>
+            <span id="greetingStepCount">1 of 7</span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Final Project Title & Tagline Reveal -->
+  <section id="finalReveal" class="final-reveal-container active" aria-label="Welcome Presentation">
+    <p class="welcome-eyebrow">WELCOME TO</p>
+    <h1 class="main-project-title"><span class="title-part">Multilingual AI</span> <span class="title-part">Learning Hub</span></h1>
+    <p class="project-tagline"><span class="tagline-part">Bridging Cultures with</span> <span class="tagline-part">Adaptive AI Education.</span></p>
+    <div class="cta-button-group">
+      <button id="getStartedBtn" class="get-started-btn">
+        <span>Get Started</span>
+        <span>→</span>
+      </button>
+      <button id="replayBtn" class="replay-btn">
+        <span>↺</span>
+        <span>Replay Intro</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Next Module Information Modal (Get Started) -->
+  <div id="moduleModal" class="module-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="moduleModalTitle">
+    <div class="module-modal">
+      <div style="font-size: 2.8rem; margin-bottom: 0.8rem;">🚀</div>
+      <h3 id="moduleModalTitle" style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:#fff; margin-bottom:0.8rem;">
+        Welcome to the Hub!
+      </h3>
+      <p style="color:#ffd8bf; font-size:1.02rem; line-height:1.6; margin-bottom:1.8rem;">
+        Bridging Cultures with Adaptive AI Education.
+        <br><br>
+        <strong style="color:var(--sunrise-gold);">Module 1 Active:</strong> The animated welcome intro is fully loaded and silent. Learning courses and AI features will connect here.
+      </p>
+      <button id="closeModuleModalBtn" class="get-started-btn" style="padding:0.75rem 2rem; font-size:0.95rem; margin:0 auto;">
+        <span>Got it</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * MULTILINGUAL AI LEARNING HUB — MODULE 1
+     * Completely Silent, Smooth, and Fully Responsive Welcome Intro
+     */
+
+    // Exact 7 languages in sequence with English first
+    const GREETINGS = [
+      {
+        langName: 'English',
+        flag: '🇬🇧',
+        nativeText: 'Hello',
+        phonetic: 'Welcome • Standard Greeting'
+      },
+      {
+        langName: 'Tamil',
+        flag: '🇮🇳',
+        nativeText: 'வணக்கம்',
+        phonetic: 'Vanakkam • Traditional Tamil Greeting'
+      },
+      {
+        langName: 'Hindi',
+        flag: '🇮🇳',
+        nativeText: 'नमस्ते',
+        phonetic: 'Namaste • Traditional Hindi Greeting'
+      },
+      {
+        langName: 'Malayalam',
+        flag: '🇮🇳',
+        nativeText: 'നമസ്കാരം',
+        phonetic: 'Namaskaram • Traditional Malayalam Greeting'
+      },
+      {
+        langName: 'Telugu',
+        flag: '🇮🇳',
+        nativeText: 'నమస్కారం',
+        phonetic: 'Namaskaram • Traditional Telugu Greeting'
+      },
+      {
+        langName: 'French',
+        flag: '🇫🇷',
+        nativeText: 'Bonjour',
+        phonetic: 'Bonjour • French Day Greeting'
+      },
+      {
+        langName: 'Japanese',
+        flag: '🇯🇵',
+        nativeText: 'こんにちは',
+        phonetic: 'Konnichiwa • Japanese Daily Greeting'
+      }
+    ];
+
+    // State Management
+    let isIntroStarted = false;
+    let isIntroSkipped = false;
+    let isIntroCompleted = false;
+    let currentGreetingIndex = 0;
+    let greetingTimer = null;
+    let flightAnimationFrame = null;
+
+    // Reading display duration per greeting (visual timing: 2.1s)
+    const GREETING_DISPLAY_DURATION = 2100;
+
+    // DOM Elements
+    const robotCarrier = document.getElementById('robotCarrier');
+    const robotBobbing = document.getElementById('robotBobbing');
+    const groundShadow = document.getElementById('groundShadow');
+    const landingGlow = document.getElementById('landingGlow');
+    const thrusterGlow = document.getElementById('thrusterGlow');
+    const thrusterCore = document.getElementById('thrusterCore');
+    const greetingCard = document.getElementById('greetingCard');
+    const langFlag = document.getElementById('langFlag');
+    const langName = document.getElementById('langName');
+    const greetingText = document.getElementById('greetingText');
+    const greetingPhonetic = document.getElementById('greetingPhonetic');
+    const greetingStepCount = document.getElementById('greetingStepCount');
+    const progressBarFill = document.getElementById('progressBarFill');
+    const stepDotsContainer = document.getElementById('stepDots');
+    const finalReveal = document.getElementById('finalReveal');
+    const skipIntroBtn = document.getElementById('skipIntroBtn');
+    const getStartedBtn = document.getElementById('getStartedBtn');
+    const replayBtn = document.getElementById('replayBtn');
+    const moduleModal = document.getElementById('moduleModal');
+    const closeModuleModalBtn = document.getElementById('closeModuleModalBtn');
+    const skyCanvas = document.getElementById('skyCanvas');
+
+    // Rocket Trail & Flight State
+    let rocketTrailParticles = [];
+    let isFlightActive = false;
+    let landingTimer = null;
+    let revealTimer = null;
+
+    // Robot Image Loader with Multiple Path Fallbacks
+    function handleRobotImageError(imgEl) {
+      if (imgEl.src.indexOf('robot.png') !== -1 && imgEl.src.indexOf('robot_clean.png') === -1) {
+        imgEl.src = 'robot_clean.png';
+      } else if (imgEl.src.indexOf('robot_clean.png') !== -1) {
+        imgEl.src = 'cute-robot-flying-with-rocket-jetpack-cartoon-vector-icon-illustration-science-technology-isolated (1).png';
+      } else {
+        console.error('Robot mascot image missing! Expected filename: robot.png or cute-robot-flying-with-rocket-jetpack-cartoon-vector-icon-illustration-science-technology-isolated (1).png');
+        imgEl.style.display = 'none';
+        const svgFallback = document.getElementById('robotSvgFallback');
+        if (svgFallback) svgFallback.style.display = 'block';
+      }
+    }
+
+    // ===================================================
+    // BACKGROUND CANVAS: RISING PARTICLES & ROCKET TRAIL
+    // ===================================================
+    const ctx = skyCanvas.getContext('2d');
+    let particles = [];
+    const PARTICLE_COUNT = 55;
+
+    function resizeCanvas() {
+      skyCanvas.width = window.innerWidth;
+      skyCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class SunParticle {
+      constructor() {
+        this.reset(true);
+      }
+      reset(init = false) {
+        this.x = Math.random() * skyCanvas.width;
+        this.y = init ? Math.random() * skyCanvas.height : skyCanvas.height + 20;
+        this.radius = Math.random() * 2.2 + 0.6;
+        this.vy = -(Math.random() * 0.7 + 0.25);
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.alpha = Math.random() * 0.7 + 0.3;
+        this.hue = Math.random() > 0.4 ? 35 : 12; // Gold vs Orange
+      }
+      update() {
+        this.y += this.vy;
+        this.x += this.vx;
+        if (this.y < -20 || this.x < -20 || this.x > skyCanvas.width + 20) {
+          this.reset(false);
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${this.hue}, 100%, 75%, ${this.alpha})`;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = `hsla(${this.hue}, 100%, 60%, 0.8)`;
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push(new SunParticle());
+    }
+
+    function animateCanvas() {
+      ctx.clearRect(0, 0, skyCanvas.width, skyCanvas.height);
+      
+      // Ambient sunrise particles
+      for (let p of particles) {
+        p.update();
+        p.draw();
+      }
+
+      // Subtle Rocket Trail Particle Emission
+      if (isFlightActive && thrusterCore) {
+        const r = thrusterCore.getBoundingClientRect();
+        if (r.width > 0 && r.left > -100 && r.left < window.innerWidth + 150) {
+          // Emit subtle thrust trail
+          for (let k = 0; k < 2; k++) {
+            rocketTrailParticles.push({
+              x: r.left + r.width * 0.5 + (Math.random() - 0.5) * 4,
+              y: r.top + r.height * 0.5 + (Math.random() - 0.5) * 4,
+              vx: (Math.random() * 2.2 + 1.2), // Drifts rightwards as robot flies leftwards
+              vy: (Math.random() - 0.3) * 0.9,
+              radius: Math.random() * 3.2 + 1.6,
+              alpha: 0.85,
+              hue: Math.random() > 0.35 ? 24 : 198 // Sunrise orange/gold and cyan plasma
+            });
+          }
+        }
+      }
+
+      // Draw and update Rocket Trail Particles
+      for (let i = rocketTrailParticles.length - 1; i >= 0; i--) {
+        const tp = rocketTrailParticles[i];
+        tp.x += tp.vx;
+        tp.y += tp.vy;
+        tp.radius *= 0.955;
+        tp.alpha -= 0.026;
+        if (tp.alpha <= 0 || tp.radius <= 0.4) {
+          rocketTrailParticles.splice(i, 1);
+        } else {
+          ctx.beginPath();
+          ctx.arc(tp.x, tp.y, tp.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${tp.hue}, 100%, 72%, ${tp.alpha})`;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = `hsla(${tp.hue}, 100%, 60%, ${tp.alpha})`;
+          ctx.fill();
+        }
+      }
+
+      requestAnimationFrame(animateCanvas);
+    }
+    animateCanvas();
+
+    // ===================================================
+    // ROBOT FLIGHT ANIMATION: RIGHT TO LEFT
+    // ===================================================
+    function getHoverCoordinates() {
+      const isMobile = window.innerWidth <= 1024;
+      if (isMobile) {
+        return {
+          left: 'calc(50% - ' + (robotCarrier.offsetWidth / 2) + 'px)',
+          top: '10vh'
+        };
+      } else {
+        return {
+          left: '12vw',
+          top: '22vh'
+        };
+      }
+    }
+
+    function startRobotFlight(onArrived) {
+      cancelAnimationFrame(flightAnimationFrame);
+      isFlightActive = true;
+      robotCarrier.style.transform = '';
+      
+      const startX = window.innerWidth + 140;
+      const startY = window.innerHeight * 0.18;
+      
+      const target = getHoverCoordinates();
+      let targetX, targetY;
+      if (window.innerWidth <= 1024) {
+        targetX = Math.round((window.innerWidth - robotCarrier.offsetWidth) / 2);
+        targetY = window.innerHeight * 0.10;
+      } else {
+        targetX = window.innerWidth * 0.12;
+        targetY = window.innerHeight * 0.22;
+      }
+
+      // Check prefers-reduced-motion
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        robotCarrier.style.left = target.left;
+        robotCarrier.style.top = target.top;
+        robotBobbing.classList.add('hovering-idle');
+        isFlightActive = false;
+        if (typeof onArrived === 'function') onArrived();
+        return;
+      }
+
+      const flightDuration = 2200; // Smooth 2.2s cinematic glide from RIGHT to LEFT
+      const startTime = performance.now();
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function stepFlight(now) {
+        if (isIntroSkipped) {
+          isFlightActive = false;
+          return;
+        }
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / flightDuration, 1);
+        const eased = easeOutCubic(progress);
+
+        // Smooth curved flight path from RIGHT to LEFT
+        const currentX = startX + (targetX - startX) * eased;
+        const currentY = startY + (targetY - startY) * eased + Math.sin(progress * Math.PI) * -38;
+        const bankAngle = (1 - eased) * -9 + Math.sin(progress * Math.PI * 2) * 3;
+
+        robotCarrier.style.left = `${currentX}px`;
+        robotCarrier.style.top = `${currentY}px`;
+        robotBobbing.style.transform = `rotate(${bankAngle}deg)`;
+
+        if (progress < 1) {
+          flightAnimationFrame = requestAnimationFrame(stepFlight);
+        } else {
+          // Arrived smoothly at hover coordinates
+          robotCarrier.style.left = target.left;
+          robotCarrier.style.top = target.top;
+          robotBobbing.style.transform = '';
+          robotBobbing.classList.add('hovering-idle');
+          if (typeof onArrived === 'function') onArrived();
+        }
+      }
+
+      flightAnimationFrame = requestAnimationFrame(stepFlight);
+    }
+
+    // ===================================================
+    // MULTILINGUAL GREETING ORCHESTRATION (COMPLETELY SILENT)
+    // ===================================================
+    function playGreetingSequence() {
+      if (isIntroSkipped) return;
+      currentGreetingIndex = 0;
+      displayNextGreeting(currentGreetingIndex);
+    }
+
+    function displayNextGreeting(index) {
+      if (isIntroSkipped) return;
+
+      if (index >= GREETINGS.length) {
+        // All 7 greetings displayed! Proceed smoothly to landing
+        triggerRobotLanding();
+        return;
+      }
+
+      const greeting = GREETINGS[index];
+
+      // Update Step Dots
+      const dots = stepDotsContainer.children;
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].className = 'step-dot';
+        if (i < index) dots[i].classList.add('completed');
+        else if (i === index) dots[i].classList.add('active');
+      }
+
+      // Smooth subtle text transition
+      greetingText.style.opacity = '0';
+      greetingText.style.transform = 'translateY(8px)';
+
+      setTimeout(() => {
+        langFlag.textContent = greeting.flag;
+        langName.textContent = greeting.langName;
+        greetingText.textContent = greeting.nativeText;
+        greetingPhonetic.textContent = greeting.phonetic;
+        greetingStepCount.textContent = `${index + 1} of ${GREETINGS.length}`;
+        
+        // Progress fill
+        const progressPercent = ((index + 1) / GREETINGS.length) * 100;
+        progressBarFill.style.width = `${progressPercent}%`;
+
+        greetingText.style.opacity = '1';
+        greetingText.style.transform = 'translateY(0)';
+      }, 150);
+
+      // Show card
+      greetingCard.classList.add('visible');
+
+      // Schedule next greeting after comfortable reading duration (completely silent)
+      greetingTimer = setTimeout(() => {
+        if (!isIntroSkipped) {
+          displayNextGreeting(index + 1);
+        }
+      }, GREETING_DISPLAY_DURATION);
+    }
+
+    // ===================================================
+    // ROBOT LANDING DIMENSIONS HELPER
+    // ===================================================
+    function getLandedDimensions() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      let width, top;
+
+      if (h <= 520 && w > h) {
+        // Landscape mobile
+        width = Math.min(65, Math.round(h * 0.16));
+        top = Math.max(8, Math.round(h * 0.03));
+      } else if (h <= 600 || w <= 360) {
+        // Ultra-small screens (320x568, 360x640)
+        width = Math.min(70, Math.round(w * 0.22));
+        top = Math.max(12, Math.round(h * 0.025));
+      } else if (w <= 480) {
+        // Modern phones (375x667, 390x844, 430x932)
+        width = Math.min(82, Math.round(w * 0.22));
+        top = Math.max(16, Math.round(h * 0.03));
+      } else if (w <= 1024) {
+        // Tablets (768px, 1024px)
+        width = Math.min(105, Math.round(w * 0.14));
+        top = Math.max(26, Math.round(h * 0.04));
+      } else {
+        // Desktop / Laptop
+        width = Math.min(125, Math.round(h * 0.16));
+        top = Math.max(30, Math.round(h * 0.045));
+      }
+
+      return { width, top };
+    }
+
+    function updateLandedPosition() {
+      const { width: robotWidth, top: landingY } = getLandedDimensions();
+
+      robotCarrier.style.width = `${robotWidth}px`;
+      robotCarrier.style.height = `${robotWidth}px`;
+      robotCarrier.style.left = '50%';
+      robotCarrier.style.transform = 'translateX(-50%)';
+      robotCarrier.style.top = `${landingY}px`;
+
+      const landedBottom = landingY + robotWidth;
+      document.documentElement.style.setProperty('--landed-robot-bottom', `${landedBottom}px`);
+
+      landingGlow.style.top = `${landingY + robotWidth - 12}px`;
+      landingGlow.style.bottom = 'auto';
+      landingGlow.style.left = '50%';
+      landingGlow.style.transform = 'translateX(-50%) scaleX(1)';
+      landingGlow.classList.add('active');
+      groundShadow.style.opacity = '0.9';
+      groundShadow.style.transform = 'translateX(-50%) scale(1)';
+    }
+
+    // ===================================================
+    // ROBOT LANDING ANIMATION
+    // ===================================================
+    function triggerRobotLanding() {
+      if (isIntroSkipped) return;
+
+      // 1. Hide greeting card smoothly
+      greetingCard.classList.remove('visible');
+
+      // 2. Prepare robot for landing touchdown
+      robotBobbing.classList.remove('hovering-idle');
+      robotCarrier.classList.add('robot-landing-effect');
+      isFlightActive = false;
+
+      // 3. Initiate touchdown physics
+      updateLandedPosition();
+      robotBobbing.style.transform = 'translateY(3px) scale(0.98)';
+
+      // Dim thrusters to an idle energy pulse
+      thrusterGlow.style.opacity = '0.35';
+      thrusterGlow.style.transform = 'scale(0.55)';
+      thrusterCore.style.opacity = '0.35';
+      thrusterCore.style.transform = 'scale(0.45)';
+
+      // 4. Smooth landing takes 1.6s. Touchdown COMPLETES BEFORE the title appears!
+      landingTimer = setTimeout(() => {
+        revealFinalTitle();
+      }, 1750);
+    }
+
+    // ===================================================
+    // PROJECT TITLE REVEAL (AFTER ROBOT FULLY LANDS)
+    // ===================================================
+    function revealFinalTitle() {
+      if (isIntroCompleted) return;
+      isIntroCompleted = true;
+
+      finalReveal.classList.add('active');
+    }
+
+    // ===================================================
+    // SKIP INTRO HANDLER
+    // ===================================================
+    function skipIntro() {
+      if (isIntroCompleted) return;
+      isIntroSkipped = true;
+
+      if (greetingTimer) clearTimeout(greetingTimer);
+      if (landingTimer) clearTimeout(landingTimer);
+      if (revealTimer) clearTimeout(revealTimer);
+      cancelAnimationFrame(flightAnimationFrame);
+      isFlightActive = false;
+
+      greetingCard.classList.remove('visible');
+
+      robotBobbing.classList.remove('hovering-idle');
+      robotCarrier.classList.remove('robot-landing-effect');
+
+      updateLandedPosition();
+      robotBobbing.style.transform = 'translateY(3px) scale(0.98)';
+
+      thrusterGlow.style.opacity = '0.35';
+      thrusterGlow.style.transform = 'scale(0.55)';
+      thrusterCore.style.opacity = '0.35';
+      thrusterCore.style.transform = 'scale(0.45)';
+
+      revealFinalTitle();
+    }
+
+    // ===================================================
+    // REPLAY INTRO HANDLER
+    // ===================================================
+    function replayIntro() {
+      if (greetingTimer) clearTimeout(greetingTimer);
+      if (landingTimer) clearTimeout(landingTimer);
+      if (revealTimer) clearTimeout(revealTimer);
+      cancelAnimationFrame(flightAnimationFrame);
+
+      isIntroStarted = false;
+      isIntroSkipped = false;
+      isIntroCompleted = false;
+      isFlightActive = false;
+
+      finalReveal.classList.remove('active');
+      landingGlow.classList.remove('active');
+      groundShadow.style.opacity = '0';
+      groundShadow.style.transform = 'translateX(-50%) scale(0.3)';
+
+      thrusterGlow.style.opacity = '0.9';
+      thrusterGlow.style.transform = '';
+      thrusterCore.style.opacity = '0.85';
+      thrusterCore.style.transform = '';
+
+      robotCarrier.classList.remove('robot-landing-effect');
+      robotCarrier.style.width = '';
+      robotCarrier.style.height = '';
+      landingGlow.style.top = '';
+      landingGlow.style.bottom = '15vh';
+
+      // Reset robot back to initial off-screen coordinates on the RIGHT
+      robotCarrier.style.transform = '';
+      robotCarrier.style.left = '115vw';
+      robotCarrier.style.top = '22vh';
+      robotBobbing.style.transform = '';
+      robotBobbing.classList.remove('hovering-idle');
+
+      // Reset greeting state & step indicators
+      currentGreetingIndex = 0;
+      progressBarFill.style.width = '0%';
+      const dots = stepDotsContainer.children;
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].className = 'step-dot';
+        if (i === 0) dots[i].classList.add('active');
+      }
+
+      // Close modal if open
+      moduleModal.classList.remove('open');
+
+      // Force layout reflow before restarting flight
+      void robotCarrier.offsetWidth;
+
+      setTimeout(() => {
+        startIntro();
+      }, 200);
+    }
+
+    // ===================================================
+    // START INTRO (AUTOMATIC & SILENT)
+    // ===================================================
+    function startIntro() {
+      if (isIntroStarted) return;
+      isIntroStarted = true;
+      isIntroSkipped = false;
+      isIntroCompleted = false;
+
+      startRobotFlight(() => {
+        playGreetingSequence();
+      });
+    }
+
+    // Event Listeners
+    skipIntroBtn.addEventListener('click', skipIntro);
+    replayBtn.addEventListener('click', replayIntro);
+
+    getStartedBtn.addEventListener('click', () => {
+      moduleModal.classList.add('open');
+    });
+    closeModuleModalBtn.addEventListener('click', () => {
+      moduleModal.classList.remove('open');
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        moduleModal.classList.remove('open');
+      }
+    });
+
+    // Window resize handler: update position if landed
+    window.addEventListener('resize', () => {
+      if (isIntroCompleted) {
+        updateLandedPosition();
+      }
+    });
+
+    // Developer / testing URL parameters (?autostart=1, ?state=landed, ?step=3)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('state') === 'landed') {
+      skipIntro();
+      setTimeout(() => {
+        const fr = document.getElementById('finalReveal').getBoundingClientRect();
+        const rc = document.getElementById('robotCarrier').getBoundingClientRect();
+        const tt = document.querySelector('.main-project-title').getBoundingClientRect();
+        const bt = document.querySelector('.cta-button-group').getBoundingClientRect();
+        const ov = [];
+        document.querySelectorAll('*').forEach(el => {
+          const r = el.getBoundingClientRect();
+          if (r.right > window.innerWidth + 2) ov.push(el.tagName + '.' + el.className + ' r=' + Math.round(r.right));
+        });
+        document.title = 'DIAG: ' + JSON.stringify({ w: window.innerWidth, bodyScroll: document.body.scrollWidth, fr, rc, tt, bt, ov });
+      }, 50);
+    } else if (urlParams.get('step')) {
+      const stepNum = parseInt(urlParams.get('step'), 10) - 1;
+      if (stepNum >= 0 && stepNum < GREETINGS.length) {
+        robotCarrier.style.left = '12vw';
+        robotCarrier.style.top = '22vh';
+        robotBobbing.classList.add('hovering-idle');
+        displayNextGreeting(stepNum);
+      }
+    } else {
+      // Auto-start silently 400ms after page initialization
+      setTimeout(startIntro, 400);
+    }
+  </script>
+
+
+</body></html>

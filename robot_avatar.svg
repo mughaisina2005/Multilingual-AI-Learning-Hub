@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%" role="img" aria-label="Multilingual AI Robot Tutor Avatar">
+  <defs>
+    <!-- Cyan glow filter for eyes & chest core -->
+    <filter id="cyanGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="60%" stop-color="#e0f2fe" />
+      <stop offset="100%" stop-color="#bae6fd" />
+    </linearGradient>
+
+    <linearGradient id="blueAccentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+
+    <linearGradient id="visorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="70%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0b1329" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Soft Aura (animates during listening/speaking) -->
+  <circle id="avatarAura" cx="100" cy="100" r="88" fill="rgba(56, 189, 248, 0.12)" />
+
+  <!-- Robot Headset / Ear Pieces -->
+  <rect x="22" y="65" width="18" height="42" rx="9" fill="url(#blueAccentGrad)" filter="drop-shadow(0 4px 6px rgba(2, 132, 199, 0.3))" />
+  <rect x="160" y="65" width="18" height="42" rx="9" fill="url(#blueAccentGrad)" filter="drop-shadow(0 4px 6px rgba(2, 132, 199, 0.3))" />
+  <circle cx="31" cy="86" r="4" fill="#38bdf8" filter="url(#cyanGlow)" />
+  <circle cx="169" cy="86" r="4" fill="#38bdf8" filter="url(#cyanGlow)" />
+
+  <!-- Head Outline / White Chassis -->
+  <path d="M 40 85 C 40 45, 60 25, 100 25 C 140 25, 160 45, 160 85 C 160 120, 140 135, 100 135 C 60 135, 40 120, 40 85 Z" fill="url(#bodyGrad)" stroke="#bae6fd" stroke-width="2.5" filter="drop-shadow(0 8px 16px rgba(2, 132, 199, 0.2))" />
+
+  <!-- Dark Visor Screen -->
+  <rect x="52" y="55" width="96" height="60" rx="20" fill="url(#visorGrad)" stroke="#38bdf8" stroke-width="1.5" />
+  
+  <!-- Visor Top Glass Reflection -->
+  <path d="M 58 64 Q 100 58 142 64 Q 125 72 75 72 Z" fill="rgba(255, 255, 255, 0.22)" />
+
+  <!-- Glowing Cyan Eyes -->
+  <g id="avatarEyes" filter="url(#cyanGlow)">
+    <!-- Left Eye -->
+    <rect class="eye-left" x="72" y="72" width="14" height="18" rx="7" fill="#38bdf8" />
+    <circle cx="76" cy="76" r="3" fill="#ffffff" />
+    
+    <!-- Right Eye -->
+    <rect class="eye-right" x="114" y="72" width="14" height="18" rx="7" fill="#38bdf8" />
+    <circle cx="118" cy="76" r="3" fill="#ffffff" />
+  </g>
+
+  <!-- Friendly Digital Smile / Voice Waveform -->
+  <path id="avatarSmile" d="M 88 100 Q 100 108 112 100" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" fill="none" filter="url(#cyanGlow)" />
+
+  <!-- Head Top Antenna / Indicator -->
+  <path d="M 96 25 L 104 25 L 102 14 L 98 14 Z" fill="url(#blueAccentGrad)" />
+  <circle id="antennaOrb" cx="100" cy="11" r="5" fill="#38bdf8" filter="url(#cyanGlow)" />
+
+  <!-- Lower Body & Collar -->
+  <path d="M 65 133 C 65 128, 135 128, 135 133 L 148 168 C 148 180, 132 188, 100 188 C 68 188, 52 180, 52 168 Z" fill="url(#bodyGrad)" stroke="#bae6fd" stroke-width="2" />
+  
+  <!-- Shoulder Blue Accents -->
+  <path d="M 52 162 C 50 152, 60 142, 70 138" stroke="url(#blueAccentGrad)" stroke-width="5" stroke-linecap="round" fill="none" />
+  <path d="M 148 162 C 150 152, 140 142, 130 138" stroke="url(#blueAccentGrad)" stroke-width="5" stroke-linecap="round" fill="none" />
+
+  <!-- Circular Glowing Chest Core Detail -->
+  <g id="avatarChestCore">
+    <circle cx="100" cy="158" r="13" fill="#0f172a" stroke="#0284c7" stroke-width="2" />
+    <circle cx="100" cy="158" r="8" fill="#38bdf8" filter="url(#cyanGlow)" />
+    <circle cx="100" cy="158" r="3" fill="#ffffff" />
+  </g>
+</svg>
